@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using BitBucketSharp.Objects;
+using BitBucketSharp.Models;
 using RestSharp;
 using RestSharp.Deserializers;
 
@@ -28,34 +26,34 @@ namespace BitBucketSharp
             _client.Authenticator = new HttpBasicAuthenticator(username, password);
         }
 
-        public Emails GetMyEmails()
+        public EmailsModel GetMyEmails()
         {
-            return Get<Emails>("emails");
+            return Get<EmailsModel>("emails");
         }
 
-        public List<RepositoryDetailed> GetRepositoriesIFollow()
+        public List<RepositoryDetailedModel> GetRepositoriesIFollow()
         {
-            return Get<List<RepositoryDetailed>>("user/follows");
+            return Get<List<RepositoryDetailedModel>>("user/follows");
         }
 
-        public Users GetUsers(String username)
+        public UsersModel GetUser(String username)
         {
-            return Get<Users>("users/" + Username);
+            return Get<UsersModel>("users/" + Username);
         }
 
-        public FollowersObject GetUserFollowers(String username)
+        public FollowersModel GetUserFollowers(String username)
         {
-            return Get<FollowersObject>("users/" + username + "/followers");
+            return Get<FollowersModel>("users/" + username + "/followers");
         }
 
-        public FollowersObject GetRepositoryFollowers(String repoOwner, String repoSlug)
+        public FollowersModel GetRepositoryFollowers(String repoOwner, String repoSlug)
         {
-            return Get<FollowersObject>("repositories/" + repoOwner + "/" + repoSlug + "/followers");
+            return Get<FollowersModel>("repositories/" + repoOwner + "/" + repoSlug + "/followers");
         }
 
-        public FollowersObject GetIssueFollowers(String repoOwner, String repoSlug, int issueId)
+        public FollowersModel GetIssueFollowers(String repoOwner, String repoSlug, int issueId)
         {
-            return Get<FollowersObject>("repositories/" + repoOwner + "/" + repoSlug + "/issues/" + issueId + "/followers");
+            return Get<FollowersModel>("repositories/" + repoOwner + "/" + repoSlug + "/issues/" + issueId + "/followers");
         }
 
         /// <summary>
