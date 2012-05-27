@@ -33,8 +33,6 @@ namespace BitBucketSharp.Models
         }
     }
 
-    public class CommentsModel : List<CommentModel> { }
-
     public class CommentModel
     {
         public string Content { get; set; }
