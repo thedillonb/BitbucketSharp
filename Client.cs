@@ -24,22 +24,12 @@ namespace BitBucketSharp
         /// <summary>
         /// The users on BitBucket
         /// </summary>
-        public UserController Users { get; private set; }
-
-        /// <summary>
-        /// The issues on BitBucket
-        /// </summary>
-        public IssueController Issues { get; private set; }
+        public UsersController Users { get; private set; }
 
         /// <summary>
         /// The repositories on BitBucket
         /// </summary>
-        public RepositoryController Repositories { get; private set; }
-
-        /// <summary>
-        /// The groups on BitBucket
-        /// </summary>
-        public GroupController Groups { get; private set; }
+        public RepositoriesController Repositories { get; private set; }
 
         /// <summary>
         /// Constructor
@@ -50,10 +40,8 @@ namespace BitBucketSharp
         {
             Username = username;
             Account = new AccountController(this);
-            Users = new UserController(this);
-            Issues = new IssueController(this);
-            Repositories = new RepositoryController(this);
-            Groups = new GroupController(this);
+            Users = new UsersController(this);
+            Repositories = new RepositoriesController(this);
             _client.Authenticator = new HttpBasicAuthenticator(username, password);
         }
 

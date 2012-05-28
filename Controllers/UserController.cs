@@ -1,39 +1,81 @@
-﻿using System.Collections.Generic;
-using BitBucketSharp.Models;
+﻿using BitBucketSharp.Models;
 
 namespace BitBucketSharp.Controllers
 {
-    public class UserController : Controller
+    /// <summary>
+    /// Provides access to a list of users
+    /// </summary>
+    public class UsersController : Controller
     {
         /// <summary>
         /// Constructor
         /// </summary>
-        /// <param name="client">A handel to the client</param>
-        public UserController(Client client)
+        /// <param name="client">A handle to the client</param>
+        public UsersController(Client client)
             : base(client)
         {
         }
 
         /// <summary>
+        /// Provides access to a specific user via a username
+        /// </summary>
+        /// <param name="username">The username of the user</param>
+        /// <returns></returns>
+        public UserController this[string username]
+        {
+            get { return new UserController(Client, username); }
+        }
+    }
+
+    /// <summary>
+    /// Provides access to a user
+    /// </summary>
+    public class UserController : Controller
+    {
+        /// <summary>
+        /// The username
+        /// </summary>
+        public string Username { get; private set; }
+
+        /// <summary>
+        /// Groups that belong to this user
+        /// </summary>
+        public GroupsController Groups { get; private set; }
+
+        /// <summary>
+        /// Repositories that belong to this user
+        /// </summary>
+        public UserRepositoriesController Repositories { get; private set; }
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        public UserController(Client client, string username)
+            : base(client)
+        {
+            Username = username;
+            Groups = new GroupsController(client, this);
+            Repositories = new UserRepositoriesController(client, this);
+        }
+
+        /// <summary>
         /// Gets information about this user
         /// </summary>
-        /// <param name="username">The username to get information on</param>
         /// <returns>A UsersModel</returns>
-        public UsersModel GetInfo(string username)
+        public UsersModel GetInfo()
         {
-            return Client.Get<UsersModel>("users/" + username);
+            return Client.Get<UsersModel>("users/" + Username);
         }
 
         /// <summary>
         /// Gets the events for a specific user
         /// </summary>
-        /// <param name="username">The username to query events for</param>
         /// <param name="start">The start index for returned items(default: 0)</param>
         /// <param name="limit">The limit index for returned items (default: 25)</param>
         /// <returns>A EventsModel</returns>
-        public EventsModel GetEvents(string username, int start = 0, int limit = 25)
+        public EventsModel GetEvents(int start = 0, int limit = 25)
         {
-            return Client.Get<EventsModel>("users/" + username + "/events/?start=" + start + "&limit=" + limit);
+            return Client.Get<EventsModel>("users/" + Username + "/events/?start=" + start + "&limit=" + limit);
         }
     }
 }

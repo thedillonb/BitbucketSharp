@@ -6,7 +6,7 @@ namespace BitBucketSharp.Controllers
     /// <summary>
     /// A controller dedicated to the actions for the user logged in!
     /// </summary>
-    public class AccountController : Controller
+    public class AccountController : UserController
     {
         /// <summary>
         /// Email for this user
@@ -18,7 +18,7 @@ namespace BitBucketSharp.Controllers
         /// </summary>
         /// <param name="client"></param>
         public AccountController(Client client)
-            : base(client)
+            : base(client, client.Username)
         {
             Emails = new EmailController(client);
         }

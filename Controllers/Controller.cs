@@ -1,5 +1,8 @@
 ﻿namespace BitBucketSharp.Controllers
 {
+    /// <summary>
+    /// Provides a base class for all controllers
+    /// </summary>
     public abstract class Controller
     {
         /// <summary>

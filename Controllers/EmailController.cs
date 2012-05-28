@@ -3,6 +3,9 @@ using BitBucketSharp.Models;
 
 namespace BitBucketSharp.Controllers
 {
+    /// <summary>
+    /// Provides access to emails
+    /// </summary>
     public class EmailController : Controller
     {
         /// <summary>
