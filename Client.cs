@@ -68,6 +68,15 @@ namespace BitBucketSharp
         }
 
         /// <summary>
+        /// Makes a 'PUT' request to the server
+        /// </summary>
+        /// <param name="uri"></param>
+        public void Put(string uri)
+        {
+            Request(uri, Method.PUT, null, new Dictionary<string, string> { { "Content-Length", "0" } });
+        }
+
+        /// <summary>
         /// Makes a 'POST' request to the server
         /// </summary>
         /// <typeparam name="T"></typeparam>
@@ -89,7 +98,7 @@ namespace BitBucketSharp
         }
 
         /// <summary>
-        /// Makes a request to the server using a URI with optional POST data and optional header modifications
+        /// Makes a request to the server expecting a response
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="uri"></param>
@@ -104,6 +113,26 @@ namespace BitBucketSharp
             return d.Deserialize<T>(response);
         }
 
+        /// <summary>
+        /// Makes a request to the server but does not expect a response.
+        /// </summary>
+        /// <param name="uri"></param>
+        /// <param name="method"></param>
+        /// <param name="data"></param>
+        /// <param name="header"></param>
+        public void Request(string uri, Method method = Method.GET, Dictionary<string, string> data = null , Dictionary<string, string> header = null)
+        {
+            ExecuteRequest(uri, method, data, header);
+        }
+
+        /// <summary>
+        /// Executes a request to the server
+        /// </summary>
+        /// <param name="uri"></param>
+        /// <param name="method"></param>
+        /// <param name="data"></param>
+        /// <param name="header"></param>
+        /// <returns></returns>
         private IRestResponse ExecuteRequest(string uri, Method method, Dictionary<string, string> data, Dictionary<string, string> header)
         {
             if (uri == null)
