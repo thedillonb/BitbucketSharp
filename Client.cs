@@ -143,7 +143,6 @@ namespace BitBucketSharp
         /// <param name="uri"></param>
         /// <param name="method"></param>
         /// <param name="data"></param>
-        /// <param name="header"></param>
         /// <returns></returns>
         private IRestResponse ExecuteRequest(string uri, Method method, Dictionary<string, string> data)
         {
