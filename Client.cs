@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
+using System.Net;
 using BitBucketSharp.Controllers;
-using BitBucketSharp.Models;
 using RestSharp;
 using RestSharp.Deserializers;
 
@@ -19,6 +17,31 @@ namespace BitBucketSharp
         public String Username { get; private set; }
 
         /// <summary>
+        /// The user account
+        /// </summary>
+        public AccountController Account { get; private set; }
+
+        /// <summary>
+        /// The users on BitBucket
+        /// </summary>
+        public UserController Users { get; private set; }
+
+        /// <summary>
+        /// The issues on BitBucket
+        /// </summary>
+        public IssueController Issues { get; private set; }
+
+        /// <summary>
+        /// The repositories on BitBucket
+        /// </summary>
+        public RepositoryController Repositories { get; private set; }
+
+        /// <summary>
+        /// The groups on BitBucket
+        /// </summary>
+        public GroupController Groups { get; private set; }
+
+        /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="username"></param>
@@ -26,29 +49,12 @@ namespace BitBucketSharp
         public Client(String username, String password)
         {
             Username = username;
+            Account = new AccountController(this);
+            Users = new UserController(this);
+            Issues = new IssueController(this);
+            Repositories = new RepositoryController(this);
+            Groups = new GroupController(this);
             _client.Authenticator = new HttpBasicAuthenticator(username, password);
-        }
-
-        public MeController GetUser()
-        {
-            return new MeController(this);
-        }
-
-        public UserController GetUser(string username)
-        {
-            return new UserController(this, username);
-        }
-
-        public RepositoryController GetRepository(string repoOwner, string repoSlug)
-        {
-            return new RepositoryController(this, repoOwner, repoSlug);
-        }
-
-
-
-        public FollowersModel GetIssueFollowers(String repoOwner, String repoSlug, int issueId)
-        {
-            return Get<FollowersModel>("repositories/" + repoOwner + "/" + repoSlug + "/issues/" + issueId + "/followers");
         }
 
         /// <summary>
@@ -59,33 +65,75 @@ namespace BitBucketSharp
         /// <returns>An object with response data</returns>
         public T Get<T>(String uri)
         {
-            var request = new RestRequest(uri);
-            var response = _client.Execute(request);
-            var d = new JsonDeserializer();
-            return d.Deserialize<T>(response);
+            return Request<T>(uri);
         }
 
         /// <summary>
-        /// Makes a 'POST' request to the server using a URI with optional POST data and optional header modifications
+        /// Makes a 'PUT' request to the server
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="uri"></param>
+        /// <returns></returns>
+        public T Put<T>(string uri)
+        {
+            return Request<T>(uri, Method.PUT, null, new Dictionary<string, string> {{"Content-Length", "0"}});
+        }
+
+        /// <summary>
+        /// Makes a 'POST' request to the server
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="uri"></param>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        public T Post<T>(string uri, Dictionary<string, string> data)
+        {
+            return Request<T>(uri, Method.POST, data);
+        }
+
+        /// <summary>
+        /// Makes a 'DELETE' request to the server
+        /// </summary>
+        /// <param name="uri"></param>
+        public void Delete(string uri)
+        {
+            Request<string>(uri, Method.DELETE);
+        }
+
+        /// <summary>
+        /// Makes a request to the server using a URI with optional POST data and optional header modifications
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="uri"></param>
         /// <param name="data"></param>
         /// <param name="header"></param>
+        /// <param name="method"></param>
         /// <returns></returns>
-        public T Post<T>(string uri, object data = null, object header = null)
+        public T Request<T>(string uri, Method method = Method.GET, Dictionary<string, string> data = null , Dictionary<string, string> header = null)
         {
-            var request = new RestRequest(uri, Method.POST);
-            if (data != null)
-                foreach (var prop in data.GetType().GetProperties(BindingFlags.Instance | BindingFlags.Public))
-                    request.AddParameter(prop.Name, prop.GetValue(data, null));
-            if (header != null)
-                foreach (var prop in header.GetType().GetProperties(BindingFlags.Instance | BindingFlags.Public).Where(prop => prop.GetValue(header, null) is string))
-                    request.AddHeader(prop.Name, prop.GetValue(header, null) as string);
-
-            var response = _client.Execute(request);
+            var response = ExecuteRequest(uri, method, data, header);
             var d = new JsonDeserializer();
             return d.Deserialize<T>(response);
+        }
+
+        private IRestResponse ExecuteRequest(string uri, Method method, Dictionary<string, string> data, Dictionary<string, string> header)
+        {
+            if (uri == null)
+                throw new ArgumentNullException("uri");
+
+            var request = new RestRequest(uri, method);
+            if (data != null)
+                foreach (var hd in data)
+                    request.AddParameter(hd.Key, hd.Value);
+            if (header != null)
+                foreach (var hd in header)
+                    request.AddHeader(hd.Key, hd.Value);
+
+            var response = _client.Execute(request);
+            if (response.StatusCode != HttpStatusCode.OK)
+                throw new InvalidOperationException("Request returned status code: " + response.StatusCode);
+
+            return response;
         }
     }
 }

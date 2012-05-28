@@ -1,38 +1,42 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using BitBucketSharp.Models;
 
 namespace BitBucketSharp.Controllers
 {
     public class GroupController : Controller
     {
-        public string Username { get; private set; }
-
-        public GroupController(Client client, string username) : base(client)
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="client"></param>
+        public GroupController(Client client) 
+            : base(client)
         {
-            Username = username;
         }
 
-        public List<GroupModel> GetGroups()
+        /// <summary>
+        /// Add a member to this group
+        /// </summary>
+        public void AddMember(string username, string groupname, string member)
         {
-            return Client.Get<List<GroupModel>>("groups/" + Username);
+            Client.Put<string>("groups/" + username + "/" + groupname + "/members/" + member);
         }
 
-        public void AddMember(string username)
+        /// <summary>
+        /// Remove a member of this group
+        /// </summary>
+        public void RemoveMember(string username, string groupname, string member)
         {
-            
+            Client.Delete("groups/" + username + "/" + groupname + "/members/" + member);
         }
 
-        public void RemoveMember(string username)
+        /// <summary>
+        /// List the members of this group
+        /// </summary>
+        /// <returns></returns>
+        public List<UserModel> ListMembers(string username, string groupname)
         {
-            
-        }
-
-        public List<UserModel> ListMembers(string groupName)
-        {
-            return Client.Get<List<UserModel>>("groups/" + Username + "/" + groupName + "/members");
+            return Client.Get<List<UserModel>>("groups/" + username + "/" + groupname + "/members");
         }
     }
 }
