@@ -74,7 +74,7 @@ namespace BitBucketSharp.Controllers
         /// Requests the Wiki page
         /// </summary>
         /// <returns></returns>
-        public WikiModel GetPage()
+        public WikiModel GetInfo()
         {
             return Client.Get<WikiModel>(Uri);
         }

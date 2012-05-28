@@ -39,12 +39,14 @@
   <ItemGroup>
     <Compile Include="Client.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ChangesetController.cs" />
     <Compile Include="Controllers\Controller.cs" />
     <Compile Include="Controllers\EmailController.cs" />
     <Compile Include="Controllers\GroupController.cs" />
     <Compile Include="Controllers\IssueController.cs" />
     <Compile Include="Controllers\RepositoryController.cs" />
     <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Controllers\WikiController.cs" />
     <Compile Include="Models\ChangesetModel.cs" />
     <Compile Include="Models\EmailModel.cs" />
     <Compile Include="Models\EventModel.cs" />
@@ -54,6 +56,7 @@
     <Compile Include="Models\RepositoryModel.cs" />
     <Compile Include="Models\SourceModel.cs" />
     <Compile Include="Models\UserModel.cs" />
+    <Compile Include="Models\WikiModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

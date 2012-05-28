@@ -100,6 +100,11 @@ namespace BitBucketSharp.Controllers
         public WikisController Wikis { get; private set; }
 
         /// <summary>
+        /// Gets the invitations to this repository
+        /// </summary>
+        public InvitationController Invitations { get; private set; }
+
+        /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="owner">The owner of this repository</param>
@@ -112,6 +117,7 @@ namespace BitBucketSharp.Controllers
             Slug = slug;
             Issues = new IssuesController(client, this);
             Wikis = new WikisController(client, this);
+            Invitations = new InvitationController(client, this);
         }
 
         /// <summary>
