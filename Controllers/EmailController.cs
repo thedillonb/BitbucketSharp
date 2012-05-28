@@ -23,7 +23,7 @@ namespace BitBucketSharp.Controllers
         /// <returns></returns>
         public IList<EmailModel> GetEmails()
         {
-            return Client.Get<List<EmailModel>>("emails");
+            return Client.Get<List<EmailModel>>(Uri);
         }
 
         /// <summary>
@@ -33,7 +33,7 @@ namespace BitBucketSharp.Controllers
         /// <returns></returns>
         public EmailModel SearchEmails(string emailAddress)
         {
-            return Client.Get<EmailModel>("emails/" + emailAddress);
+            return Client.Get<EmailModel>(Uri + "/" + emailAddress);
         }
 
 
@@ -44,7 +44,7 @@ namespace BitBucketSharp.Controllers
         /// <returns></returns>
         public EmailModel AddEmail(string emailAddress)
         {
-            return Client.Put<EmailModel>("emails/" + emailAddress);
+            return Client.Put<EmailModel>(Uri + "/" + emailAddress);
         }
 
         /// <summary>
@@ -54,7 +54,15 @@ namespace BitBucketSharp.Controllers
         /// <returns></returns>
         public EmailModel SetPrimaryEmail(string emailAddress)
         {
-            return Client.Post<EmailModel>("emails/" + emailAddress, new Dictionary<string, string> { { "primary", "true" } });
+            return Client.Post<EmailModel>(Uri + "/" + emailAddress, new Dictionary<string, string> { { "primary", "true" } });
+        }
+
+        /// <summary>
+        /// The URI of this controller
+        /// </summary>
+        protected override string Uri
+        {
+            get { return "emails"; }
         }
     }
 }

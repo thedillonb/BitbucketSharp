@@ -26,4 +26,17 @@ namespace BitBucketSharp.Models
             public string File { get; set; }
         }
     }
+
+    public class ChangesetDiffModel
+    {
+        public string Type { get; set; }
+        public string File { get; set; }
+        public List<DiffModel> Diffstat { get; set; } 
+
+        public class DiffModel
+        {
+            public int Removed { get; set; }
+            public int Added { get; set; }
+        }
+    }
 }

@@ -39,7 +39,7 @@ namespace BitBucketSharp.Controllers
         /// <returns></returns>
         public IssuesModel Search(string search)
         {
-            return Client.Get<IssuesModel>("repositories/" + Repository.Owner.Username + "/" + Repository.Slug + "/issues/?search=" + search);
+            return Client.Get<IssuesModel>(Uri + "/?search=" + search);
         }
 
         /// <summary>
@@ -50,7 +50,15 @@ namespace BitBucketSharp.Controllers
         /// <returns></returns>
         public IssuesModel GetIssues(int start = 0, int limit = 15)
         {
-            return Client.Get<IssuesModel>("repositories/" + Repository.Owner.Username + "/" + Repository.Slug + "/issues/?start=" + start + "&limit=" + limit);
+            return Client.Get<IssuesModel>(Uri + "/?start=" + start + "&limit=" + limit);
+        }
+
+        /// <summary>
+        /// The URI of this controller
+        /// </summary>
+        protected override string Uri
+        {
+            get { return "repositories/" + Repository.Owner.Username + "/" + Repository.Slug + "/issues"; }
         }
     }
 
@@ -88,7 +96,7 @@ namespace BitBucketSharp.Controllers
         /// <returns></returns>
         public IssueModel GetIssue()
         {
-            return Client.Get<IssueModel>("repositories/" + Repository.Owner.Username + "/" + Repository.Slug + "/issues/" + Id);
+            return Client.Get<IssueModel>(Uri);
         }
 
         /// <summary>
@@ -97,7 +105,7 @@ namespace BitBucketSharp.Controllers
         /// <returns></returns>
         public FollowersModel GetIssueFollowers()
         {
-            return Client.Get<FollowersModel>("repositories/" + Repository.Owner.Username + "/" + Repository.Slug + "/issues/" + Id + "/followers");
+            return Client.Get<FollowersModel>(Uri + "/followers");
         }
 
         /// <summary>
@@ -105,7 +113,15 @@ namespace BitBucketSharp.Controllers
         /// </summary>
         public void DeleteIssue()
         {
-            Client.Delete("repositories/" + Repository.Owner.Username + "/" + Repository.Slug + "/issues/" + Id + "/");
+            Client.Delete(Uri);
+        }
+
+        /// <summary>
+        /// The URI of this controller
+        /// </summary>
+        protected override string Uri
+        {
+            get { return "repositories/" + Repository.Owner.Username + "/" + Repository.Slug + "/issues/" + Id + "/"; }
         }
     }
 }

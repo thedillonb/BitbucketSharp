@@ -34,6 +34,13 @@ namespace BitBucketSharp.Controllers
             get { return new WikiController(Client, Repository, page); }
         }
 
+        /// <summary>
+        /// The URI of this controller
+        /// </summary>
+        protected override string Uri
+        {
+            get { return "repositories/" + Repository.Owner.Username + "/" + Repository.Slug + "/wiki/"; }
+        }
     }
 
     /// <summary>
@@ -69,7 +76,7 @@ namespace BitBucketSharp.Controllers
         /// <returns></returns>
         public WikiModel GetPage()
         {
-            return Client.Get<WikiModel>("repositories/" + Repository.Owner.Username + "/" + Repository.Slug + "/wiki/" + Page);
+            return Client.Get<WikiModel>(Uri);
         }
 
         /// <summary>
@@ -78,8 +85,7 @@ namespace BitBucketSharp.Controllers
         /// <param name="data">The data to put on the wiki</param>
         public void Update(string data)
         {
-            Client.Put("repositories/" + Repository.Owner.Username + "/" + Repository.Slug + "/wiki/" + Page, 
-                        new Dictionary<string, string> {{"data", data}});
+            Client.Put(Uri, new Dictionary<string, string> {{"data", data}});
         }
 
         /// <summary>
@@ -88,9 +94,15 @@ namespace BitBucketSharp.Controllers
         /// <param name="data"></param>
         public void Create(string data)
         {
-            Client.Post("repositories/" + Repository.Owner.Username + "/" + Repository.Slug + "/wiki/" + Page,
-                        new Dictionary<string, string> { { "data", data } });
+            Client.Post(Uri, new Dictionary<string, string> { { "data", data } });
         }
 
+        /// <summary>
+        /// The URI of this controller
+        /// </summary>
+        protected override string Uri
+        {
+            get { return "repositories/" + Repository.Owner.Username + "/" + Repository.Slug + "/wiki/" + Page; }
+        }
     }
 }

@@ -33,6 +33,13 @@ namespace BitBucketSharp.Controllers
             get { return new GroupController(Client, User, groupname); }
         }
 
+        /// <summary>
+        /// The URI of this controller
+        /// </summary>
+        protected override string Uri
+        {
+            get { return "groups/" + User.Username; }
+        }
     }
 
     /// <summary>
@@ -68,7 +75,7 @@ namespace BitBucketSharp.Controllers
         /// </summary>
         public void AddMember(string member)
         {
-            Client.Put<string>("groups/" + User.Username + "/" + Groupname + "/members/" + member);
+            Client.Put<string>(Uri + "/members/" + member);
         }
 
         /// <summary>
@@ -76,7 +83,7 @@ namespace BitBucketSharp.Controllers
         /// </summary>
         public void RemoveMember(string member)
         {
-            Client.Delete("groups/" + User.Username + "/" + Groupname + "/members/" + member);
+            Client.Delete(Uri + "/members/" + member);
         }
 
         /// <summary>
@@ -85,7 +92,15 @@ namespace BitBucketSharp.Controllers
         /// <returns></returns>
         public List<UserModel> ListMembers()
         {
-            return Client.Get<List<UserModel>>("groups/" + User.Username + "/" + Groupname + "/members");
+            return Client.Get<List<UserModel>>(Uri + "/members");
+        }
+
+        /// <summary>
+        /// The URI of this controller
+        /// </summary>
+        protected override string Uri
+        {
+            get { return "groups/" + User.Username + "/" + Groupname; }
         }
     }
 }

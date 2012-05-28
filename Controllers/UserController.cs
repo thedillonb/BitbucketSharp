@@ -25,6 +25,14 @@ namespace BitBucketSharp.Controllers
         {
             get { return new UserController(Client, username); }
         }
+
+        /// <summary>
+        /// The URI of this controller
+        /// </summary>
+        protected override string Uri
+        {
+            get { return "users/"; }
+        }
     }
 
     /// <summary>
@@ -64,7 +72,7 @@ namespace BitBucketSharp.Controllers
         /// <returns>A UsersModel</returns>
         public UsersModel GetInfo()
         {
-            return Client.Get<UsersModel>("users/" + Username);
+            return Client.Get<UsersModel>(Uri);
         }
 
         /// <summary>
@@ -75,7 +83,15 @@ namespace BitBucketSharp.Controllers
         /// <returns>A EventsModel</returns>
         public EventsModel GetEvents(int start = 0, int limit = 25)
         {
-            return Client.Get<EventsModel>("users/" + Username + "/events/?start=" + start + "&limit=" + limit);
+            return Client.Get<EventsModel>(Uri + "/events/?start=" + start + "&limit=" + limit);
+        }
+
+        /// <summary>
+        /// The URI of this controller
+        /// </summary>
+        protected override string Uri
+        {
+            get { return "users/" + Username; }
         }
     }
 }

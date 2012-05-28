@@ -32,6 +32,14 @@ namespace BitBucketSharp.Controllers
         {
             get { return new RepositoryController(Client, Owner, slug); } 
         }
+
+        /// <summary>
+        /// The URI of this controller
+        /// </summary>
+        protected override string Uri
+        {
+            get { return "repositories"; }
+        }
     }
 
     /// <summary>
@@ -54,7 +62,15 @@ namespace BitBucketSharp.Controllers
         /// <returns>A list of RepositorySimpleModel</returns>
         public IList<RepositorySimpleModel> Search(string name)
         {
-            return Client.Get<List<RepositorySimpleModel>>("repositories/?name=" + name);
+            return Client.Get<List<RepositorySimpleModel>>(Uri + "/?name=" + name);
+        }
+
+        /// <summary>
+        /// The URI of this controller
+        /// </summary>
+        protected override string Uri
+        {
+            get { return "repositories"; }
         }
     }
 
@@ -86,6 +102,8 @@ namespace BitBucketSharp.Controllers
         /// <summary>
         /// Constructor
         /// </summary>
+        /// <param name="owner">The owner of this repository</param>
+        /// <param name="slug">The slug of this repository</param>
         /// <param name="client">A handle to the client</param>
         public RepositoryController(Client client, UserController owner, string slug) 
             : base(client)
@@ -102,7 +120,7 @@ namespace BitBucketSharp.Controllers
         /// <returns>A RepositoryDetailedModel</returns>
         public RepositoryDetailedModel GetInfo()
         {
-            return Client.Get<RepositoryDetailedModel>("repositories/" + Owner.Username + "/" + Slug);
+            return Client.Get<RepositoryDetailedModel>(Uri);
         }
 
         /// <summary>
@@ -111,10 +129,8 @@ namespace BitBucketSharp.Controllers
         /// <returns>A FollowersModel</returns>
         public FollowersModel GetFollowers()
         {
-            return Client.Get<FollowersModel>("repositories/" + Owner.Username + "/" + Slug + "/followers");
+            return Client.Get<FollowersModel>(Uri + "/followers");
         }
-
-        public WikiModel GetWiki()
 
         /// <summary>
         /// Requests the events of a repository
@@ -125,8 +141,16 @@ namespace BitBucketSharp.Controllers
         /// <returns>A EventsModel</returns>
         public EventsModel GetEvents(int start = 0, int limit = 25, string type = null)
         {
-            return Client.Get<EventsModel>("repositories/" + Owner.Username + "/" + Slug + "/events/?start=" + start + "&limit=" +
+            return Client.Get<EventsModel>(Uri + "/events/?start=" + start + "&limit=" +
                                            limit + (type == null ? "" : "&type=" + type));
+        }
+
+        /// <summary>
+        /// The URI of this controller
+        /// </summary>
+        protected override string Uri
+        {
+            get { return "repositories/" + Owner.Username + "/" + Slug; }
         }
     }
 }
