@@ -79,6 +79,11 @@ namespace BitBucketSharp.Controllers
         public string Slug { get; private set; }
 
         /// <summary>
+        /// Gets the wikis of this repository
+        /// </summary>
+        public WikisController Wikis { get; private set; }
+
+        /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="client">A handle to the client</param>
@@ -88,6 +93,7 @@ namespace BitBucketSharp.Controllers
             Owner = owner;
             Slug = slug;
             Issues = new IssuesController(client, this);
+            Wikis = new WikisController(client, this);
         }
 
         /// <summary>
@@ -107,6 +113,8 @@ namespace BitBucketSharp.Controllers
         {
             return Client.Get<FollowersModel>("repositories/" + Owner.Username + "/" + Slug + "/followers");
         }
+
+        public WikiModel GetWiki()
 
         /// <summary>
         /// Requests the events of a repository

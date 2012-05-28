@@ -62,18 +62,18 @@ namespace BitBucketSharp
         /// <typeparam name="T"></typeparam>
         /// <param name="uri"></param>
         /// <returns></returns>
-        public T Put<T>(string uri)
+        public T Put<T>(string uri, Dictionary<string, string> data = null)
         {
-            return Request<T>(uri, Method.PUT, null, new Dictionary<string, string> {{"Content-Length", "0"}});
+            return Request<T>(uri, Method.PUT, data);
         }
 
         /// <summary>
         /// Makes a 'PUT' request to the server
         /// </summary>
         /// <param name="uri"></param>
-        public void Put(string uri)
+        public void Put(string uri, Dictionary<string, string> data = null)
         {
-            Request(uri, Method.PUT, null, new Dictionary<string, string> { { "Content-Length", "0" } });
+            Request(uri, Method.PUT, data);
         }
 
         /// <summary>
@@ -86,6 +86,18 @@ namespace BitBucketSharp
         public T Post<T>(string uri, Dictionary<string, string> data)
         {
             return Request<T>(uri, Method.POST, data);
+        }
+
+        /// <summary>
+        /// Makes a 'POST' request to the server without a response
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="uri"></param>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        public void Post(string uri, Dictionary<string, string> data)
+        {
+            Request(uri, Method.POST, data);
         }
 
         /// <summary>
@@ -106,9 +118,9 @@ namespace BitBucketSharp
         /// <param name="header"></param>
         /// <param name="method"></param>
         /// <returns></returns>
-        public T Request<T>(string uri, Method method = Method.GET, Dictionary<string, string> data = null , Dictionary<string, string> header = null)
+        public T Request<T>(string uri, Method method = Method.GET, Dictionary<string, string> data = null)
         {
-            var response = ExecuteRequest(uri, method, data, header);
+            var response = ExecuteRequest(uri, method, data);
             var d = new JsonDeserializer();
             return d.Deserialize<T>(response);
         }
@@ -120,9 +132,9 @@ namespace BitBucketSharp
         /// <param name="method"></param>
         /// <param name="data"></param>
         /// <param name="header"></param>
-        public void Request(string uri, Method method = Method.GET, Dictionary<string, string> data = null , Dictionary<string, string> header = null)
+        public void Request(string uri, Method method = Method.GET, Dictionary<string, string> data = null)
         {
-            ExecuteRequest(uri, method, data, header);
+            ExecuteRequest(uri, method, data);
         }
 
         /// <summary>
@@ -133,7 +145,7 @@ namespace BitBucketSharp
         /// <param name="data"></param>
         /// <param name="header"></param>
         /// <returns></returns>
-        private IRestResponse ExecuteRequest(string uri, Method method, Dictionary<string, string> data, Dictionary<string, string> header)
+        private IRestResponse ExecuteRequest(string uri, Method method, Dictionary<string, string> data)
         {
             if (uri == null)
                 throw new ArgumentNullException("uri");
@@ -142,9 +154,10 @@ namespace BitBucketSharp
             if (data != null)
                 foreach (var hd in data)
                     request.AddParameter(hd.Key, hd.Value);
-            if (header != null)
-                foreach (var hd in header)
-                    request.AddHeader(hd.Key, hd.Value);
+            
+            //Puts without any data must be marked as having no content!
+            if (method == Method.PUT && data == null)
+                request.AddHeader("Content-Length", "0");
 
             var response = _client.Execute(request);
             if (response.StatusCode != HttpStatusCode.OK)
