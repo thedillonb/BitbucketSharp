@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using BitBucketSharp.Models;
+using BitbucketSharp.Models;
 
-namespace BitBucketSharp.Controllers
+namespace BitbucketSharp.Controllers
 {
     /// <summary>
     /// A controller dedicated to the actions for the user logged in!

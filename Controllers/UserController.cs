@@ -1,6 +1,6 @@
-﻿using BitBucketSharp.Models;
+﻿using BitbucketSharp.Models;
 
-namespace BitBucketSharp.Controllers
+namespace BitbucketSharp.Controllers
 {
     /// <summary>
     /// Provides access to a list of users

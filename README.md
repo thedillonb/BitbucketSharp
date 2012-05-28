@@ -1,13 +1,15 @@
-﻿# BitBucketSharp
+﻿# BitbucketSharp
+
+Showin some love for Bitbucket
 
 ## Description
 
-A C# implementation of BitBucket's REST request framework.
+A C# implementation of Bitbucket's REST request framework.
 
 ## Example Usage
 
 	//Instantiate a client with your username and password
-	var client = BitBucketSharp.Client("username", "password");
+	var client = BitbucketSharp.Client("username", "password");
 
 	//Request information about a user
 	var userInfo = client.Users["thedillonb"].GetInfo();

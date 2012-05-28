@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BitBucketSharp", "BitBucketSharp.csproj", "{F0165852-6B14-406D-BAFD-50D0F6417291}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BitbucketSharp", "BitbucketSharp.csproj", "{F0165852-6B14-406D-BAFD-50D0F6417291}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BitBucketBrowserTest", "..\BitBucketBrowser\BitBucketBrowserTest\BitBucketBrowserTest.csproj", "{BAA5D1A5-223F-4DEB-A4CD-ACCD585D1A57}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BitbucketBrowserTest", "..\BitBucketBrowser\BitBucketBrowserTest\BitbucketBrowserTest.csproj", "{BAA5D1A5-223F-4DEB-A4CD-ACCD585D1A57}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

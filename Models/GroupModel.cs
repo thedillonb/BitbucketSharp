@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace BitBucketSharp.Models
+namespace BitbucketSharp.Models
 {
     public class GroupModel
     {

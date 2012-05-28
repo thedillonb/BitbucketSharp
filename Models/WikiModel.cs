@@ -1,4 +1,4 @@
-﻿namespace BitBucketSharp.Models
+﻿namespace BitbucketSharp.Models
 {
     public class WikiModel
     {

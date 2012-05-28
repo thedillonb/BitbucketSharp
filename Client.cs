@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net;
-using BitBucketSharp.Controllers;
+using BitbucketSharp.Controllers;
 using RestSharp;
 using RestSharp.Deserializers;
 
-namespace BitBucketSharp
+namespace BitbucketSharp
 {
     public class Client
     {
@@ -22,12 +22,12 @@ namespace BitBucketSharp
         public AccountController Account { get; private set; }
 
         /// <summary>
-        /// The users on BitBucket
+        /// The users on Bitbucket
         /// </summary>
         public UsersController Users { get; private set; }
 
         /// <summary>
-        /// The repositories on BitBucket
+        /// The repositories on Bitbucket
         /// </summary>
         public RepositoriesController Repositories { get; private set; }
 

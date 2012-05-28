@@ -1,6 +1,6 @@
-﻿using BitBucketSharp.Models;
+﻿using BitbucketSharp.Models;
 
-namespace BitBucketSharp.Controllers
+namespace BitbucketSharp.Controllers
 {
     /// <summary>
     /// Provides access to issues owned by a repository
