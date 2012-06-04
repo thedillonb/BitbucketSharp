@@ -32,7 +32,84 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="monotouch" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <Folder Include="Controllers\" />
+    <Folder Include="Models\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\BitbucketSharp\Controllers\AccountController.cs">
+      <Link>Controllers\AccountController.cs</Link>
+    </Compile>
+    <Compile Include="..\BitbucketSharp\Controllers\ChangesetController.cs">
+      <Link>Controllers\ChangesetController.cs</Link>
+    </Compile>
+    <Compile Include="..\BitbucketSharp\Controllers\Controller.cs">
+      <Link>Controllers\Controller.cs</Link>
+    </Compile>
+    <Compile Include="..\BitbucketSharp\Controllers\EmailController.cs">
+      <Link>Controllers\EmailController.cs</Link>
+    </Compile>
+    <Compile Include="..\BitbucketSharp\Controllers\GroupController.cs">
+      <Link>Controllers\GroupController.cs</Link>
+    </Compile>
+    <Compile Include="..\BitbucketSharp\Controllers\InvitationController.cs">
+      <Link>Controllers\InvitationController.cs</Link>
+    </Compile>
+    <Compile Include="..\BitbucketSharp\Controllers\IssueController.cs">
+      <Link>Controllers\IssueController.cs</Link>
+    </Compile>
+    <Compile Include="..\BitbucketSharp\Controllers\RepositoryController.cs">
+      <Link>Controllers\RepositoryController.cs</Link>
+    </Compile>
+    <Compile Include="..\BitbucketSharp\Controllers\UserController.cs">
+      <Link>Controllers\UserController.cs</Link>
+    </Compile>
+    <Compile Include="..\BitbucketSharp\Controllers\WikiController.cs">
+      <Link>Controllers\WikiController.cs</Link>
+    </Compile>
+    <Compile Include="..\BitbucketSharp\Models\ChangesetModel.cs">
+      <Link>Models\ChangesetModel.cs</Link>
+    </Compile>
+    <Compile Include="..\BitbucketSharp\Models\EmailModel.cs">
+      <Link>Models\EmailModel.cs</Link>
+    </Compile>
+    <Compile Include="..\BitbucketSharp\Models\EventModel.cs">
+      <Link>Models\EventModel.cs</Link>
+    </Compile>
+    <Compile Include="..\BitbucketSharp\Models\FollowModel.cs">
+      <Link>Models\FollowModel.cs</Link>
+    </Compile>
+    <Compile Include="..\BitbucketSharp\Models\GroupModel.cs">
+      <Link>Models\GroupModel.cs</Link>
+    </Compile>
+    <Compile Include="..\BitbucketSharp\Models\InvitationModel.cs">
+      <Link>Models\InvitationModel.cs</Link>
+    </Compile>
+    <Compile Include="..\BitbucketSharp\Models\IssueModel.cs">
+      <Link>Models\IssueModel.cs</Link>
+    </Compile>
+    <Compile Include="..\BitbucketSharp\Models\RepositoryModel.cs">
+      <Link>Models\RepositoryModel.cs</Link>
+    </Compile>
+    <Compile Include="..\BitbucketSharp\Models\SourceModel.cs">
+      <Link>Models\SourceModel.cs</Link>
+    </Compile>
+    <Compile Include="..\BitbucketSharp\Models\UserModel.cs">
+      <Link>Models\UserModel.cs</Link>
+    </Compile>
+    <Compile Include="..\BitbucketSharp\Models\WikiModel.cs">
+      <Link>Models\WikiModel.cs</Link>
+    </Compile>
+    <Compile Include="..\BitbucketSharp\Client.cs">
+      <Link>Client.cs</Link>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\RestSharp\RestSharp.MonoTouch\RestSharp.MonoTouch.csproj">
+      <Project>{E9A9D1C5-4E06-4D31-9809-A97188C70B2C}</Project>
+      <Name>RestSharp.MonoTouch</Name>
+    </ProjectReference>
+  </ItemGroup>
 </Project>

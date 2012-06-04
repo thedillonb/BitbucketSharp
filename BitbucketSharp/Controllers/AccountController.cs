@@ -29,15 +29,7 @@ namespace BitbucketSharp.Controllers
         /// <returns>A list of repositories</returns>
         public List<RepositoryDetailedModel> GetRepositories()
         {
-            return Client.Get<List<RepositoryDetailedModel>>(Uri + "/follows");
-        }
-
-        /// <summary>
-        /// The URI of this controller
-        /// </summary>
-        protected override string Uri
-        {
-            get { return "user"; }
+            return Client.Get<List<RepositoryDetailedModel>>("user/follows");
         }
     }
 }

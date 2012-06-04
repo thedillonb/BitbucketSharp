@@ -3,7 +3,7 @@
     public class RepositoryDetailedModel : RepositorySimpleModel
     {
         public string Description { get; set; }
-        public int FollowsCount { get; set; }
+        public int ForkCount { get; set; }
         public string ResourceUri { get; set; }
         public string Website { get; set; }
         public bool HasWiki { get; set; }
@@ -13,7 +13,7 @@
         public int Size { get; set; }
         public bool ReadOnly { get; set; }
         public string Language { get; set; }
-        public int FollowerCount { get; set; }
+        public int FollowersCount { get; set; }
         public string State { get; set; }
         public bool HasIssues { get; set; }
         public bool IsFork { get; set; }

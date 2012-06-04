@@ -17,5 +17,9 @@ namespace BitbucketSharp.Models
         public UserModel User { get; set; }
         public string UtcCreatedOn { get; set; }
         public string Event { get; set; }
+		
+		public static readonly Dictionary<string, string> EventToString = new Dictionary<string, string>() {
+			{"commit", "Commit"}, {"wiki_created", "Wiki Created"}, {"wiki_updated", "Wiki Updated"}
+		};
     }
 }

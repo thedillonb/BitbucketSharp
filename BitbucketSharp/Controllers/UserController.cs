@@ -85,6 +85,15 @@ namespace BitbucketSharp.Controllers
         {
             return Client.Get<EventsModel>(Uri + "/events/?start=" + start + "&limit=" + limit);
         }
+		
+		/// <summary>
+		/// Gets the followers.
+		/// </summary>
+		/// <returns>The followers./returns>
+		public FollowersModel GetFollowers()
+		{
+			return Client.Get<FollowersModel>(Uri + "/followers");
+		}
 
         /// <summary>
         /// The URI of this controller
