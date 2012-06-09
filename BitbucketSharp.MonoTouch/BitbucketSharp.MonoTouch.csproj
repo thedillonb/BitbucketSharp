@@ -105,6 +105,7 @@
     <Compile Include="..\BitbucketSharp\Client.cs">
       <Link>Client.cs</Link>
     </Compile>
+    <Compile Include="Controllers\BranchController.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\RestSharp\RestSharp.MonoTouch\RestSharp.MonoTouch.csproj">

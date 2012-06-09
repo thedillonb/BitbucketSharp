@@ -105,6 +105,11 @@ namespace BitbucketSharp.Controllers
         public InvitationController Invitations { get; private set; }
 
         /// <summary>
+        /// Gets the changesets.
+        /// </summary>
+        public ChangesetsController Changesets { get; private set; }
+
+        /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="owner">The owner of this repository</param>
@@ -118,6 +123,7 @@ namespace BitbucketSharp.Controllers
             Issues = new IssuesController(client, this);
             Wikis = new WikisController(client, this);
             Invitations = new InvitationController(client, this);
+            Changesets = new ChangesetsController(client, this);
         }
 
         /// <summary>

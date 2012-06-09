@@ -19,7 +19,8 @@ namespace BitbucketSharp.Models
         public string Event { get; set; }
 		
 		public static readonly Dictionary<string, string> EventToString = new Dictionary<string, string>() {
-			{"commit", "Commit"}, {"wiki_created", "Wiki Created"}, {"wiki_updated", "Wiki Updated"}
+			{"commit", "Commit"}, {"wiki_created", "Wiki Created"}, {"wiki_updated", "Wiki Updated"},
+            {"start_follow_user", "Following User" }, {"issue_update", "Issue Updated"}, {"report_issue", "Issue Reported"},
 		};
     }
 }
