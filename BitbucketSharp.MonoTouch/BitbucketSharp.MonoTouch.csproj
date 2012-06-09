@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -10,6 +10,8 @@
     <OutputType>Library</OutputType>
     <RootNamespace>BitbucketSharp.MonoTouch</RootNamespace>
     <AssemblyName>BitbucketSharp.MonoTouch</AssemblyName>
+    <TargetFrameworkVersion>v1.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -34,16 +36,19 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
-  <ItemGroup>
-    <Folder Include="Controllers\" />
-    <Folder Include="Models\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Compile Include="..\BitbucketSharp\Controllers\AccountController.cs">
       <Link>Controllers\AccountController.cs</Link>
     </Compile>
+    <Compile Include="..\BitbucketSharp\Controllers\BranchController.cs">
+      <Link>Controllers\BranchController.cs</Link>
+    </Compile>
     <Compile Include="..\BitbucketSharp\Controllers\ChangesetController.cs">
       <Link>Controllers\ChangesetController.cs</Link>
+    </Compile>
+    <Compile Include="..\BitbucketSharp\Controllers\CommentController.cs">
+      <Link>Controllers\CommentController.cs</Link>
     </Compile>
     <Compile Include="..\BitbucketSharp\Controllers\Controller.cs">
       <Link>Controllers\Controller.cs</Link>
@@ -62,6 +67,9 @@
     </Compile>
     <Compile Include="..\BitbucketSharp\Controllers\RepositoryController.cs">
       <Link>Controllers\RepositoryController.cs</Link>
+    </Compile>
+    <Compile Include="..\BitbucketSharp\Controllers\SourceController.cs">
+      <Link>Controllers\SourceController.cs</Link>
     </Compile>
     <Compile Include="..\BitbucketSharp\Controllers\UserController.cs">
       <Link>Controllers\UserController.cs</Link>
@@ -105,7 +113,6 @@
     <Compile Include="..\BitbucketSharp\Client.cs">
       <Link>Client.cs</Link>
     </Compile>
-    <Compile Include="Controllers\BranchController.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\RestSharp\RestSharp.MonoTouch\RestSharp.MonoTouch.csproj">

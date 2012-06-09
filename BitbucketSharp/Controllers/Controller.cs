@@ -13,7 +13,7 @@
         /// <summary>
         /// The URI of this controller
         /// </summary>
-        protected abstract string Uri { get; }
+        public abstract string Uri { get; }
 
         /// <summary>
         /// Constructor

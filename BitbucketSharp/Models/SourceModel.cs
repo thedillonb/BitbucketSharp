@@ -24,5 +24,25 @@ namespace BitbucketSharp.Models
         }
     }
 
+    public class SourceModel
+    {
+        public List<String> Directories { get; set; }
+        public List<FileModel> Files { get; set; } 
+
+        public class FileModel
+        {
+            public string Path { get; set; }
+            public string Revision { get; set; }
+            public int Size { get; set; }
+            public string Timestamp { get; set; }
+        }
+    }
+
+    public class FileModel
+    {
+        public string Data { get; set; }
+        public string Node { get; set; }
+        public string Path { get; set; }
+    }
 
 }

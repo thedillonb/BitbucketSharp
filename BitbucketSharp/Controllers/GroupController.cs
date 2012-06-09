@@ -30,13 +30,13 @@ namespace BitbucketSharp.Controllers
         /// <returns></returns>
         public GroupController this[string groupname]
         {
-            get { return new GroupController(Client, User, groupname); }
+            get { return new GroupController(Client, this, groupname); }
         }
 
         /// <summary>
         /// The URI of this controller
         /// </summary>
-        protected override string Uri
+        public override string Uri
         {
             get { return "groups/" + User.Username; }
         }
@@ -48,9 +48,9 @@ namespace BitbucketSharp.Controllers
     public class GroupController : Controller
     {
         /// <summary>
-        /// The username the group belongs to
+        /// The groups this group belongs to
         /// </summary>
-        public UserController User { get; private set; }
+        public GroupsController Groups { get; private set; }
 
         /// <summary>
         /// The group name
@@ -61,12 +61,12 @@ namespace BitbucketSharp.Controllers
         /// Constructor
         /// </summary>
         /// <param name="client">A handle to the client</param>
-        /// <param name="user">The user the group belongs to</param>
+        /// <param name="groups">The groups the group belongs to</param>
         /// <param name="groupname">The name of the group</param>
-        public GroupController(Client client, UserController user, string groupname) 
+        public GroupController(Client client, GroupsController groups, string groupname) 
             : base(client)
         {
-            User = user;
+            Groups = groups;
             Groupname = groupname;
         }
 
@@ -98,9 +98,9 @@ namespace BitbucketSharp.Controllers
         /// <summary>
         /// The URI of this controller
         /// </summary>
-        protected override string Uri
+        public override string Uri
         {
-            get { return "groups/" + User.Username + "/" + Groupname; }
+            get { return Groups.Uri + "/" + Groupname; }
         }
     }
 }

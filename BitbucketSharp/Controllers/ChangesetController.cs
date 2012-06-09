@@ -48,9 +48,9 @@ namespace BitbucketSharp.Controllers
         /// <summary>
         /// The URI of this controller
         /// </summary>
-        protected override string Uri
+        public override string Uri
         {
-            get { return "repositories/" + Repository.Owner.Username + "/" + Repository.Slug + "/changesets"; }
+            get { return Repository.Uri + "/changesets"; }
         }
     }
 
@@ -91,6 +91,10 @@ namespace BitbucketSharp.Controllers
             return Client.Get<ChangesetModel>(Uri + "/" + Node);
         }
 
+        /// <summary>
+        /// /Gets the diffs
+        /// </summary>
+        /// <returns></returns>
         public IList<ChangesetDiffModel> GetDiffs()
         {
             return Client.Get<List<ChangesetDiffModel>>(Uri + "/" + Node + "/diffstat");
@@ -99,9 +103,9 @@ namespace BitbucketSharp.Controllers
         /// <summary>
         /// The URI of this controller
         /// </summary>
-        protected override string Uri
+        public override string Uri
         {
-            get { return "repositories/" + Repository.Owner.Username + "/" + Repository.Slug + "/changesets"; }
+            get { return Repository.Uri + "/changesets"; }
         }
     }
 }

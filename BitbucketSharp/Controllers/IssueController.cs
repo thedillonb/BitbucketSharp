@@ -56,9 +56,9 @@ namespace BitbucketSharp.Controllers
         /// <summary>
         /// The URI of this controller
         /// </summary>
-        protected override string Uri
+        public override string Uri
         {
-            get { return "repositories/" + Repository.Owner.Username + "/" + Repository.Slug + "/issues"; }
+            get { return Repository.Uri + "/issues"; }
         }
     }
 
@@ -78,6 +78,11 @@ namespace BitbucketSharp.Controllers
         public RepositoryController Repository { get; private set; }
 
         /// <summary>
+        /// Gets the comments this issue has
+        /// </summary>
+        public CommentsController Comments { get; private set; }
+
+        /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="client">A handle to the client</param>
@@ -88,6 +93,7 @@ namespace BitbucketSharp.Controllers
         {
             Id = id;
             Repository = repository;
+            Comments = new CommentsController(Client, this);
         }
 
         /// <summary>
@@ -119,9 +125,9 @@ namespace BitbucketSharp.Controllers
         /// <summary>
         /// The URI of this controller
         /// </summary>
-        protected override string Uri
+        public override string Uri
         {
-            get { return "repositories/" + Repository.Owner.Username + "/" + Repository.Slug + "/issues/" + Id + "/"; }
+            get { return Repository.Uri + "/issues/" + Id + "/"; }
         }
     }
 }

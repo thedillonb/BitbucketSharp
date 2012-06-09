@@ -60,7 +60,7 @@ namespace BitbucketSharp.Controllers
         /// <summary>
         /// The URI of this controller
         /// </summary>
-        protected override string Uri
+        public override string Uri
         {
             get { return "emails"; }
         }

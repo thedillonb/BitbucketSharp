@@ -31,15 +31,15 @@ namespace BitbucketSharp.Controllers
         /// <returns></returns>
         public WikiController this[string page]
         {
-            get { return new WikiController(Client, Repository, page); }
+            get { return new WikiController(Client, this, page); }
         }
 
         /// <summary>
         /// The URI of this controller
         /// </summary>
-        protected override string Uri
+        public override string Uri
         {
-            get { return "repositories/" + Repository.Owner.Username + "/" + Repository.Slug + "/wiki/"; }
+            get { return Repository.Uri + "/wiki/"; }
         }
     }
 
@@ -49,9 +49,9 @@ namespace BitbucketSharp.Controllers
     public class WikiController : Controller
     {
         /// <summary>
-        /// Gets the repository this wiki belongs to
+        /// Gets the wikis this wiki belongs to
         /// </summary>
-        public RepositoryController Repository { get; private set; }
+        public WikisController Wikis { get; private set; }
 
         /// <summary>
         /// Gets the page of the wiki
@@ -62,11 +62,12 @@ namespace BitbucketSharp.Controllers
         /// Constructor
         /// </summary>
         /// <param name="client">A handle to the client</param>
-        /// <param name="repository">The repository this wiki belongs to</param>
+        /// <param name="wikis">The wikis this wiki belongs to</param>
         /// <param name="page">The page of this wiki</param>
-        public WikiController(Client client, RepositoryController repository, string page) : base(client)
+        public WikiController(Client client, WikisController wikis, string page)
+            : base(client)
         {
-            Repository = repository;
+            Wikis = wikis;
             Page = page;
         }
 
@@ -100,9 +101,9 @@ namespace BitbucketSharp.Controllers
         /// <summary>
         /// The URI of this controller
         /// </summary>
-        protected override string Uri
+        public override string Uri
         {
-            get { return "repositories/" + Repository.Owner.Username + "/" + Repository.Slug + "/wiki/" + Page; }
+            get { return Wikis.Uri + "/" + Page; }
         }
     }
 }
