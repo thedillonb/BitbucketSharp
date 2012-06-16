@@ -37,9 +37,9 @@ namespace BitbucketSharp.Controllers
         /// Gets all the branches in this repository
         /// </summary>
         /// <returns></returns>
-        public List<BranchModel> GetBranches()
+        public Dictionary<string, BranchModel> GetBranches()
         {
-            return Client.Get<List<BranchModel>>(Uri);
+            return Client.Get<Dictionary<string, BranchModel>>(Uri);
         }
 
         /// <summary>

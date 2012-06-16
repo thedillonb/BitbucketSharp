@@ -38,7 +38,7 @@ namespace BitbucketSharp.Controllers
         /// </summary>
         public override string Uri
         {
-            get { return Branch.Uri + "/src/" + Branch.Name; }
+            get { return Branch.Branches.Repository.Uri + "/src/" + Branch.Name; }
         }
     }
 

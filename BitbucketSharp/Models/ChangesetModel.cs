@@ -7,6 +7,7 @@ namespace BitbucketSharp.Models
         public int Count { get; set; }
         public string Start { get; set; }
         public int Limit { get; set; }
+        public List<ChangesetModel> Changesets { get; set; }
     }
 
     public class ChangesetModel

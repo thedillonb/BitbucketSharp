@@ -60,9 +60,9 @@ namespace BitbucketSharp.Controllers
         /// </summary>
         /// <param name="name">The partial or full name to search for</param>
         /// <returns>A list of RepositorySimpleModel</returns>
-        public IList<RepositorySimpleModel> Search(string name)
+        public RepositorySearchModel Search(string name)
         {
-            return Client.Get<List<RepositorySimpleModel>>(Uri + "/?name=" + name);
+            return Client.Get<RepositorySearchModel>(Uri + "/?name=" + name);
         }
 
         /// <summary>
@@ -110,6 +110,11 @@ namespace BitbucketSharp.Controllers
         public ChangesetsController Changesets { get; private set; }
 
         /// <summary>
+        /// Gets the branches
+        /// </summary>
+        public BranchesController Branches { get; private set; }
+
+        /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="owner">The owner of this repository</param>
@@ -124,6 +129,7 @@ namespace BitbucketSharp.Controllers
             Wikis = new WikisController(client, this);
             Invitations = new InvitationController(client, this);
             Changesets = new ChangesetsController(client, this);
+            Branches = new BranchesController(client, this);
         }
 
         /// <summary>
@@ -142,6 +148,14 @@ namespace BitbucketSharp.Controllers
         public FollowersModel GetFollowers()
         {
             return Client.Get<FollowersModel>(Uri + "/followers");
+        }
+
+        /// <summary>
+        /// Gets the tags.
+        /// </summary>
+        public Dictionary<string, TagModel> GetTags()
+        {
+            return Client.Get<Dictionary<string, TagModel>>(Uri + "/tags");
         }
 
         /// <summary>

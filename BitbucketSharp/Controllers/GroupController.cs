@@ -24,6 +24,14 @@ namespace BitbucketSharp.Controllers
         }
 
         /// <summary>
+        /// Gets the groups.
+        /// </summary>ß
+        public List<GroupModel> GetGroups()
+        {
+            return Client.Get<List<GroupModel>>(Uri);
+        }
+
+        /// <summary>
         /// Access a specific group with a specified groupname
         /// </summary>
         /// <param name="groupname">The name of the group</param>
@@ -68,6 +76,14 @@ namespace BitbucketSharp.Controllers
         {
             Groups = groups;
             Groupname = groupname;
+        }
+
+        /// <summary>
+        /// Gets the group info
+        /// </summary>
+        public GroupModel GetInfo()
+        {
+            return Client.Get<GroupModel>(Uri);
         }
 
         /// <summary>
