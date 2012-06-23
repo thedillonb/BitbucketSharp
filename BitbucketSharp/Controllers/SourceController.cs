@@ -33,6 +33,13 @@ namespace BitbucketSharp.Controllers
             get { return new SourceController(Client, this, path); }
         }
 
+        public FileModel GetFile(string file)
+        {
+            if (!Uri.EndsWith("/") && !file.StartsWith("/"))
+                file = "/" + file;
+            return Client.Get<FileModel>(Uri + file);
+        }   
+
         /// <summary>
         /// The URI of this controller
         /// </summary>
@@ -80,6 +87,7 @@ namespace BitbucketSharp.Controllers
         {
             return Client.Get<SourceModel>(Uri);
         }
+
 
         /// <summary>
         /// The URI of this controller

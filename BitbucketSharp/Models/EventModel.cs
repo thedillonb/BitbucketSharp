@@ -17,10 +17,15 @@ namespace BitbucketSharp.Models
         public UserModel User { get; set; }
         public string UtcCreatedOn { get; set; }
         public string Event { get; set; }
-		
-		public static readonly Dictionary<string, string> EventToString = new Dictionary<string, string>() {
-			{"commit", "Commit"}, {"wiki_created", "Wiki Created"}, {"wiki_updated", "Wiki Updated"},
-            {"start_follow_user", "Following User" }, {"issue_update", "Issue Updated"}, {"report_issue", "Issue Reported"},
-		};
+
+        public static class Type
+        {
+            public static readonly string 
+                Commit = "commit", CreateRepo = "create",
+                WikiCreated = "wiki_created", WikiUpdated = "wiki_updated",
+                StartFollowUser = "start_follow_user", StopFollowUser = "stop_follow_user",
+                StartFollowRepo = "start_follow_repo", StopFollowRepo = "stop_follow_repo",
+                IssueReported = "report_issue", IssueUpdated = "issue_update";
+        }
     }
 }

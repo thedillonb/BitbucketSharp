@@ -16,6 +16,8 @@ namespace BitbucketSharp.Models
         public int CommentCount { get; set; }
         public string Content { get; set; }
         public string CreatedOn { get; set; }
+        public string UtcCreatedOn { get; set; }
+        public string UtcLastUpdated { get; set; }
         public int LocalId { get; set; }
         public int FollowerCount { get; set; }
         public string ResourceUri { get; set; }

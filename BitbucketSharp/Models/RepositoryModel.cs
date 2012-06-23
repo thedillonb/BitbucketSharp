@@ -10,6 +10,7 @@ namespace BitbucketSharp.Models
         public string Website { get; set; }
         public bool HasWiki { get; set; }
         public string LastUpdated { get; set; }
+        public string UtcLastUpdated { get; set; }
         public string CreatedOn { get; set; }
         public string Logo { get; set; }
         public int Size { get; set; }
