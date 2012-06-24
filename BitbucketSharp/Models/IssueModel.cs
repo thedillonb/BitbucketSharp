@@ -12,6 +12,7 @@ namespace BitbucketSharp.Models
     public class IssueModel
     {
         public string Status { get; set; }
+        public string Priority { get; set; }
         public string Title { get; set; }
         public int CommentCount { get; set; }
         public string Content { get; set; }

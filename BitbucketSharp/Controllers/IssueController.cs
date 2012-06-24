@@ -127,7 +127,7 @@ namespace BitbucketSharp.Controllers
         /// </summary>
         public override string Uri
         {
-            get { return Repository.Uri + "/issues/" + Id + "/"; }
+            get { return Repository.Uri + "/issues/" + Id; }
         }
     }
 }
