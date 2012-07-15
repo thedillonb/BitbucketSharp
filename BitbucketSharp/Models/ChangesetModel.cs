@@ -21,6 +21,8 @@ namespace BitbucketSharp.Models
         public int Revision { get; set; }
         public int Size { get; set; }
         public List<FileModel> Files { get; set; } 
+        public string RawNode { get; set; }
+        public List<string> Parents { get; set; }
 
         public class FileModel
         {

@@ -12,6 +12,7 @@ namespace BitbucketSharp.Models
         public string LastUpdated { get; set; }
         public string UtcLastUpdated { get; set; }
         public string CreatedOn { get; set; }
+        public string UtcCreatedOn { get; set; }
         public string Logo { get; set; }
         public int Size { get; set; }
         public bool ReadOnly { get; set; }
