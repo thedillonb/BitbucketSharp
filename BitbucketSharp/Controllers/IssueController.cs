@@ -52,10 +52,14 @@ namespace BitbucketSharp.Controllers
         {
             return Client.Get<IssuesModel>(Uri + "/?start=" + start + "&limit=" + limit);
         }
-
-        public void Create(IssueModel issue)
+        /// <summary>
+        /// Create a new issue for this repository
+        /// </summary>
+        /// <param name="issue">The issue model to create</param>
+        /// <returns></returns>
+        public IssueModel Create(IssueModel issue)
         {
-            Client.Post(Uri, issue);
+            return Client.Post(Uri, issue);
         }
 
         /// <summary>
