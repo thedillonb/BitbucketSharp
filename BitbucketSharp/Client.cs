@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Net;
 using BitbucketSharp.Controllers;
+using BitbucketSharp.Utils;
 using RestSharp;
 using RestSharp.Deserializers;
 
@@ -87,6 +88,18 @@ namespace BitbucketSharp
         public T Post<T>(string uri, Dictionary<string, string> data)
         {
             return Request<T>(uri, Method.POST, data);
+        }
+
+        /// <summary>
+        /// Makes a 'POST' request to the server
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="uri"></param>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        public T Post<T>(string uri, T data)
+        {
+            return Post<T>(uri, ObjectToDictionaryConverter.Convert(data));
         }
 
         /// <summary>

@@ -1,4 +1,7 @@
-﻿using BitbucketSharp.Models;
+﻿using System;
+using System.Collections.Generic;
+using BitbucketSharp.Models;
+using BitbucketSharp.Utils;
 
 namespace BitbucketSharp.Controllers
 {
@@ -52,6 +55,7 @@ namespace BitbucketSharp.Controllers
         {
             return Client.Get<IssuesModel>(Uri + "/?start=" + start + "&limit=" + limit);
         }
+
         /// <summary>
         /// Create a new issue for this repository
         /// </summary>
@@ -68,6 +72,28 @@ namespace BitbucketSharp.Controllers
         public override string Uri
         {
             get { return Repository.Uri + "/issues"; }
+        }
+
+        /// <summary>
+        /// Updates an issue from its id
+        /// </summary>
+        /// <param name="id">The issue id</param>
+        /// <param name="issue">The issue model</param>
+        /// <returns></returns>
+        public IssueModel Update(int id, IssueModel issue)
+        {
+            return this[id].Update(issue);
+        }
+
+        /// <summary>
+        /// Updates an issue from its id
+        /// </summary>
+        /// <param name="id">The issue id</param>
+        /// <param name="data">The update data</param>
+        /// <returns></returns>
+        public IssueModel Update(int id, Dictionary<string,string> data)
+        {
+            return this[id].Update(data);
         }
     }
 
@@ -129,6 +155,26 @@ namespace BitbucketSharp.Controllers
         public void DeleteIssue()
         {
             Client.Delete(Uri);
+        }
+
+        /// <summary>
+        /// Updates an issue
+        /// </summary>
+        /// <param name="issue">The issue model</param>
+        /// <returns></returns>
+        public IssueModel Update(IssueModel issue)
+        {
+            return Update(ObjectToDictionaryConverter.Convert(issue));
+        }
+
+        /// <summary>
+        /// Updates an issue
+        /// </summary>
+        /// <param name="data">The update data</param>
+        /// <returns></returns>
+        public IssueModel Update(Dictionary<string,string> data)
+        {
+            return Client.Put<IssueModel>(Uri, data);
         }
 
         /// <summary>
