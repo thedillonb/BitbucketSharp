@@ -67,14 +67,6 @@ namespace BitbucketSharp.Controllers
         }
 
         /// <summary>
-        /// The URI of this controller
-        /// </summary>
-        public override string Uri
-        {
-            get { return Repository.Uri + "/issues"; }
-        }
-
-        /// <summary>
         /// Updates an issue from its id
         /// </summary>
         /// <param name="id">The issue id</param>
@@ -91,9 +83,17 @@ namespace BitbucketSharp.Controllers
         /// <param name="id">The issue id</param>
         /// <param name="data">The update data</param>
         /// <returns></returns>
-        public IssueModel Update(int id, Dictionary<string,string> data)
+        public IssueModel Update(int id, Dictionary<string, string> data)
         {
             return this[id].Update(data);
+        }
+
+        /// <summary>
+        /// The URI of this controller
+        /// </summary>
+        public override string Uri
+        {
+            get { return Repository.Uri + "/issues"; }
         }
     }
 

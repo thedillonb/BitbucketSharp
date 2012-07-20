@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using BitbucketSharp.Models;
+using BitbucketSharp.Utils;
 
 namespace BitbucketSharp.Controllers
 {
@@ -28,7 +29,7 @@ namespace BitbucketSharp.Controllers
         /// </summary>
         /// <param name="id">The id of the comment to access</param>
         /// <returns></returns>
-        public CommentController this[string id]
+        public CommentController this[int id]
         {
             get { return new CommentController(Client, this, id);}
         }
@@ -40,6 +41,38 @@ namespace BitbucketSharp.Controllers
         public List<CommentModel> GetComments()
         {
             return Client.Get<List<CommentModel>>(Uri);
+        }
+
+        /// <summary>
+        /// Create a new comment for this issue
+        /// </summary>
+        /// <param name="comment">The comment model to create</param>
+        /// <returns></returns>
+        public CommentModel Create(CommentModel comment)
+        {
+            return Client.Post(Uri, comment);
+        }
+
+        /// <summary>
+        /// Updates a comment from its id
+        /// </summary>
+        /// <param name="id">The comment id</param>
+        /// <param name="comment">The comment model</param>
+        /// <returns></returns>
+        public CommentModel Update(int id, CommentModel comment)
+        {
+            return this[id].Update(comment);
+        }
+
+        /// <summary>
+        /// Updates a comment from its id
+        /// </summary>
+        /// <param name="id">The comment id</param>
+        /// <param name="data">The update data</param>
+        /// <returns></returns>
+        public CommentModel Update(int id, Dictionary<string, string> data)
+        {
+            return this[id].Update(data);
         }
 
         /// <summary>
@@ -64,7 +97,7 @@ namespace BitbucketSharp.Controllers
         /// <summary>
         /// The id of the comment
         /// </summary>
-        public string Id { get; private set; }
+        public int Id { get; private set; }
 
         /// <summary>
         /// Constructor
@@ -72,7 +105,7 @@ namespace BitbucketSharp.Controllers
         /// <param name="client">The client handle</param>
         /// <param name="comments">The comments this comment belongs to</param>
         /// <param name="id"></param>
-        public CommentController(Client client, CommentsController comments, string id)
+        public CommentController(Client client, CommentsController comments, int id)
             : base(client)
         {
             Comments = comments;
@@ -86,6 +119,34 @@ namespace BitbucketSharp.Controllers
         public CommentModel GetInfo()
         {
             return Client.Get<CommentModel>(Uri);
+        }
+
+        /// <summary>
+        /// Deletes this comment
+        /// </summary>
+        public void DeleteComment()
+        {
+            Client.Delete(Uri);
+        }
+
+        /// <summary>
+        /// Updates a comment
+        /// </summary>
+        /// <param name="comment">The issue model</param>
+        /// <returns></returns>
+        public CommentModel Update(CommentModel comment)
+        {
+            return Update(ObjectToDictionaryConverter.Convert(comment));
+        }
+
+        /// <summary>
+        /// Updates a comment
+        /// </summary>
+        /// <param name="data">The update data</param>
+        /// <returns></returns>
+        public CommentModel Update(Dictionary<string, string> data)
+        {
+            return Client.Put<CommentModel>(Uri, data);
         }
 
         /// <summary>
