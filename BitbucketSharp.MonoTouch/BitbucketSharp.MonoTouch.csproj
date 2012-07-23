@@ -49,7 +49,7 @@
       <Link>Controllers\CommentController.cs</Link>
     </Compile>
     <Compile Include="..\BitbucketSharp\Controllers\Controller.cs">
-      <Link>Controllers\Controller.cs</Link>
+      <Link>Models\Controller.cs</Link>
     </Compile>
     <Compile Include="..\BitbucketSharp\Controllers\EmailController.cs">
       <Link>Controllers\EmailController.cs</Link>
@@ -111,11 +111,11 @@
     <Compile Include="..\BitbucketSharp\Client.cs">
       <Link>Client.cs</Link>
     </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\RestSharp\RestSharp.MonoTouch\RestSharp.MonoTouch.csproj">
-      <Project>{E9A9D1C5-4E06-4D31-9809-A97188C70B2C}</Project>
-      <Name>RestSharp.MonoTouch</Name>
-    </ProjectReference>
+    <Compile Include="..\BitbucketSharp\Controllers\SSHKeyController.cs">
+      <Link>Controllers\SSHKeyController.cs</Link>
+    </Compile>
+    <Compile Include="..\BitbucketSharp\Models\SSHKeyModel.cs">
+      <Link>Models\SSHKeyModel.cs</Link>
+    </Compile>
   </ItemGroup>
 </Project>

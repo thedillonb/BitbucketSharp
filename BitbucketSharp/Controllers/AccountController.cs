@@ -14,6 +14,11 @@ namespace BitbucketSharp.Controllers
         public EmailController Emails { get; private set; }
 
         /// <summary>
+        /// Gets the SSH keys.
+        /// </summary>
+        public SSHKeyController SSHKeys { get; private set; }
+
+        /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="client"></param>
@@ -21,6 +26,7 @@ namespace BitbucketSharp.Controllers
             : base(client, client.Username)
         {
             Emails = new EmailController(client);
+            SSHKeys = new SSHKeyController(client);
         }
 
         /// <summary>
