@@ -65,6 +65,7 @@
     <Compile Include="Client.cs" />
     <Compile Include="Controllers\SSHKeyController.cs" />
     <Compile Include="Models\SSHKeyModel.cs" />
+	<Compile Include="Utils\ObjectToDictionaryConverter.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
