@@ -68,7 +68,7 @@ namespace BitbucketSharp.Controllers
             : base(client)
         {
             Wikis = wikis;
-            Page = page;
+            Page = page.ToLower();
         }
 
         /// <summary>

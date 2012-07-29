@@ -124,7 +124,7 @@ namespace BitbucketSharp.Controllers
             : base(client)
         {
             Owner = owner;
-            Slug = slug;
+            Slug = slug.ToLower();
             Issues = new IssuesController(client, this);
             Wikis = new WikisController(client, this);
             Invitations = new InvitationController(client, this);

@@ -117,5 +117,17 @@
     <Compile Include="..\BitbucketSharp\Models\SSHKeyModel.cs">
       <Link>Models\SSHKeyModel.cs</Link>
     </Compile>
+    <Compile Include="..\..\bitbucketsharp\BitbucketSharp\Utils\ObjectToDictionaryConverter.cs">
+      <Link>Utils\ObjectToDictionaryConverter.cs</Link>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Utils\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\RestSharp\RestSharp.MonoTouch\RestSharp.MonoTouch.csproj">
+      <Project>{E9A9D1C5-4E06-4D31-9809-A97188C70B2C}</Project>
+      <Name>RestSharp.MonoTouch</Name>
+    </ProjectReference>
   </ItemGroup>
 </Project>

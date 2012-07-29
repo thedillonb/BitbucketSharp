@@ -61,7 +61,7 @@ namespace BitbucketSharp.Controllers
         public UserController(Client client, string username)
             : base(client)
         {
-            Username = username;
+            Username = username.ToLower();
             Groups = new GroupsController(client, this);
             Repositories = new UserRepositoriesController(client, this);
         }
