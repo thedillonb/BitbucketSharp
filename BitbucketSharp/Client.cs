@@ -33,6 +33,18 @@ namespace BitbucketSharp
         public RepositoriesController Repositories { get; private set; }
 
         /// <summary>
+        /// Gets or sets the timeout.
+        /// </summary>
+        /// <value>
+        /// The timeout.
+        /// </value>
+        public int Timeout 
+        {
+            get { return _client.Timeout; }
+            set { _client.Timeout = value; }
+        }
+
+        /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="username"></param>
