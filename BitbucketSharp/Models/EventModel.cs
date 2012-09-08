@@ -22,10 +22,12 @@ namespace BitbucketSharp.Models
         {
             public static readonly string 
                 Commit = "commit", CreateRepo = "create",
+                DeleteRepo = "delete", 
                 WikiCreated = "wiki_created", WikiUpdated = "wiki_updated",
                 StartFollowUser = "start_follow_user", StopFollowUser = "stop_follow_user",
                 StartFollowRepo = "start_follow_repo", StopFollowRepo = "stop_follow_repo",
-                IssueReported = "report_issue", IssueUpdated = "issue_update";
+                IssueReported = "report_issue", IssueUpdated = "issue_update",
+                IssueComment = "issue_comment";
         }
     }
 }
