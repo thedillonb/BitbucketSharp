@@ -56,36 +56,29 @@ namespace BitbucketSharp.Controllers
             return Client.Get<IssuesModel>(Uri + "/?start=" + start + "&limit=" + limit);
         }
 
+        public ComponentModel GetComponents()
+        {
+            return Client.Get<ComponentModel>(Uri + "/components");
+        }
+
+        public VersionModel GetVersions()
+        {
+            return Client.Get<VersionModel>(Uri + "/versions");
+        }
+
+        public MilestoneModel GetMilestones()
+        {
+            return Client.Get<MilestoneModel>(Uri + "/milestones");
+        }
+
         /// <summary>
         /// Create a new issue for this repository
         /// </summary>
         /// <param name="issue">The issue model to create</param>
         /// <returns></returns>
-        public IssueModel Create(IssueModel issue)
+        public IssueModel Create(CreateIssueModel issue)
         {
-            return Client.Post(Uri, issue);
-        }
-
-        /// <summary>
-        /// Updates an issue from its id
-        /// </summary>
-        /// <param name="id">The issue id</param>
-        /// <param name="issue">The issue model</param>
-        /// <returns></returns>
-        public IssueModel Update(int id, IssueModel issue)
-        {
-            return this[id].Update(issue);
-        }
-
-        /// <summary>
-        /// Updates an issue from its id
-        /// </summary>
-        /// <param name="id">The issue id</param>
-        /// <param name="data">The update data</param>
-        /// <returns></returns>
-        public IssueModel Update(int id, Dictionary<string, string> data)
-        {
-            return this[id].Update(data);
+            return Client.Post<IssueModel, CreateIssueModel>(Uri, issue);
         }
 
         /// <summary>
@@ -152,7 +145,7 @@ namespace BitbucketSharp.Controllers
         /// <summary>
         /// Deletes this issue
         /// </summary>
-        public void DeleteIssue()
+        public void Delete()
         {
             Client.Delete(Uri);
         }
@@ -162,7 +155,7 @@ namespace BitbucketSharp.Controllers
         /// </summary>
         /// <param name="issue">The issue model</param>
         /// <returns></returns>
-        public IssueModel Update(IssueModel issue)
+        public IssueModel Update(CreateIssueModel issue)
         {
             return Update(ObjectToDictionaryConverter.Convert(issue));
         }

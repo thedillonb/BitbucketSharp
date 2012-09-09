@@ -56,6 +56,11 @@ namespace BitbucketSharp.Controllers
         public UserRepositoriesController Repositories { get; private set; }
 
         /// <summary>
+        /// Gets the privileges for this user
+        /// </summary>
+        public UserPrivilegesController Privileges { get; private set; }
+
+        /// <summary>
         /// Constructor
         /// </summary>
         public UserController(Client client, string username)
@@ -64,6 +69,7 @@ namespace BitbucketSharp.Controllers
             Username = username.ToLower();
             Groups = new GroupsController(client, this);
             Repositories = new UserRepositoriesController(client, this);
+            Privileges = new UserPrivilegesController(client, this);
         }
 
         /// <summary>

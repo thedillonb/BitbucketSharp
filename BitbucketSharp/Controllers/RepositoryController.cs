@@ -115,6 +115,11 @@ namespace BitbucketSharp.Controllers
         public BranchesController Branches { get; private set; }
 
         /// <summary>
+        /// Gets the privileges for this repository
+        /// </summary>
+        public RepositoryPrivilegeController Privileges { get; private set; }
+
+        /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="owner">The owner of this repository</param>
@@ -130,6 +135,7 @@ namespace BitbucketSharp.Controllers
             Invitations = new InvitationController(client, this);
             Changesets = new ChangesetsController(client, this);
             Branches = new BranchesController(client, this);
+            Privileges = new RepositoryPrivilegeController(client, new UserPrivilegesController(client, Owner), Slug);
         }
 
         /// <summary>

@@ -9,6 +9,19 @@ namespace BitbucketSharp.Models
         public List<IssueModel> Issues { get; set; } 
     }
 
+    public class CreateIssueModel
+    {
+        public string Status { get; set; }
+        public string Priority { get; set; }
+        public string Title { get; set; }
+        public string Responsible { get; set; }
+        public string Content { get; set; }
+        public string Kind { get; set; }
+        public string Component { get; set; }
+        public string Milestone { get; set; }
+        public string Version { get; set; }
+    }
+
     public class IssueModel
     {
         public string Status { get; set; }
@@ -44,5 +57,23 @@ namespace BitbucketSharp.Models
         public string UtcUpdatedOn { get; set; }
         public string UtcCreatedOn { get; set; }
         public bool IsSpam { get; set; }
+    }
+
+    public class ComponentModel
+    {
+        public string Name { get; set; }
+        public int Id { get; set; }
+    }
+
+    public class VersionModel
+    {
+        public string Name { get; set; }
+        public int Id { get; set; }
+    }
+
+    public class MilestoneModel
+    {
+        public string Name { get; set; }
+        public int Id { get; set; }
     }
 }

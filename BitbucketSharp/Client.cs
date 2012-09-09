@@ -115,6 +115,14 @@ namespace BitbucketSharp
         }
 
         /// <summary>
+        /// Post the specified uri and data.
+        /// </summary>
+        public T Post<T, D>(string uri, D data)
+        {
+            return Post<T>(uri, ObjectToDictionaryConverter.Convert(data));
+        }
+
+        /// <summary>
         /// Makes a 'POST' request to the server without a response
         /// </summary>
         /// <typeparam name="T"></typeparam>
@@ -132,7 +140,7 @@ namespace BitbucketSharp
         /// <param name="uri"></param>
         public void Delete(string uri)
         {
-            Request<string>(uri, Method.DELETE);
+            Request(uri, Method.DELETE);
         }
 
         /// <summary>
@@ -186,7 +194,17 @@ namespace BitbucketSharp
 
             var response = _client.Execute(request);
             if (response.StatusCode != HttpStatusCode.OK)
-                throw new InvalidOperationException("Request returned status code: " + response.StatusCode);
+            {
+                //A special case for deletes
+                if (method == Method.DELETE && response.StatusCode == HttpStatusCode.NoContent)
+                {
+                    //Do nothing. This is a special case...
+                }
+                else
+                {
+                    throw new InvalidOperationException("Request returned status code: " + response.StatusCode);
+                }
+            }
 
             return response;
         }
