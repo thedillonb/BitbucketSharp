@@ -44,6 +44,8 @@ namespace BitbucketSharp
             set { _client.Timeout = value; }
         }
 
+        public uint Retries { get; set; }
+
         /// <summary>
         /// Constructor
         /// </summary>
@@ -51,6 +53,7 @@ namespace BitbucketSharp
         /// <param name="password"></param>
         public Client(String username, String password)
         {
+            Retries = 3;
             Username = username;
             Account = new AccountController(this);
             Users = new UsersController(this);
@@ -192,21 +195,32 @@ namespace BitbucketSharp
             if (method == Method.PUT && data == null)
                 request.AddHeader("Content-Length", "0");
 
-            var response = _client.Execute(request);
-            if (response.StatusCode != HttpStatusCode.OK)
+            RestSharp.IRestResponse response = null;
+            for (var i = 0; i < Retries + 1; i++)
             {
-                //A special case for deletes
-                if (method == Method.DELETE && response.StatusCode == HttpStatusCode.NoContent)
+                response = _client.Execute(request);
+                if (response.StatusCode != HttpStatusCode.OK)
                 {
-                    //Do nothing. This is a special case...
+                    //A special case for deletes
+                    if (request.Method == Method.DELETE && response.StatusCode == HttpStatusCode.NoContent)
+                    {
+                        //Do nothing. This is a special case...
+                    }
+                    else if (response.StatusCode == 0)
+                    {
+                        continue;
+                    }
+                    else
+                    {
+                        throw new InvalidOperationException("Request returned status code: " + response.StatusCode);
+                    }
                 }
-                else
-                {
-                    throw new InvalidOperationException("Request returned status code: " + response.StatusCode);
-                }
+
+                //Return the response
+                return response;
             }
 
-            return response;
+            throw new InvalidOperationException("Unable to execute request. Status code 0 returned " + (Retries+1) + " times!");
         }
     }
 }
