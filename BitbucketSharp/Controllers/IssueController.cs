@@ -56,19 +56,19 @@ namespace BitbucketSharp.Controllers
             return Client.Get<IssuesModel>(Uri + "/?start=" + start + "&limit=" + limit);
         }
 
-        public ComponentModel GetComponents()
+        public List<ComponentModel> GetComponents()
         {
-            return Client.Get<ComponentModel>(Uri + "/components");
+            return Client.Get<List<ComponentModel>>(Uri + "/components");
         }
 
-        public VersionModel GetVersions()
+        public List<VersionModel> GetVersions()
         {
-            return Client.Get<VersionModel>(Uri + "/versions");
+            return Client.Get<List<VersionModel>>(Uri + "/versions");
         }
 
-        public MilestoneModel GetMilestones()
+        public List<MilestoneModel> GetMilestones()
         {
-            return Client.Get<MilestoneModel>(Uri + "/milestones");
+            return Client.Get<List<MilestoneModel>>(Uri + "/milestones");
         }
 
         /// <summary>

@@ -40,9 +40,13 @@ namespace BitbucketSharp.Controllers
         /// <param name="start">The start index of returned items (default: 0)</param>
         /// <param name="limit">The limit of returned items (default: 15)</param>
         /// <returns></returns>
-        public ChangesetsModel GetChangesets(int start = 0, int limit = 15)
+        public ChangesetsModel GetChangesets(int limit = 15, string startNode = null)
         {
-            return Client.Get<ChangesetsModel>(Uri);
+            var url = Uri + "?limit=" + limit;
+            if (startNode != null)
+                url = url + "&start=" + startNode;
+
+            return Client.Get<ChangesetsModel>(url);
         }
 
         /// <summary>
