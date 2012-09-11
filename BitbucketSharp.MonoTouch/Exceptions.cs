@@ -6,9 +6,19 @@ namespace BitbucketSharp
     public class ForbiddenException : StatusCodeException
     {
         public ForbiddenException()
-            : base(HttpStatusCode.Forbidden, "You do not have the permissions to access or modify this resource.")
-        {
-        }
+        : base(HttpStatusCode.Forbidden, "You do not have the permissions to access or modify this resource.") { }
+    }
+
+    public class NotFoundException : StatusCodeException
+    {
+        public NotFoundException()
+        : base(HttpStatusCode.NotFound, "The server is unable to locate the requested resource.") { }
+    }
+
+    public class InternalServerException : StatusCodeException
+    {
+        public InternalServerException()
+        : base(HttpStatusCode.InternalServerError, "The request was unable to be processed due to an interal server error.") { }
     }
 
     public class StatusCodeException : Exception
@@ -16,7 +26,7 @@ namespace BitbucketSharp
         public HttpStatusCode StatusCode { get; private set; }
 
         public StatusCodeException(HttpStatusCode statusCode)
-            : this(statusCode, "The resource requested is " + statusCode)
+            : this(statusCode, statusCode.ToString())
         {
         }
 
@@ -28,10 +38,17 @@ namespace BitbucketSharp
 
         public static StatusCodeException FactoryCreate(HttpStatusCode statusCode)
         {
-            if (statusCode == HttpStatusCode.Forbidden)
-                return new ForbiddenException();
-            else
-                return new StatusCodeException(statusCode);
+            switch (statusCode)
+            {
+                case HttpStatusCode.Forbidden:
+                    return new ForbiddenException();
+                case HttpStatusCode.NotFound:
+                    return new NotFoundException();
+                case HttpStatusCode.InternalServerError:
+                    return new InternalServerException();
+                default:
+                    return new StatusCodeException(statusCode);
+            }
         }
     }
 }
