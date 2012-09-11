@@ -212,7 +212,7 @@ namespace BitbucketSharp
                     }
                     else
                     {
-                        throw new InvalidOperationException("Request returned status code: " + response.StatusCode);
+                        throw StatusCodeException.FactoryCreate(response.StatusCode);
                     }
                 }
 
@@ -223,4 +223,6 @@ namespace BitbucketSharp
             throw new InvalidOperationException("Unable to execute request. Status code 0 returned " + (Retries+1) + " times!");
         }
     }
+
+
 }

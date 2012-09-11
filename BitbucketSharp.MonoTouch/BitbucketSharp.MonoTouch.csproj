@@ -122,6 +122,7 @@
     </Compile>
     <Compile Include="Controllers\PrivilegesController.cs" />
     <Compile Include="Models\PrivilegeModel.cs" />
+    <Compile Include="Exceptions.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="..\..\bitbucketsharp\BitbucketSharp.MonoTouch\Utils\" />

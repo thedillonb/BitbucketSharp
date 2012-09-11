@@ -20,6 +20,12 @@ namespace BitbucketSharp.Models
         public string Component { get; set; }
         public string Milestone { get; set; }
         public string Version { get; set; }
+
+        public bool CheckNoChange()
+        {
+            return Status == null && Priority == null && Title == null && Responsible == null && Content == null && 
+                   Kind == null && Component == null && Milestone == null && Version == null;
+        }
     }
 
     public class IssueModel
