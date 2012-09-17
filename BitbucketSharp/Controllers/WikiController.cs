@@ -75,9 +75,9 @@ namespace BitbucketSharp.Controllers
         /// Requests the Wiki page
         /// </summary>
         /// <returns></returns>
-        public WikiModel GetInfo()
+        public WikiModel GetInfo(bool forceCacheInvalidation = false)
         {
-            return Client.Get<WikiModel>(Uri);
+            return Client.Get<WikiModel>(Uri, forceCacheInvalidation);
         }
 
         /// <summary>
@@ -86,6 +86,7 @@ namespace BitbucketSharp.Controllers
         /// <param name="data">The data to put on the wiki</param>
         public void Update(string data)
         {
+            Client.InvalidateCacheObjects(Uri);
             Client.Put(Uri, new Dictionary<string, string> {{"data", data}});
         }
 
@@ -95,6 +96,7 @@ namespace BitbucketSharp.Controllers
         /// <param name="data"></param>
         public void Create(string data)
         {
+            Client.InvalidateCacheObjects(Uri);
             Client.Post(Uri, new Dictionary<string, string> { { "data", data } });
         }
 

@@ -62,7 +62,7 @@ namespace BitbucketSharp.Controllers
         /// <returns>A list of RepositorySimpleModel</returns>
         public RepositorySearchModel Search(string name)
         {
-            return Client.Get<RepositorySearchModel>(Uri + "/?name=" + name);
+            return Client.Request<RepositorySearchModel>(Uri + "/?name=" + name);
         }
 
         /// <summary>
@@ -142,26 +142,26 @@ namespace BitbucketSharp.Controllers
         /// Requests the information on a specific repository
         /// </summary>
         /// <returns>A RepositoryDetailedModel</returns>
-        public RepositoryDetailedModel GetInfo()
+        public RepositoryDetailedModel GetInfo(bool forceCacheInvalidation = false)
         {
-            return Client.Get<RepositoryDetailedModel>(Uri);
+            return Client.Get<RepositoryDetailedModel>(Uri, forceCacheInvalidation);
         }
 
         /// <summary>
         /// Requests the followers of a specific repository
         /// </summary>
         /// <returns>A FollowersModel</returns>
-        public FollowersModel GetFollowers()
+        public FollowersModel GetFollowers(bool forceCacheInvalidation = false)
         {
-            return Client.Get<FollowersModel>(Uri + "/followers");
+            return Client.Get<FollowersModel>(Uri + "/followers", forceCacheInvalidation);
         }
 
         /// <summary>
         /// Gets the tags.
         /// </summary>
-        public Dictionary<string, TagModel> GetTags()
+        public Dictionary<string, TagModel> GetTags(bool forceCacheInvalidation = false)
         {
-            return Client.Get<Dictionary<string, TagModel>>(Uri + "/tags");
+            return Client.Get<Dictionary<string, TagModel>>(Uri + "/tags", forceCacheInvalidation);
         }
 
         /// <summary>
@@ -173,8 +173,8 @@ namespace BitbucketSharp.Controllers
         /// <returns>A EventsModel</returns>
         public EventsModel GetEvents(int start = 0, int limit = 25, string type = null)
         {
-            return Client.Get<EventsModel>(Uri + "/events/?start=" + start + "&limit=" +
-                                           limit + (type == null ? "" : "&type=" + type));
+            return Client.Request<EventsModel>(Uri + "/events/?start=" + start + "&limit=" +
+                                               limit + (type == null ? "" : "&type=" + type));
         }
 
         /// <summary>

@@ -26,9 +26,9 @@ namespace BitbucketSharp.Controllers
         /// <summary>
         /// Gets the privileges for this user
         /// </summary>
-        public List<PrivilegeModel> GetPrivileges()
+        public List<PrivilegeModel> GetPrivileges(bool forceCacheInvalidation = false)
         {
-            return Client.Get<List<PrivilegeModel>>(Uri);
+            return Client.Get<List<PrivilegeModel>>(Uri, forceCacheInvalidation);
         }
         
         /// <summary>
@@ -70,9 +70,9 @@ namespace BitbucketSharp.Controllers
         /// Requests the information on a specific repository's privileges
         /// </summary>
         /// <returns>A list of PrivilegeModels</returns>
-        public List<PrivilegeModel> GetPrivileges()
+        public List<PrivilegeModel> GetPrivileges(bool forceCacheInvalidation = false)
         {
-            return Client.Get<List<PrivilegeModel>>(Uri);
+            return Client.Get<List<PrivilegeModel>>(Uri, forceCacheInvalidation);
         }
   
         /// <summary>

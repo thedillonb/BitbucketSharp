@@ -33,11 +33,11 @@ namespace BitbucketSharp.Controllers
             get { return new SourceController(Client, this, path); }
         }
 
-        public FileModel GetFile(string file)
+        public FileModel GetFile(string file, bool forceCacheInvalidation = false)
         {
             if (!Uri.EndsWith("/") && !file.StartsWith("/"))
                 file = "/" + file;
-            return Client.Get<FileModel>(Uri + file);
+            return Client.Get<FileModel>(Uri + file, forceCacheInvalidation);
         }   
 
         /// <summary>
@@ -83,9 +83,9 @@ namespace BitbucketSharp.Controllers
         /// Gets the source model for ths controller
         /// </summary>
         /// <returns></returns>
-        public SourceModel GetInfo()
+        public SourceModel GetInfo(bool forceCacheInvalidation = false)
         {
-            return Client.Get<SourceModel>(Uri);
+            return Client.Get<SourceModel>(Uri, forceCacheInvalidation);
         }
 
 

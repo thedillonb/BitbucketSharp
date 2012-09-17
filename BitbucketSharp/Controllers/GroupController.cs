@@ -26,9 +26,9 @@ namespace BitbucketSharp.Controllers
         /// <summary>
         /// Gets the groups.
         /// </summary>ß
-        public List<GroupModel> GetGroups()
+        public List<GroupModel> GetGroups(bool forceCacheInvalidation = false)
         {
-            return Client.Get<List<GroupModel>>(Uri);
+            return Client.Get<List<GroupModel>>(Uri, forceCacheInvalidation);
         }
 
         /// <summary>
@@ -81,9 +81,9 @@ namespace BitbucketSharp.Controllers
         /// <summary>
         /// Gets the group info
         /// </summary>
-        public GroupModel GetInfo()
+        public GroupModel GetInfo(bool forceCacheInvalidation = false)
         {
-            return Client.Get<GroupModel>(Uri);
+            return Client.Get<GroupModel>(Uri, forceCacheInvalidation);
         }
 
         /// <summary>
@@ -91,6 +91,7 @@ namespace BitbucketSharp.Controllers
         /// </summary>
         public void AddMember(string member)
         {
+            Client.InvalidateCacheObjects(Uri);
             Client.Put<string>(Uri + "/members/" + member);
         }
 
@@ -99,6 +100,7 @@ namespace BitbucketSharp.Controllers
         /// </summary>
         public void RemoveMember(string member)
         {
+            Client.InvalidateCacheObjects(Uri);
             Client.Delete(Uri + "/members/" + member);
         }
 
@@ -106,9 +108,9 @@ namespace BitbucketSharp.Controllers
         /// List the members of this group
         /// </summary>
         /// <returns></returns>
-        public List<UserModel> ListMembers()
+        public List<UserModel> ListMembers(bool forceCacheInvalidation = false)
         {
-            return Client.Get<List<UserModel>>(Uri + "/members");
+            return Client.Get<List<UserModel>>(Uri + "/members", forceCacheInvalidation);
         }
 
         /// <summary>

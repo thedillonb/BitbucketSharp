@@ -21,9 +21,9 @@ namespace BitbucketSharp.Controllers
         /// Gets the list of emails
         /// </summary>
         /// <returns></returns>
-        public IList<EmailModel> GetEmails()
+        public IList<EmailModel> GetEmails(bool forceCacheInvalidation = false)
         {
-            return Client.Get<List<EmailModel>>(Uri);
+            return Client.Get<List<EmailModel>>(Uri, forceCacheInvalidation);
         }
 
         /// <summary>
@@ -31,11 +31,10 @@ namespace BitbucketSharp.Controllers
         /// </summary>
         /// <param name="emailAddress"></param>
         /// <returns></returns>
-        public EmailModel SearchEmails(string emailAddress)
+        public EmailModel SearchEmails(string emailAddress, bool forceCacheInvalidation = false)
         {
-            return Client.Get<EmailModel>(Uri + "/" + emailAddress);
+            return Client.Get<EmailModel>(Uri + "/" + emailAddress, forceCacheInvalidation);
         }
-
 
         /// <summary>
         /// Adds an email address only if the email is being added to the logged in user's account
@@ -44,6 +43,7 @@ namespace BitbucketSharp.Controllers
         /// <returns></returns>
         public EmailModel AddEmail(string emailAddress)
         {
+            Client.InvalidateCacheObjects(Uri);
             return Client.Put<EmailModel>(Uri + "/" + emailAddress);
         }
 
@@ -54,6 +54,7 @@ namespace BitbucketSharp.Controllers
         /// <returns></returns>
         public EmailModel SetPrimaryEmail(string emailAddress)
         {
+            Client.InvalidateCacheObjects(Uri);
             return Client.Post<EmailModel>(Uri + "/" + emailAddress, new Dictionary<string, string> { { "primary", "true" } });
         }
 

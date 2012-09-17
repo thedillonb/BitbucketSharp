@@ -44,7 +44,15 @@ namespace BitbucketSharp
             set { _client.Timeout = value; }
         }
 
+        /// <summary>
+        /// Gets or sets the retries for No Content errors
+        /// </summary>
         public uint Retries { get; set; }
+
+        /// <summary>
+        /// Gets or sets the cache provider.
+        /// </summary>
+        public ICacheProvider CacheProvider { get; set; }
 
         /// <summary>
         /// Constructor
@@ -62,15 +70,36 @@ namespace BitbucketSharp
             _client.FollowRedirects = false;
         }
 
+        public void InvalidateCacheObjects(string startsWithUri)
+        {
+            if (CacheProvider != null)
+                CacheProvider.DeleteWhereStartingWith(startsWithUri);
+        }
+
         /// <summary>
         /// Makes a 'GET' request to the server using a URI
         /// </summary>
         /// <typeparam name="T">The type of object the response should be deserialized ot</typeparam>
         /// <param name="uri">The URI to request information from</param>
         /// <returns>An object with response data</returns>
-        public T Get<T>(String uri)
+        public T Get<T>(String uri, bool forceCacheInvalidation = false) where T : class
         {
-            return Request<T>(uri);
+            T obj = null;
+
+            //If there's a cache provider, check it.
+            if (CacheProvider != null && !forceCacheInvalidation)
+                obj = CacheProvider.Get<T>(uri);
+
+            if (obj == null)
+            {
+                obj = Request<T>(uri);
+
+                //If there's a cache provider, save it!
+                if (CacheProvider != null)
+                    CacheProvider.Set(obj, uri);
+            }
+
+            return obj;
         }
 
         /// <summary>

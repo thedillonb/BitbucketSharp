@@ -123,9 +123,10 @@
     <Compile Include="Controllers\PrivilegesController.cs" />
     <Compile Include="Models\PrivilegeModel.cs" />
     <Compile Include="Exceptions.cs" />
+    <Compile Include="ICacheProvider.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="..\..\bitbucketsharp\BitbucketSharp.MonoTouch\Utils\" />
+    <Folder Include="Utils\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\RestSharp\RestSharp.MonoTouch\RestSharp.MonoTouch.csproj">

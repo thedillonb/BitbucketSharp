@@ -21,9 +21,9 @@ namespace BitbucketSharp.Controllers
         /// <returns>
         /// The keys.
         /// </returns>
-        public List<SSHKeyModel> GetKeys()
+        public List<SSHKeyModel> GetKeys(bool forceCacheInvalidation = false)
         {
-            return Client.Get<List<SSHKeyModel>>(Uri);
+            return Client.Get<List<SSHKeyModel>>(Uri, forceCacheInvalidation);
         }
 
         /// <summary>

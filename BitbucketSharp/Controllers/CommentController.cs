@@ -38,9 +38,9 @@ namespace BitbucketSharp.Controllers
         /// Gets all the comments
         /// </summary>
         /// <returns></returns>
-        public List<CommentModel> GetComments()
+        public List<CommentModel> GetComments(bool forceCacheInvalidation = false)
         {
-            return Client.Get<List<CommentModel>>(Uri);
+            return Client.Get<List<CommentModel>>(Uri, forceCacheInvalidation);
         }
 
         /// <summary>
@@ -50,29 +50,8 @@ namespace BitbucketSharp.Controllers
         /// <returns></returns>
         public CommentModel Create(CommentModel comment)
         {
+            Client.InvalidateCacheObjects(Uri);
             return Client.Post(Uri, comment);
-        }
-
-        /// <summary>
-        /// Updates a comment from its id
-        /// </summary>
-        /// <param name="id">The comment id</param>
-        /// <param name="comment">The comment model</param>
-        /// <returns></returns>
-        public CommentModel Update(int id, CommentModel comment)
-        {
-            return this[id].Update(comment);
-        }
-
-        /// <summary>
-        /// Updates a comment from its id
-        /// </summary>
-        /// <param name="id">The comment id</param>
-        /// <param name="data">The update data</param>
-        /// <returns></returns>
-        public CommentModel Update(int id, Dictionary<string, string> data)
-        {
-            return this[id].Update(data);
         }
 
         /// <summary>
@@ -116,9 +95,9 @@ namespace BitbucketSharp.Controllers
         /// Gets the comment
         /// </summary>
         /// <returns></returns>
-        public CommentModel GetInfo()
+        public CommentModel GetInfo(bool forceCacheInvalidation = false)
         {
-            return Client.Get<CommentModel>(Uri);
+            return Client.Get<CommentModel>(Uri, forceCacheInvalidation);
         }
 
         /// <summary>
@@ -126,6 +105,7 @@ namespace BitbucketSharp.Controllers
         /// </summary>
         public void DeleteComment()
         {
+            Client.InvalidateCacheObjects(Uri);
             Client.Delete(Uri);
         }
 
@@ -146,6 +126,7 @@ namespace BitbucketSharp.Controllers
         /// <returns></returns>
         public CommentModel Update(Dictionary<string, string> data)
         {
+            Client.InvalidateCacheObjects(Uri);
             return Client.Put<CommentModel>(Uri, data);
         }
 

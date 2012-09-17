@@ -42,7 +42,7 @@ namespace BitbucketSharp.Controllers
         /// <returns></returns>
         public IssuesModel Search(string search)
         {
-            return Client.Get<IssuesModel>(Uri + "/?search=" + search);
+            return Client.Request<IssuesModel>(Uri + "/?search=" + search);
         }
 
         /// <summary>
@@ -53,22 +53,22 @@ namespace BitbucketSharp.Controllers
         /// <returns></returns>
         public IssuesModel GetIssues(int start = 0, int limit = 15)
         {
-            return Client.Get<IssuesModel>(Uri + "/?start=" + start + "&limit=" + limit);
+            return Client.Request<IssuesModel>(Uri + "/?start=" + start + "&limit=" + limit);
         }
 
-        public List<ComponentModel> GetComponents()
+        public List<ComponentModel> GetComponents(bool forceCacheInvalidation = false)
         {
-            return Client.Get<List<ComponentModel>>(Uri + "/components");
+            return Client.Get<List<ComponentModel>>(Uri + "/components", forceCacheInvalidation);
         }
 
-        public List<VersionModel> GetVersions()
+        public List<VersionModel> GetVersions(bool forceCacheInvalidation = false)
         {
-            return Client.Get<List<VersionModel>>(Uri + "/versions");
+            return Client.Get<List<VersionModel>>(Uri + "/versions", forceCacheInvalidation);
         }
 
-        public List<MilestoneModel> GetMilestones()
+        public List<MilestoneModel> GetMilestones(bool forceCacheInvalidation = false)
         {
-            return Client.Get<List<MilestoneModel>>(Uri + "/milestones");
+            return Client.Get<List<MilestoneModel>>(Uri + "/milestones", forceCacheInvalidation);
         }
 
         /// <summary>
@@ -128,18 +128,18 @@ namespace BitbucketSharp.Controllers
         /// Requests the issue information
         /// </summary>
         /// <returns></returns>
-        public IssueModel GetIssue()
+        public IssueModel GetIssue(bool forceCacheInvalidation= false)
         {
-            return Client.Get<IssueModel>(Uri);
+            return Client.Get<IssueModel>(Uri, forceCacheInvalidation);
         }
 
         /// <summary>
         /// Requests the follows of this issue
         /// </summary>
         /// <returns></returns>
-        public FollowersModel GetIssueFollowers()
+        public FollowersModel GetIssueFollowers(bool forceCacheInvalidation = false)
         {
-            return Client.Get<FollowersModel>(Uri + "/followers");
+            return Client.Get<FollowersModel>(Uri + "/followers", forceCacheInvalidation);
         }
 
         /// <summary>
@@ -147,6 +147,7 @@ namespace BitbucketSharp.Controllers
         /// </summary>
         public void Delete()
         {
+            Client.InvalidateCacheObjects(Uri);
             Client.Delete(Uri);
         }
 
@@ -167,6 +168,7 @@ namespace BitbucketSharp.Controllers
         /// <returns></returns>
         public IssueModel Update(Dictionary<string,string> data)
         {
+            Client.InvalidateCacheObjects(Uri);
             return Client.Put<IssueModel>(Uri, data);
         }
 

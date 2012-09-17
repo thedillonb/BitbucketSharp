@@ -33,9 +33,9 @@ namespace BitbucketSharp.Controllers
         /// Requests the repositories that the current logged in user is following
         /// </summary>
         /// <returns>A list of repositories</returns>
-        public List<RepositoryDetailedModel> GetRepositories()
+        public List<RepositoryDetailedModel> GetRepositories(bool forceCacheInvalidation = false)
         {
-            return Client.Get<List<RepositoryDetailedModel>>("user/follows");
+            return Client.Get<List<RepositoryDetailedModel>>("user/follows", forceCacheInvalidation);
         }
     }
 }

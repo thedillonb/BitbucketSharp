@@ -76,9 +76,9 @@ namespace BitbucketSharp.Controllers
         /// Gets information about this user
         /// </summary>
         /// <returns>A UsersModel</returns>
-        public UsersModel GetInfo()
+        public UsersModel GetInfo(bool forceCacheInvalidation = false)
         {
-            return Client.Get<UsersModel>(Uri);
+            return Client.Get<UsersModel>(Uri, forceCacheInvalidation);
         }
 
         /// <summary>
@@ -89,16 +89,16 @@ namespace BitbucketSharp.Controllers
         /// <returns>A EventsModel</returns>
         public EventsModel GetEvents(int start = 0, int limit = 25)
         {
-            return Client.Get<EventsModel>(Uri + "/events/?start=" + start + "&limit=" + limit);
+            return Client.Request<EventsModel>(Uri + "/events/?start=" + start + "&limit=" + limit);
         }
 		
 		/// <summary>
 		/// Gets the followers.
 		/// </summary>
 		/// <returns>The followers./returns>
-		public FollowersModel GetFollowers()
+        public FollowersModel GetFollowers(bool forceCacheInvalidation = false)
 		{
-			return Client.Get<FollowersModel>(Uri + "/followers");
+            return Client.Get<FollowersModel>(Uri + "/followers", forceCacheInvalidation);
 		}
 
         /// <summary>

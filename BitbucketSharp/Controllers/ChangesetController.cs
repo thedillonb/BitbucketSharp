@@ -46,7 +46,7 @@ namespace BitbucketSharp.Controllers
             if (startNode != null)
                 url = url + "&start=" + startNode;
 
-            return Client.Get<ChangesetsModel>(url);
+            return Client.Request<ChangesetsModel>(url);
         }
 
         /// <summary>
@@ -90,18 +90,18 @@ namespace BitbucketSharp.Controllers
         /// Requests information about the changeset
         /// </summary>
         /// <returns></returns>
-        public ChangesetModel GetInfo()
+        public ChangesetModel GetInfo(bool forceCacheInvalidation = false)
         {
-            return Client.Get<ChangesetModel>(Uri + "/" + Node);
+            return Client.Get<ChangesetModel>(Uri + "/" + Node, forceCacheInvalidation);
         }
 
         /// <summary>
         /// /Gets the diffs
         /// </summary>
         /// <returns></returns>
-        public IList<ChangesetDiffModel> GetDiffs()
+        public IList<ChangesetDiffModel> GetDiffs(bool forceCacheInvalidation = false)
         {
-            return Client.Get<List<ChangesetDiffModel>>(Uri + "/" + Node + "/diffstat");
+            return Client.Get<List<ChangesetDiffModel>>(Uri + "/" + Node + "/diffstat", forceCacheInvalidation);
         }
 
         /// <summary>
