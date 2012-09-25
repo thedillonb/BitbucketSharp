@@ -13,10 +13,10 @@ namespace BitbucketSharp
         void DeleteAll();
         int DefaultDuractionInMinutes { get; }
     }
-    
-    public class CachedObject<T> where T : class
+
+    public class CachedObject
     {
-        public T Cached { get; set; }
+        public object Cached { get; set; }
         public DateTime When { get; set; }
     }
 }
