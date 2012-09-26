@@ -75,7 +75,7 @@ namespace BitbucketSharp.Controllers
             : base(client)
         {
             Groups = groups;
-            Groupname = groupname.ToLower();
+            Groupname = groupname;
         }
 
         /// <summary>

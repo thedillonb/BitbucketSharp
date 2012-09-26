@@ -6,13 +6,16 @@ namespace BitbucketSharp.Controllers
 {
     public class SSHKeyController : Controller
     {
+        public UserController User { get; private set; }
+
         /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="client"></param>
-        public SSHKeyController(Client client)
+        public SSHKeyController(Client client, UserController user)
             : base(client)
         {
+            User = user;
         }
 
         /// <summary>
@@ -31,7 +34,7 @@ namespace BitbucketSharp.Controllers
         /// </summary>
         public override string Uri 
         {
-            get { return "ssh-keys"; }
+            get { return User.Uri + "/ssh-keys"; }
         }
     }
 }

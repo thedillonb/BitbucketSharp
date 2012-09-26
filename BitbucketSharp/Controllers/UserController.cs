@@ -61,15 +61,21 @@ namespace BitbucketSharp.Controllers
         public UserPrivilegesController Privileges { get; private set; }
 
         /// <summary>
+        /// Gets the SSH keys.
+        /// </summary>
+        public SSHKeyController SSHKeys { get; private set; }
+
+        /// <summary>
         /// Constructor
         /// </summary>
         public UserController(Client client, string username)
             : base(client)
         {
-            Username = username.ToLower();
+            Username = username;
             Groups = new GroupsController(client, this);
             Repositories = new UserRepositoriesController(client, this);
             Privileges = new UserPrivilegesController(client, this);
+            SSHKeys = new SSHKeyController(client, this);
         }
 
         /// <summary>

@@ -81,7 +81,7 @@ namespace BitbucketSharp.Controllers
             : base(client)
         {
             Branches = branches;
-            Name = branch.ToLower();
+            Name = branch;
             Source = new SourcesController(Client, this);
         }
 

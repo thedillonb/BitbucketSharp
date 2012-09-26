@@ -83,7 +83,7 @@ namespace BitbucketSharp.Controllers
             : base(client)
         {
             Repository = repository;
-            Node = node.ToLower();
+            Node = node;
         }
 
         /// <summary>
