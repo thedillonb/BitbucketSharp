@@ -49,7 +49,7 @@
       <Link>Controllers\CommentController.cs</Link>
     </Compile>
     <Compile Include="..\BitbucketSharp\Controllers\Controller.cs">
-      <Link>Models\Controller.cs</Link>
+      <Link>Controllers\Controller.cs</Link>
     </Compile>
     <Compile Include="..\BitbucketSharp\Controllers\EmailController.cs">
       <Link>Controllers\EmailController.cs</Link>

@@ -19,7 +19,7 @@ namespace BitbucketSharp.Models
         public string Branch { get; set; }
         public string Message { get; set; }
         public int Revision { get; set; }
-        public int Size { get; set; }
+        public long Size { get; set; }
         public List<FileModel> Files { get; set; } 
         public string RawNode { get; set; }
         public List<string> Parents { get; set; }

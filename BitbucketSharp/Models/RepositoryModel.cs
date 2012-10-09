@@ -14,7 +14,7 @@ namespace BitbucketSharp.Models
         public string CreatedOn { get; set; }
         public string UtcCreatedOn { get; set; }
         public string Logo { get; set; }
-        public int Size { get; set; }
+        public long Size { get; set; }
         public bool ReadOnly { get; set; }
         public string Language { get; set; }
         public int FollowersCount { get; set; }
@@ -55,7 +55,7 @@ namespace BitbucketSharp.Models
         public string Branch { get; set; }
         public string Message { get; set; }
         public string Revision { get; set; }
-        public int Size { get; set; }
+        public long Size { get; set; }
 
 
         public class FileModel

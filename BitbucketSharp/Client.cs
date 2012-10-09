@@ -67,7 +67,7 @@ namespace BitbucketSharp
             Users = new UsersController(this);
             Repositories = new RepositoriesController(this);
             _client.Authenticator = new HttpBasicAuthenticator(username, password);
-            _client.FollowRedirects = false;
+            _client.FollowRedirects = true;
         }
 
         public void InvalidateCacheObjects(string startsWithUri)

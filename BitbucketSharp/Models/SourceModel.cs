@@ -15,7 +15,7 @@ namespace BitbucketSharp.Models
         public string Branch { get; set; }
         public string Message { get; set; }
         public string Revision { get; set; }
-        public int Size { get; set; }
+        public long Size { get; set; }
 
         public class FileModel
         {
@@ -33,7 +33,7 @@ namespace BitbucketSharp.Models
         {
             public string Path { get; set; }
             public string Revision { get; set; }
-            public int Size { get; set; }
+            public long Size { get; set; }
             public string Timestamp { get; set; }
         }
     }
