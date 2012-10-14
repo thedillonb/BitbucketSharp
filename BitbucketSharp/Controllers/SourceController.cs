@@ -38,7 +38,41 @@ namespace BitbucketSharp.Controllers
             if (!Uri.EndsWith("/") && !file.StartsWith("/"))
                 file = "/" + file;
             return Client.Get<FileModel>(Uri + file, forceCacheInvalidation);
-        }   
+        } 
+
+        public System.Net.HttpWebResponse GetFileRaw(string file, System.IO.Stream stream)
+        {
+            var uri = Client.ApiUrl + "/" + Branch.Branches.Repository.Uri + "/raw/" + Branch.Name;
+            if (!uri.EndsWith("/") && !file.StartsWith("/"))
+                file = "/" + file;
+
+
+            var fileReq = (System.Net.HttpWebRequest)System.Net.HttpWebRequest.Create(uri + file);
+
+            //Set the authentication!
+            var authInfo = Client.Username + ":" + Client.Password;
+            authInfo = System.Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(authInfo));
+            fileReq.Headers["Authorization"] = "Basic " + authInfo;
+
+            var resp = (System.Net.HttpWebResponse)fileReq.GetResponse();
+            if (resp != null)
+            {
+                using (var dstream = resp.GetResponseStream())
+                {
+                    var buffer = new byte[1024];
+                    int bytesRead = 0;
+                    while (true)
+                    {
+                        bytesRead = dstream.Read(buffer, 0, 1024);
+                        if (bytesRead <= 0)
+                            break;
+                        stream.Write(buffer, 0, bytesRead);
+                    }
+                }
+            }
+
+            return resp;
+        }
 
         /// <summary>
         /// The URI of this controller

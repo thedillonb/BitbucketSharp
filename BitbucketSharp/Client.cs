@@ -10,12 +10,19 @@ namespace BitbucketSharp
 {
     public class Client
     {
-        private readonly RestClient _client = new RestClient("https://api.bitbucket.org/1.0");
+        public static string ApiUrl = "https://api.bitbucket.org/1.0";
+
+        private readonly RestClient _client = new RestClient(ApiUrl);
 
         /// <summary>
         /// Gets the username for this clietn
         /// </summary>
         public String Username { get; private set; }
+
+        /// <summary>
+        /// Gets the password.
+        /// </summary>
+        public String Password { get; private set; }
 
         /// <summary>
         /// The user account
@@ -63,6 +70,7 @@ namespace BitbucketSharp
         {
             Retries = 3;
             Username = username;
+            Password = password;
             Account = new AccountController(this);
             Users = new UsersController(this);
             Repositories = new RepositoriesController(this);
@@ -210,7 +218,7 @@ namespace BitbucketSharp
         /// <param name="method"></param>
         /// <param name="data"></param>
         /// <returns></returns>
-        private IRestResponse ExecuteRequest(string uri, Method method, Dictionary<string, string> data)
+        internal IRestResponse ExecuteRequest(string uri, Method method, Dictionary<string, string> data)
         {
             if (uri == null)
                 throw new ArgumentNullException("uri");

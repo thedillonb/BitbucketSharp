@@ -126,7 +126,7 @@
     <Compile Include="ICacheProvider.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Utils\" />
+    <Folder Include="..\..\bitbucketsharp\BitbucketSharp.MonoTouch\Utils\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\RestSharp\RestSharp.MonoTouch\RestSharp.MonoTouch.csproj">
