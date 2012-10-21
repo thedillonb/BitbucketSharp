@@ -37,8 +37,8 @@ namespace BitbucketSharp.Controllers
         /// <summary>
         /// Requests all the changesets
         /// </summary>
-        /// <param name="start">The start index of returned items (default: 0)</param>
         /// <param name="limit">The limit of returned items (default: 15)</param>
+        /// <param name="startNode">The starting node</param>
         /// <returns></returns>
         public ChangesetsModel GetChangesets(int limit = 15, string startNode = null)
         {

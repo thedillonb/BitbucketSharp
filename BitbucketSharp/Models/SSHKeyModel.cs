@@ -1,5 +1,3 @@
-using System;
-
 namespace BitbucketSharp.Models
 {
     public class SSHKeyModel

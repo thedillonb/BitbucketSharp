@@ -89,6 +89,7 @@ namespace BitbucketSharp
         /// </summary>
         /// <typeparam name="T">The type of object the response should be deserialized ot</typeparam>
         /// <param name="uri">The URI to request information from</param>
+        /// <param name="forceCacheInvalidation"></param>
         /// <returns>An object with response data</returns>
         public T Get<T>(String uri, bool forceCacheInvalidation = false) where T : class
         {
@@ -115,6 +116,7 @@ namespace BitbucketSharp
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="uri"></param>
+        /// <param name="data"></param>
         /// <returns></returns>
         public T Put<T>(string uri, Dictionary<string, string> data = null)
         {
@@ -125,6 +127,7 @@ namespace BitbucketSharp
         /// Makes a 'PUT' request to the server
         /// </summary>
         /// <param name="uri"></param>
+        /// <param name="data"></param>
         public void Put(string uri, Dictionary<string, string> data = null)
         {
             Request(uri, Method.PUT, data);
@@ -157,7 +160,7 @@ namespace BitbucketSharp
         /// <summary>
         /// Post the specified uri and data.
         /// </summary>
-        public T Post<T, D>(string uri, D data)
+        public T Post<T, TD>(string uri, TD data)
         {
             return Post<T>(uri, ObjectToDictionaryConverter.Convert(data));
         }
@@ -165,7 +168,6 @@ namespace BitbucketSharp
         /// <summary>
         /// Makes a 'POST' request to the server without a response
         /// </summary>
-        /// <typeparam name="T"></typeparam>
         /// <param name="uri"></param>
         /// <param name="data"></param>
         /// <returns></returns>
@@ -189,7 +191,6 @@ namespace BitbucketSharp
         /// <typeparam name="T"></typeparam>
         /// <param name="uri"></param>
         /// <param name="data"></param>
-        /// <param name="header"></param>
         /// <param name="method"></param>
         /// <returns></returns>
         public T Request<T>(string uri, Method method = Method.GET, Dictionary<string, string> data = null)
@@ -205,7 +206,6 @@ namespace BitbucketSharp
         /// <param name="uri"></param>
         /// <param name="method"></param>
         /// <param name="data"></param>
-        /// <param name="header"></param>
         public void Request(string uri, Method method = Method.GET, Dictionary<string, string> data = null)
         {
             ExecuteRequest(uri, method, data);
@@ -232,10 +232,9 @@ namespace BitbucketSharp
             if (method == Method.PUT && data == null)
                 request.AddHeader("Content-Length", "0");
 
-            RestSharp.IRestResponse response = null;
             for (var i = 0; i < Retries + 1; i++)
             {
-                response = _client.Execute(request);
+                IRestResponse response = _client.Execute(request);
                 if (response.StatusCode != HttpStatusCode.OK)
                 {
                     //A special case for deletes

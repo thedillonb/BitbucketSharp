@@ -30,6 +30,7 @@ namespace BitbucketSharp.Controllers
         /// Search through all the emails for a particular address
         /// </summary>
         /// <param name="emailAddress"></param>
+        /// <param name="forceCacheInvalidation">Forces the invalidation of hte cahce for this object</param>
         /// <returns></returns>
         public EmailModel SearchEmails(string emailAddress, bool forceCacheInvalidation = false)
         {

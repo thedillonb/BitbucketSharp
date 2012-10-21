@@ -47,7 +47,7 @@ namespace BitbucketSharp.Controllers
                 file = "/" + file;
 
 
-            var fileReq = (System.Net.HttpWebRequest)System.Net.HttpWebRequest.Create(uri + file);
+            var fileReq = (System.Net.HttpWebRequest)System.Net.WebRequest.Create(uri + file);
 
             //Set the authentication!
             var authInfo = Client.Username + ":" + Client.Password;
@@ -60,10 +60,9 @@ namespace BitbucketSharp.Controllers
                 using (var dstream = resp.GetResponseStream())
                 {
                     var buffer = new byte[1024];
-                    int bytesRead = 0;
                     while (true)
                     {
-                        bytesRead = dstream.Read(buffer, 0, 1024);
+                        var bytesRead = dstream.Read(buffer, 0, 1024);
                         if (bytesRead <= 0)
                             break;
                         stream.Write(buffer, 0, bytesRead);

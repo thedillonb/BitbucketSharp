@@ -1,4 +1,5 @@
 ﻿using BitbucketSharp.Models;
+using BitbucketSharp.MonoTouch.Controllers;
 
 namespace BitbucketSharp.Controllers
 {

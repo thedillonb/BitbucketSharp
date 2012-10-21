@@ -1,7 +1,8 @@
 using System.Collections.Generic;
+using BitbucketSharp.Controllers;
 using BitbucketSharp.Models;
 
-namespace BitbucketSharp.Controllers
+namespace BitbucketSharp.MonoTouch.Controllers
 {
     /// <summary>
     /// Provides access to repositories owned by a user
@@ -56,7 +57,7 @@ namespace BitbucketSharp.Controllers
         /// <summary>
         /// Constructor
         /// </summary>
-        /// <param name="owner">The owner of this repository</param>
+        /// <param name="userPrivileges">The user privileges object</param>
         /// <param name="slug">The slug of this repository</param>
         /// <param name="client">A handle to the client</param>
         public RepositoryPrivilegeController(Client client, UserPrivilegesController userPrivileges, string slug) 

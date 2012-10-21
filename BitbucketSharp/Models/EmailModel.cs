@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace BitbucketSharp.Models
+﻿namespace BitbucketSharp.Models
 {
     public class EmailModel
     {
