@@ -118,21 +118,23 @@
     <Compile Include="..\BitbucketSharp\Models\SSHKeyModel.cs">
       <Link>Models\SSHKeyModel.cs</Link>
     </Compile>
-    <Compile Include="..\..\bitbucketsharp\BitbucketSharp\Utils\ObjectToDictionaryConverter.cs">
+    <Compile Include="..\BitbucketSharp\Utils\ObjectToDictionaryConverter.cs">
       <Link>Utils\ObjectToDictionaryConverter.cs</Link>
     </Compile>
-    <Compile Include="Controllers\PrivilegesController.cs" />
-    <Compile Include="Models\PrivilegeModel.cs" />
-    <Compile Include="Exceptions.cs" />
-    <Compile Include="ICacheProvider.cs" />
+    <Compile Include="..\BitbucketSharp\Models\PrivilegeModel.cs">
+      <Link>Models\PrivilegeModel.cs</Link>
+    </Compile>
+    <Compile Include="..\BitbucketSharp\Exceptions.cs">
+      <Link>Exceptions.cs</Link>
+    </Compile>
+    <Compile Include="..\BitbucketSharp\ICacheProvider.cs">
+      <Link>ICacheProvider.cs</Link>
+    </Compile>
+    <Compile Include="..\BitbucketSharp\Controllers\PrivilegesController.cs">
+      <Link>Controllers\PrivilegesController.cs</Link>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="..\..\bitbucketsharp\BitbucketSharp.MonoTouch\Utils\" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\RestSharp\RestSharp.MonoTouch\RestSharp.MonoTouch.csproj">
-      <Project>{E9A9D1C5-4E06-4D31-9809-A97188C70B2C}</Project>
-      <Name>RestSharp.MonoTouch</Name>
-    </ProjectReference>
+    <Folder Include="Utils\" />
   </ItemGroup>
 </Project>

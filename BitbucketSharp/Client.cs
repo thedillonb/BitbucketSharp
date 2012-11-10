@@ -256,7 +256,7 @@ namespace BitbucketSharp
                 return response;
             }
 
-            throw new InvalidOperationException("Unable to execute request. Status code 0 returned " + (Retries+1) + " times!");
+            throw new InvalidOperationException("Unable to execute request. No connection available!");
         }
     }
 

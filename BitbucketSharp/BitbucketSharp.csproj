@@ -12,22 +12,22 @@
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
+    <DebugSymbols>True</DebugSymbols>
     <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
+    <Optimize>False</Optimize>
     <OutputPath>bin\Debug</OutputPath>
     <DefineConstants>DEBUG;</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <ConsolePause>false</ConsolePause>
+    <ConsolePause>False</ConsolePause>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>none</DebugType>
-    <Optimize>true</Optimize>
+    <Optimize>True</Optimize>
     <OutputPath>bin\Release</OutputPath>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <ConsolePause>false</ConsolePause>
+    <ConsolePause>False</ConsolePause>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -65,7 +65,11 @@
     <Compile Include="Client.cs" />
     <Compile Include="Controllers\SSHKeyController.cs" />
     <Compile Include="Models\SSHKeyModel.cs" />
-	<Compile Include="Utils\ObjectToDictionaryConverter.cs" />
+    <Compile Include="Utils\ObjectToDictionaryConverter.cs" />
+    <Compile Include="Controllers\PrivilegesController.cs" />
+    <Compile Include="Models\PrivilegeModel.cs" />
+    <Compile Include="Exceptions.cs" />
+    <Compile Include="ICacheProvider.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

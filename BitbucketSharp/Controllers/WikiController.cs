@@ -84,10 +84,10 @@ namespace BitbucketSharp.Controllers
         /// Updates a wiki page
         /// </summary>
         /// <param name="data">The data to put on the wiki</param>
-        public void Update(string data)
+        public void Update(string data, string path)
         {
             Client.InvalidateCacheObjects(Uri);
-            Client.Put(Uri, new Dictionary<string, string> {{"data", data}});
+            Client.Put(Uri, new Dictionary<string, string> {{"data", data}, {"path", path}});
         }
 
         /// <summary>
@@ -105,7 +105,7 @@ namespace BitbucketSharp.Controllers
         /// </summary>
         public override string Uri
         {
-            get { return Wikis.Uri + "/" + Page; }
+            get { return Wikis.Uri + Page; }
         }
     }
 }
