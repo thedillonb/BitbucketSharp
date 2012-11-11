@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System;
 
 namespace BitbucketSharp.Models
 {
@@ -15,7 +16,7 @@ namespace BitbucketSharp.Models
         public string Node { get; set; }
         public string Author { get; set; }
         public string Timestamp { get; set; }
-        public string Utctimestamp { get; set; }
+        public DateTime Utctimestamp { get; set; }
         public string Branch { get; set; }
         public string Message { get; set; }
         public int Revision { get; set; }

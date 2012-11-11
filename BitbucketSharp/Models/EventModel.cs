@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System;
 
 namespace BitbucketSharp.Models
 {
@@ -15,7 +16,7 @@ namespace BitbucketSharp.Models
         public RepositoryDetailedModel Repository { get; set; }
         public string CreatedOn { get; set; }
         public UserModel User { get; set; }
-        public string UtcCreatedOn { get; set; }
+        public DateTime UtcCreatedOn { get; set; }
         public string Event { get; set; }
 
         public static class Type

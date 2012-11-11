@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using BitbucketSharp.Models;
 using BitbucketSharp.Utils;
+using System;
 
 namespace BitbucketSharp.Controllers
 {
@@ -50,9 +51,15 @@ namespace BitbucketSharp.Controllers
         /// <param name="start">The start index of the returned set (default: 0)</param>
         /// <param name="limit">The limit of items of the returned set (default: 15)</param>
         /// <returns></returns>
-        public IssuesModel GetIssues(int start = 0, int limit = 15)
+        public IssuesModel GetIssues(int start = 0, int limit = 15, IEnumerable<Tuple<string, string>> search = null)
         {
-            return Client.Request<IssuesModel>(Uri + "/?start=" + start + "&limit=" + limit);
+            var sb = new System.Text.StringBuilder();
+            sb.Append(Uri).Append("/?start=").Append(start).Append("&limit=").Append(limit);
+            if (search != null)
+                foreach (var a in search)
+                    sb.Append("&").Append(a.Item1).Append("=").Append(a.Item2);
+
+            return Client.Request<IssuesModel>(sb.ToString());
         }
 
         public List<ComponentModel> GetComponents(bool forceCacheInvalidation = false)

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System;
 
 namespace BitbucketSharp.Models
 {
@@ -36,8 +37,8 @@ namespace BitbucketSharp.Models
         public int CommentCount { get; set; }
         public string Content { get; set; }
         public string CreatedOn { get; set; }
-        public string UtcCreatedOn { get; set; }
-        public string UtcLastUpdated { get; set; }
+        public DateTime UtcCreatedOn { get; set; }
+        public DateTime UtcLastUpdated { get; set; }
         public int LocalId { get; set; }
         public int FollowerCount { get; set; }
         public string ResourceUri { get; set; }
@@ -60,8 +61,8 @@ namespace BitbucketSharp.Models
         public string Content { get; set; }
         public UserModel AuthorInfo { get; set; }
         public int CommentId { get; set; }
-        public string UtcUpdatedOn { get; set; }
-        public string UtcCreatedOn { get; set; }
+        public DateTime UtcUpdatedOn { get; set; }
+        public DateTime UtcCreatedOn { get; set; }
         public bool IsSpam { get; set; }
     }
 

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System;
 
 namespace BitbucketSharp.Models
 {
@@ -10,9 +11,9 @@ namespace BitbucketSharp.Models
         public string Website { get; set; }
         public bool HasWiki { get; set; }
         public string LastUpdated { get; set; }
-        public string UtcLastUpdated { get; set; }
+        public DateTime UtcLastUpdated { get; set; }
         public string CreatedOn { get; set; }
-        public string UtcCreatedOn { get; set; }
+        public DateTime UtcCreatedOn { get; set; }
         public string Logo { get; set; }
         public long Size { get; set; }
         public bool ReadOnly { get; set; }
@@ -47,7 +48,7 @@ namespace BitbucketSharp.Models
         public string Node { get; set; }
         public List<FileModel> Files { get; set; }
         public string RawAuthor { get; set; }
-        public string Utctimestamp { get; set; }
+        public DateTime Utctimestamp { get; set; }
         public string Timestamp { get; set; }
         public string Author { get; set; }
         public string RawNode { get; set; }
