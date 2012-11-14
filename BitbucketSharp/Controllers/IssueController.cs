@@ -57,7 +57,7 @@ namespace BitbucketSharp.Controllers
             sb.Append(Uri).Append("/?start=").Append(start).Append("&limit=").Append(limit);
             if (search != null)
                 foreach (var a in search)
-                    sb.Append("&").Append(a.Item1).Append("=").Append(a.Item2);
+                    sb.Append("&").Append(a.Item1).Append("=").Append(System.Uri.EscapeDataString(a.Item2));
 
             return Client.Request<IssuesModel>(sb.ToString());
         }
