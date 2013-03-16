@@ -27,7 +27,7 @@ namespace BitbucketSharp.Models
                 Commit = "commit", CreateRepo = "create", DeleteRepo = "delete", StripRepo = "strip", ForkRepo = "fork", PatchQueue = "mq",
 
                 //Wiki
-                WikiCreated = "wiki_created", WikiUpdated = "wiki_updated",
+                WikiCreated = "wiki_created", WikiUpdated = "wiki_updated", WikiDeleted = "wiki_deleted",
 
                 //Following
                 StartFollowUser = "start_follow_user", StopFollowUser = "stop_follow_user",
