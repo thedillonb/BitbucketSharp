@@ -84,4 +84,43 @@ namespace BitbucketSharp.MonoTouch.Controllers
             get { return UserPrivileges.Uri + "/" + Slug; }
         }
     }
+
+    /// <summary>
+    /// Provides access to a repository's group privileges
+    /// </summary>
+    public class RepositoryGroupPrivilegeController : Controller
+    {
+        /// <summary>
+        /// Gets the repository
+        /// </summary>
+        public RepositoryController Repo { get; private set; }
+        
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="repo">The user privileges object</param>
+        /// <param name="client">A handle to the client</param>
+        public RepositoryGroupPrivilegeController(Client client, RepositoryController repo) 
+            : base(client)
+        {
+            Repo = repo;
+        }
+        
+        /// <summary>
+        /// Requests the information on a specific repository's group privileges
+        /// </summary>
+        /// <returns>A list of GroupPrivilegeModels</returns>
+        public List<GroupPrivilegeModel> GetPrivileges(bool forceCacheInvalidation = false)
+        {
+            return Client.Get<List<GroupPrivilegeModel>>(Uri, forceCacheInvalidation);
+        }
+        
+        /// <summary>
+        /// The URI of this controller
+        /// </summary>
+        public override string Uri
+        {
+            get { return "group-privileges/" + Repo.Owner.Username + "/" + Repo.Slug; }
+        }
+    }
 }

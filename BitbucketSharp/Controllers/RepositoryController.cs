@@ -121,6 +121,11 @@ namespace BitbucketSharp.Controllers
         public RepositoryPrivilegeController Privileges { get; private set; }
 
         /// <summary>
+        /// Gets the group privileges for this repository
+        /// </summary>
+        public RepositoryGroupPrivilegeController GroupPrivileges { get; private set; }
+
+        /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="owner">The owner of this repository</param>
@@ -137,6 +142,7 @@ namespace BitbucketSharp.Controllers
             Changesets = new ChangesetsController(client, this);
             Branches = new BranchesController(client, this);
             Privileges = new RepositoryPrivilegeController(client, new UserPrivilegesController(client, Owner), Slug);
+            GroupPrivileges = new RepositoryGroupPrivilegeController(client, this);
         }
 
         /// <summary>

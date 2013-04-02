@@ -16,5 +16,17 @@ namespace BitbucketSharp.Models
         public bool IsTeam { get; set; }
         public string Avatar { get; set; }
         public string ResourceUrl { get; set; }
+
+        public override bool Equals(object obj)
+        {
+            if (obj is UserModel)
+                return this.Username.Equals(((UserModel)obj).Username);
+            return false;
+        }
+
+        public override int GetHashCode()
+        {
+            return this.Username.GetHashCode();
+        }
     }
 }
