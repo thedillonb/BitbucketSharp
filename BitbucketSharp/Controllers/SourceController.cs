@@ -42,7 +42,7 @@ namespace BitbucketSharp.Controllers
 
         public System.Net.HttpWebResponse GetFileRaw(string file, System.IO.Stream stream)
         {
-            var uri = Client.ApiUrl + "/" + Branch.Branches.Repository.Uri + "/raw/" + Branch.Name;
+            var uri = Client.ApiUrl + "/" + Branch.Branches.Repository.Uri + "/raw/" + Branch.UrlSafeName;
             if (!uri.EndsWith("/") && !file.StartsWith("/"))
                 file = "/" + file;
 
@@ -78,7 +78,7 @@ namespace BitbucketSharp.Controllers
         /// </summary>
         public override string Uri
         {
-            get { return Branch.Branches.Repository.Uri + "/src/" + Branch.Name; }
+            get { return Branch.Branches.Repository.Uri + "/src/" + Branch.UrlSafeName; }
         }
     }
 

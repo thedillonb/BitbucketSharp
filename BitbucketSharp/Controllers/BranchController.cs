@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using BitbucketSharp.Models;
+using RestSharp.Contrib;
 
 namespace BitbucketSharp.Controllers
 {
@@ -61,6 +62,18 @@ namespace BitbucketSharp.Controllers
         /// </summary>
         public string Name { get; private set; }
 
+		/// <summary>
+		/// Gets the name of the URL safe.
+		/// </summary>
+		/// <value>The name of the URL safe.</value>
+		public string UrlSafeName
+		{
+			get
+			{
+				return HttpUtility.UrlEncode(Name);
+			}
+		}
+
         /// <summary>
         /// The repository this branch belongs to
         /// </summary>
@@ -90,7 +103,7 @@ namespace BitbucketSharp.Controllers
         /// </summary>
         public override string Uri 
         {
-            get { return Branches.Uri + "/" + Name; }
+            get { return Branches.Uri + "/" + UrlSafeName; }
         }
     }
 }
