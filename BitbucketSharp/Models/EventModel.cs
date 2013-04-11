@@ -24,7 +24,7 @@ namespace BitbucketSharp.Models
             public static readonly string 
 
                 //Repository
-                Commit = "commit", CreateRepo = "create", DeleteRepo = "delete", StripRepo = "strip", ForkRepo = "fork", PatchQueue = "mq",
+                Commit = "commit", CreateRepo = "create", DeleteRepo = "delete", StripRepo = "strip", ForkRepo = "fork", PatchQueue = "mq", Pushed = "pushed",
 
                 //Wiki
                 WikiCreated = "wiki_created", WikiUpdated = "wiki_updated", WikiDeleted = "wiki_deleted",
@@ -53,4 +53,17 @@ namespace BitbucketSharp.Models
                 ChangeSetLike = "cset_like", ChangeSetUnlike = "cset_unlike";
         }
     }
+
+	public class PushedEventDescriptionModel
+	{
+		public int TotalCommits { get; set; }
+		public List<CommitModel> Commits { get; set; }
+
+		public class CommitModel
+		{
+			public string Hash { get; set; }
+			public string Description { get; set; }
+		}
+
+	}
 }
