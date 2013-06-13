@@ -43,6 +43,7 @@ namespace BitbucketSharp.Models
         public string Data { get; set; }
         public string Node { get; set; }
         public string Path { get; set; }
+        public string Encoding { get; set; }
     }
 
 }
