@@ -11,6 +11,7 @@ namespace BitbucketSharp
     public class Client
     {
         public static string ApiUrl = "https://api.bitbucket.org/1.0";
+        public static string Url = "https://bitbucket.org";
 
         private readonly RestClient _client = new RestClient(ApiUrl);
 

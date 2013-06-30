@@ -42,7 +42,7 @@ namespace BitbucketSharp.Controllers
 
         public System.Net.HttpWebResponse GetFileRaw(string file, System.IO.Stream stream)
         {
-            var uri = Client.ApiUrl + "/" + Branch.Branches.Repository.Uri + "/raw/" + Branch.UrlSafeName;
+            var uri = Client.Url + "/" + Branch.Branches.Repository.Owner.Username + "/" + Branch.Branches.Repository.Slug + "/raw/" + Branch.UrlSafeName;
             if (!uri.EndsWith("/") && !file.StartsWith("/"))
                 file = "/" + file;
 
