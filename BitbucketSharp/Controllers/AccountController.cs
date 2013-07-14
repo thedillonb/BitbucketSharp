@@ -14,6 +14,12 @@ namespace BitbucketSharp.Controllers
         public EmailController Emails { get; private set; }
 
         /// <summary>
+        /// Gets the teams.
+        /// </summary>
+        /// <value>The teams.</value>
+        public TeamController Teams { get; private set; }
+
+        /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="client"></param>
@@ -21,6 +27,7 @@ namespace BitbucketSharp.Controllers
             : base(client, client.Username)
         {
             Emails = new EmailController(client);
+            Teams = new TeamController(client);
         }
 
         /// <summary>
