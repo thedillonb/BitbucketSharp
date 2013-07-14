@@ -133,8 +133,6 @@
     <Compile Include="..\BitbucketSharp\Controllers\PrivilegesController.cs">
       <Link>Controllers\PrivilegesController.cs</Link>
     </Compile>
-    <Compile Include="Controllers\TeamController.cs" />
-    <Compile Include="Models\TeamModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Utils\" />

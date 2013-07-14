@@ -15,8 +15,6 @@ namespace BitbucketSharp
 
         private readonly RestClient _client = new RestClient(ApiUrl);
 
-        internal RestClient RestClient { get { return _client; } }
-
         /// <summary>
         /// Gets the username for this clietn
         /// </summary>

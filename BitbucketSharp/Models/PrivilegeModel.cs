@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace BitbucketSharp.Models
 {
     public class PrivilegeModel
@@ -20,6 +22,11 @@ namespace BitbucketSharp.Models
             public string Name { get; set; }
             public string Slug { get; set; }
         }
+    }
+
+    public class AccountPrivileges
+    {
+        public Dictionary<string, string> Teams { get; set; }
     }
 }
 
