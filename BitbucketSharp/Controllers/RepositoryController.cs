@@ -135,7 +135,7 @@ namespace BitbucketSharp.Controllers
             : base(client)
         {
             Owner = owner;
-            Slug = slug.ToLower();
+            Slug = slug.Replace(' ', '-').ToLower();
             Issues = new IssuesController(client, this);
             Wikis = new WikisController(client, this);
             Invitations = new InvitationController(client, this);
@@ -182,6 +182,28 @@ namespace BitbucketSharp.Controllers
         {
             return Client.Request<EventsModel>(Uri + "/events/?start=" + start + "&limit=" +
                                                limit + (type == null ? "" : "&type=" + type));
+        }
+
+        /// <summary>
+        /// Forks the repository.
+        /// </summary>
+        /// <returns>The repository model of the forked repository.</returns>
+        /// <param name="name">The name of the new forked repository.</param>
+        /// <param name="description">the description of the forked repository.</param>
+        /// <param name="language">The language of the forked repository.</param>
+        /// <param name="isPrivate">Whether or not the forked repository is private.</param>
+        public RepositoryDetailedModel ForkRepository(string name, string description = null, string language = null, bool? isPrivate = null)
+        {
+            var data = new Dictionary<string, string>();
+            data.Add("name", name);
+            if (description != null)
+                data.Add("description", description);
+            if (language != null)
+                data.Add("language", language);
+            if (isPrivate != null)
+                data.Add("is_private", isPrivate.Value.ToString());
+
+            return Client.Post<RepositoryDetailedModel>(Uri + "/fork", data);
         }
 
         /// <summary>
