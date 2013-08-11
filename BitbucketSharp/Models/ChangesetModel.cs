@@ -36,7 +36,7 @@ namespace BitbucketSharp.Models
     {
         public string Type { get; set; }
         public string File { get; set; }
-        public List<DiffModel> Diffstat { get; set; } 
+        public DiffModel Diffstat { get; set; } 
 
         public class DiffModel
         {

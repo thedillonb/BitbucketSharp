@@ -99,7 +99,7 @@ namespace BitbucketSharp.Controllers
         /// /Gets the diffs
         /// </summary>
         /// <returns></returns>
-        public IList<ChangesetDiffModel> GetDiffs(bool forceCacheInvalidation = false)
+        public List<ChangesetDiffModel> GetDiffs(bool forceCacheInvalidation = false)
         {
             return Client.Get<List<ChangesetDiffModel>>(Uri + "/" + Node + "/diffstat", forceCacheInvalidation);
         }
