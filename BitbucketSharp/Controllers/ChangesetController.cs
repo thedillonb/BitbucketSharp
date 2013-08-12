@@ -74,6 +74,14 @@ namespace BitbucketSharp.Controllers
         public string Node { get; private set; }
 
         /// <summary>
+        /// Gets the comments.
+        /// </summary>
+        public ChangesetCommentsController Comments
+        {
+            get { return new ChangesetCommentsController(Client, this); }
+        }
+
+        /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="client"></param>
@@ -92,7 +100,7 @@ namespace BitbucketSharp.Controllers
         /// <returns></returns>
         public ChangesetModel GetInfo(bool forceCacheInvalidation = false)
         {
-            return Client.Get<ChangesetModel>(Uri + "/" + Node, forceCacheInvalidation);
+            return Client.Get<ChangesetModel>(Uri, forceCacheInvalidation);
         }
 
         /// <summary>
@@ -101,7 +109,46 @@ namespace BitbucketSharp.Controllers
         /// <returns></returns>
         public List<ChangesetDiffModel> GetDiffs(bool forceCacheInvalidation = false)
         {
-            return Client.Get<List<ChangesetDiffModel>>(Uri + "/" + Node + "/diffstat", forceCacheInvalidation);
+            return Client.Get<List<ChangesetDiffModel>>(Uri + "/diffstat", forceCacheInvalidation);
+        }
+
+        /// <summary>
+        /// Gets the likes for a changeset
+        /// </summary>
+        /// <returns>The likes.</returns>
+        /// <param name="forceCacheInvalidation">If set to <c>true</c> force cache invalidation.</param>
+        public List<ChangesetLikeModel> GetLikes(bool forceCacheInvalidation = false)
+        {
+            return Client.Get<List<ChangesetLikeModel>>(Uri + "/likes", forceCacheInvalidation);
+        }
+
+        /// <summary>
+        /// Gets the participants for a changeset
+        /// </summary>
+        /// <returns>The participants.</returns>
+        /// <param name="forceCacheInvalidation">If set to <c>true</c> force cache invalidation.</param>
+        public List<ChangesetParticipantsModel> GetParticipants(bool forceCacheInvalidation = false)
+        {
+            return Client.Get<List<ChangesetParticipantsModel>>(Uri + "/participants", forceCacheInvalidation);
+        }
+
+        /// <summary>
+        /// Approve this instance.
+        /// </summary>
+        public void Approve()
+        {
+            var data = new Dictionary<string, string>();
+            data.Add("hasComments", "false");
+            data.Add("username", Client.Username);
+            Client.Post(Uri + "/approvals/" + Client.Username, data, Client.ApiUrl2);
+        }
+
+        /// <summary>
+        /// Unapprove this instance.
+        /// </summary>
+        public void Unapprove()
+        {
+            Client.Delete(Uri + "/approvals/" + Client.Username, Client.ApiUrl2);
         }
 
         /// <summary>
@@ -109,7 +156,7 @@ namespace BitbucketSharp.Controllers
         /// </summary>
         public override string Uri
         {
-            get { return Repository.Uri + "/changesets"; }
+            get { return Repository.Uri + "/changesets/" + Node; }
         }
     }
 }

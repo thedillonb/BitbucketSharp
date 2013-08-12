@@ -32,6 +32,50 @@ namespace BitbucketSharp.Models
         }
     }
 
+    public class ChangesetCommentModel
+    {
+        public string Username { get; set; }
+        public string Node { get; set; }
+        public long CommentId { get; set; }
+        public string DisplayName { get; set; }
+        public long? ParentId { get; set; }
+        public bool Deleted { get; set; }
+        public DateTime UtcLastUpdated { get; set; }
+        public string FilenameHash { get; set; }
+        public string Filename { get; set; }
+        public string Content { get; set; }
+        public string ContentRendered { get; set; }
+        public string UserAvatarUrl { get; set; }
+        public long? LineFrom { get; set; }
+        public long? LineTo { get; set; }
+        public DateTime UtcCreatedOn { get; set; }
+        public bool IsSpam { get; set; }
+    }
+
+    public class CreateChangesetCommentModel
+    {
+        public string Content { get; set; }
+        public long? LineFrom { get; set; }
+        public long? LineTo { get; set; }
+        public long? ParentId { get; set; }
+        public string Filename { get; set; }
+    }
+
+    public class ChangesetLikeModel
+    {
+        public DateTime UtcLikedOn { get; set; }
+        public UserModel User { get; set; }
+    }
+
+    public class ChangesetParticipantsModel
+    {
+        public bool Approved { get; set; }
+        public string Username { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string Avatar { get; set; }
+    }
+
     public class ChangesetDiffModel
     {
         public string Type { get; set; }

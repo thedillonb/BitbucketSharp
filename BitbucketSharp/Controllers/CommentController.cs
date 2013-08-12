@@ -64,6 +64,56 @@ namespace BitbucketSharp.Controllers
     }
 
     /// <summary>
+    /// Accesses comments for an changeset
+    /// </summary>
+    public class ChangesetCommentsController : Controller
+    {
+        /// <summary>
+        /// The issue these comments belong to
+        /// </summary>
+        public ChangesetController Changeset { get; private set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="client"></param>
+        /// <param name="issue"></param>
+        public ChangesetCommentsController(Client client, ChangesetController changeset) : base(client)
+        {
+            Changeset = changeset;
+        }
+
+
+        /// <summary>
+        /// Gets all the comments
+        /// </summary>
+        /// <returns></returns>
+        public List<ChangesetCommentModel> GetComments(bool forceCacheInvalidation = false)
+        {
+            return Client.Get<List<ChangesetCommentModel>>(Uri, forceCacheInvalidation);
+        }
+
+        /// <summary>
+        /// Create a new comment for this issue
+        /// </summary>
+        /// <param name="comment">The comment model to create</param>
+        /// <returns></returns>
+        public ChangesetCommentModel Create(CreateChangesetCommentModel model)
+        {
+            Client.InvalidateCacheObjects(Uri);
+            return Client.Post<ChangesetCommentModel, CreateChangesetCommentModel>(Uri, model);
+        }
+
+        /// <summary>
+        /// The URI of this controller
+        /// </summary>
+        public override string Uri
+        {
+            get { return Changeset.Uri + "/comments"; }
+        }
+    }
+
+    /// <summary>
     /// Accesses a specific comment
     /// </summary>
     public class CommentController : Controller

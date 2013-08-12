@@ -10,10 +10,11 @@ namespace BitbucketSharp
 {
     public class Client
     {
-        public static string ApiUrl = "https://api.bitbucket.org/1.0";
+        public const string ApiUrl = "https://bitbucket.org/api/1.0/";
+        public const string ApiUrl2 = "https://bitbucket.org/api/2.0/";
         public static string Url = "https://bitbucket.org";
 
-        private readonly RestClient _client = new RestClient(ApiUrl);
+        private readonly RestClient _client = new RestClient();
 
         /// <summary>
         /// Gets the username for this clietn
@@ -92,7 +93,7 @@ namespace BitbucketSharp
         /// <param name="uri">The URI to request information from</param>
         /// <param name="forceCacheInvalidation"></param>
         /// <returns>An object with response data</returns>
-        public T Get<T>(String uri, bool forceCacheInvalidation = false) where T : class
+        public T Get<T>(String uri, bool forceCacheInvalidation = false, string baseUri = ApiUrl) where T : class
         {
             T obj = null;
 
@@ -102,7 +103,7 @@ namespace BitbucketSharp
 
             if (obj == null)
             {
-                obj = Request<T>(uri);
+                obj = Request<T>(uri, baseUri: baseUri);
 
                 //If there's a cache provider, save it!
                 if (CacheProvider != null)
@@ -119,9 +120,9 @@ namespace BitbucketSharp
         /// <param name="uri"></param>
         /// <param name="data"></param>
         /// <returns></returns>
-        public T Put<T>(string uri, Dictionary<string, string> data = null)
+        public T Put<T>(string uri, Dictionary<string, string> data = null, string baseUri = ApiUrl)
         {
-            return Request<T>(uri, Method.PUT, data);
+            return Request<T>(uri, Method.PUT, data, baseUri);
         }
 
         /// <summary>
@@ -129,9 +130,9 @@ namespace BitbucketSharp
         /// </summary>
         /// <param name="uri"></param>
         /// <param name="data"></param>
-        public void Put(string uri, Dictionary<string, string> data = null)
+        public void Put(string uri, Dictionary<string, string> data = null, string baseUri = ApiUrl)
         {
-            Request(uri, Method.PUT, data);
+            Request(uri, Method.PUT, data, baseUri);
         }
 
         /// <summary>
@@ -141,9 +142,9 @@ namespace BitbucketSharp
         /// <param name="uri"></param>
         /// <param name="data"></param>
         /// <returns></returns>
-        public T Post<T>(string uri, Dictionary<string, string> data)
+        public T Post<T>(string uri, Dictionary<string, string> data, string baseUri = ApiUrl)
         {
-            return Request<T>(uri, Method.POST, data);
+            return Request<T>(uri, Method.POST, data, baseUri);
         }
 
         /// <summary>
@@ -153,17 +154,17 @@ namespace BitbucketSharp
         /// <param name="uri"></param>
         /// <param name="data"></param>
         /// <returns></returns>
-        public T Post<T>(string uri, T data)
+        public T Post<T>(string uri, T data, string baseUri = ApiUrl)
         {
-            return Post<T>(uri, ObjectToDictionaryConverter.Convert(data));
+            return Post<T>(uri, ObjectToDictionaryConverter.Convert(data), baseUri);
         }
 
         /// <summary>
         /// Post the specified uri and data.
         /// </summary>
-        public T Post<T, TD>(string uri, TD data)
+        public T Post<T, TD>(string uri, TD data, string baseUri = ApiUrl)
         {
-            return Post<T>(uri, ObjectToDictionaryConverter.Convert(data));
+            return Post<T>(uri, ObjectToDictionaryConverter.Convert(data), baseUri);
         }
 
         /// <summary>
@@ -172,18 +173,18 @@ namespace BitbucketSharp
         /// <param name="uri"></param>
         /// <param name="data"></param>
         /// <returns></returns>
-        public void Post(string uri, Dictionary<string, string> data)
+        public void Post(string uri, Dictionary<string, string> data, string baseUri = ApiUrl)
         {
-            Request(uri, Method.POST, data);
+            Request(uri, Method.POST, data, baseUri);
         }
 
         /// <summary>
         /// Makes a 'DELETE' request to the server
         /// </summary>
         /// <param name="uri"></param>
-        public void Delete(string uri)
+        public void Delete(string uri, string baseUri = ApiUrl)
         {
-            Request(uri, Method.DELETE);
+            Request(uri, Method.DELETE, baseUri: baseUri);
         }
 
         /// <summary>
@@ -194,9 +195,9 @@ namespace BitbucketSharp
         /// <param name="data"></param>
         /// <param name="method"></param>
         /// <returns></returns>
-        public T Request<T>(string uri, Method method = Method.GET, Dictionary<string, string> data = null)
+        public T Request<T>(string uri, Method method = Method.GET, Dictionary<string, string> data = null, string baseUri = ApiUrl)
         {
-            var response = ExecuteRequest(uri, method, data);
+            var response = ExecuteRequest(uri, method, data, baseUri);
             var d = new JsonDeserializer();
             return d.Deserialize<T>(response);
         }
@@ -207,9 +208,9 @@ namespace BitbucketSharp
         /// <param name="uri"></param>
         /// <param name="method"></param>
         /// <param name="data"></param>
-        public void Request(string uri, Method method = Method.GET, Dictionary<string, string> data = null)
+        public void Request(string uri, Method method = Method.GET, Dictionary<string, string> data = null, string baseUri = ApiUrl)
         {
-            ExecuteRequest(uri, method, data);
+            ExecuteRequest(uri, method, data, baseUri);
         }
 
         /// <summary>
@@ -219,12 +220,14 @@ namespace BitbucketSharp
         /// <param name="method"></param>
         /// <param name="data"></param>
         /// <returns></returns>
-        internal IRestResponse ExecuteRequest(string uri, Method method, Dictionary<string, string> data)
+        internal IRestResponse ExecuteRequest(string uri, Method method, Dictionary<string, string> data, string baseUri)
         {
             if (uri == null)
                 throw new ArgumentNullException("uri");
 
-            var request = new RestRequest(uri, method);
+            var requestUri = new Uri(new Uri(baseUri), uri);
+            var request = new RestRequest(method);
+            request.Resource = requestUri.AbsoluteUri;
             if (data != null)
                 foreach (var hd in data)
                     request.AddParameter(hd.Key, hd.Value);
