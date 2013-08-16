@@ -104,6 +104,15 @@ namespace BitbucketSharp.Controllers
         }
 
         /// <summary>
+        /// Delete a comment
+        /// </summary>
+        /// <param name="commentId">The comment's id to be deleted</param>
+        public void Delete(long commentId)
+        {
+            Client.Delete(Uri + "/" + commentId);
+        }
+
+        /// <summary>
         /// The URI of this controller
         /// </summary>
         public override string Uri

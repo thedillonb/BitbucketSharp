@@ -137,10 +137,7 @@ namespace BitbucketSharp.Controllers
         /// </summary>
         public void Approve()
         {
-            var data = new Dictionary<string, string>();
-            data.Add("hasComments", "false");
-            data.Add("username", Client.Username);
-            Client.Post(Uri + "/approvals/" + Client.Username, data, Client.ApiUrl2);
+            Client.Post(Uri + "/approvals/" + Client.Username, null, Client.ApiUrl2);
         }
 
         /// <summary>
