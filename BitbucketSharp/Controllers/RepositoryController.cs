@@ -83,7 +83,10 @@ namespace BitbucketSharp.Controllers
         /// <summary>
         /// Gets a handle to the issue controller
         /// </summary>
-        public IssuesController Issues { get; private set; }
+        public IssuesController Issues
+        {
+            get { return new IssuesController(Client, this); }
+        }
 
         /// <summary>
         /// Gets the owner of the repository
@@ -98,32 +101,50 @@ namespace BitbucketSharp.Controllers
         /// <summary>
         /// Gets the wikis of this repository
         /// </summary>
-        public WikisController Wikis { get; private set; }
+        public WikisController Wikis
+        {
+            get { return new WikisController(Client, this); }
+        }
 
         /// <summary>
         /// Gets the invitations to this repository
         /// </summary>
-        public InvitationController Invitations { get; private set; }
+        public InvitationController Invitations
+        {
+            get { return new InvitationController(Client, this); }
+        }
 
         /// <summary>
         /// Gets the changesets.
         /// </summary>
-        public ChangesetsController Changesets { get; private set; }
+        public ChangesetsController Changesets
+        {
+            get { return new ChangesetsController(Client, this); }
+        }
 
         /// <summary>
         /// Gets the branches
         /// </summary>
-        public BranchesController Branches { get; private set; }
+        public BranchesController Branches
+        {
+            get { return new BranchesController(Client, this); }
+        }
 
         /// <summary>
         /// Gets the privileges for this repository
         /// </summary>
-        public RepositoryPrivilegeController Privileges { get; private set; }
+        public RepositoryPrivilegeController Privileges
+        {
+            get { return new RepositoryPrivilegeController(Client, new UserPrivilegesController(Client, Owner), Slug); }
+        }
 
         /// <summary>
         /// Gets the group privileges for this repository
         /// </summary>
-        public RepositoryGroupPrivilegeController GroupPrivileges { get; private set; }
+        public RepositoryGroupPrivilegeController GroupPrivileges
+        {
+            get { return new RepositoryGroupPrivilegeController(Client, this); }
+        }
 
         /// <summary>
         /// Constructor
@@ -136,13 +157,6 @@ namespace BitbucketSharp.Controllers
         {
             Owner = owner;
             Slug = slug.Replace(' ', '-').ToLower();
-            Issues = new IssuesController(client, this);
-            Wikis = new WikisController(client, this);
-            Invitations = new InvitationController(client, this);
-            Changesets = new ChangesetsController(client, this);
-            Branches = new BranchesController(client, this);
-            Privileges = new RepositoryPrivilegeController(client, new UserPrivilegesController(client, Owner), Slug);
-            GroupPrivileges = new RepositoryGroupPrivilegeController(client, this);
         }
 
         /// <summary>

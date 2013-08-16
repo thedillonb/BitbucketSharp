@@ -83,7 +83,6 @@ namespace BitbucketSharp.Controllers
             Changeset = changeset;
         }
 
-
         /// <summary>
         /// Gets all the comments
         /// </summary>

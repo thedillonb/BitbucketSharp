@@ -11,7 +11,10 @@ namespace BitbucketSharp.Controllers
         /// <summary>
         /// Email for this user
         /// </summary>
-        public EmailController Emails { get; private set; }
+        public EmailController Emails 
+        {
+            get { return new EmailController(Client); }
+        }
 
         /// <summary>
         /// Constructor
@@ -20,7 +23,15 @@ namespace BitbucketSharp.Controllers
         public AccountController(Client client)
             : base(client, client.Username)
         {
-            Emails = new EmailController(client);
+        }
+
+        /// <summary>
+        /// Gets information about this user
+        /// </summary>
+        /// <returns>A UsersModel</returns>
+        public new UsersModel GetInfo(bool forceCacheInvalidation = false)
+        {
+            return Client.Get<UsersModel>("user", forceCacheInvalidation);
         }
 
         /// <summary>

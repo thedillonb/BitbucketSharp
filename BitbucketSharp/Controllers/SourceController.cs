@@ -33,6 +33,12 @@ namespace BitbucketSharp.Controllers
             get { return new SourceController(Client, this, path); }
         }
 
+        /// <summary>
+        /// Get a file
+        /// </summary>
+        /// <param name="file">The file name</param>
+        /// <param name="forceCacheInvalidation"></param>
+        /// <returns></returns>
         public FileModel GetFile(string file, bool forceCacheInvalidation = false)
         {
             if (!Uri.EndsWith("/") && !file.StartsWith("/"))
@@ -40,17 +46,25 @@ namespace BitbucketSharp.Controllers
             return Client.Get<FileModel>(Uri + file, forceCacheInvalidation);
         } 
 
-        public System.Net.HttpWebResponse GetFileRaw(string file, System.IO.Stream stream)
+        /// <summary>
+        /// Get the raw file that will write to an IO stream. 
+        /// BASIC authentication is only supported now until I update the latest RestSharp to include streaming capabilities.
+        /// </summary>
+        /// <param param name="username">The username to login with</param>
+        /// <param name="password">The password to login with</param>
+        /// <param name="file">The file name</param>
+        /// <param name="stream">The file stream to write the file to</param>
+        /// <returns>An HttpWebResponse object</returns>
+        public System.Net.HttpWebResponse GetFileRaw(string username, string password, string file, System.IO.Stream stream)
         {
             var uri = Client.Url + "/" + Branch.Branches.Repository.Owner.Username + "/" + Branch.Branches.Repository.Slug + "/raw/" + Branch.UrlSafeName;
             if (!uri.EndsWith("/") && !file.StartsWith("/"))
                 file = "/" + file;
 
-
             var fileReq = (System.Net.HttpWebRequest)System.Net.WebRequest.Create(uri + file);
 
             //Set the authentication!
-            var authInfo = Client.Username + ":" + Client.Password;
+            var authInfo = username + ":" + password;
             authInfo = System.Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(authInfo));
             fileReq.Headers["Authorization"] = "Basic " + authInfo;
 

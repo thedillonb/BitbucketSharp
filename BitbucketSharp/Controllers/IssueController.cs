@@ -114,7 +114,10 @@ namespace BitbucketSharp.Controllers
         /// <summary>
         /// Gets the comments this issue has
         /// </summary>
-        public CommentsController Comments { get; private set; }
+        public CommentsController Comments
+        {
+            get { return new CommentsController(Client, this); }
+        }
 
         /// <summary>
         /// Constructor
@@ -127,7 +130,6 @@ namespace BitbucketSharp.Controllers
         {
             Id = id;
             Repository = repository;
-            Comments = new CommentsController(Client, this);
         }
 
         /// <summary>

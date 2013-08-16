@@ -5,6 +5,8 @@ using BitbucketSharp.Controllers;
 using BitbucketSharp.Utils;
 using RestSharp;
 using RestSharp.Deserializers;
+using BitbucketSharp.Models;
+using RestSharp.Contrib;
 
 namespace BitbucketSharp
 {
@@ -14,32 +16,37 @@ namespace BitbucketSharp
         public const string ApiUrl2 = "https://bitbucket.org/api/2.0/";
         public static string Url = "https://bitbucket.org";
 
-        private readonly RestClient _client = new RestClient();
+        private readonly RestClient _client;
 
         /// <summary>
-        /// Gets the username for this clietn
+        /// The username we are logging as as.
+        /// Instead of passing in the account's username everywhere we'll just set it once here.
         /// </summary>
-        public String Username { get; private set; }
-
-        /// <summary>
-        /// Gets the password.
-        /// </summary>
-        public String Password { get; private set; }
+        public string Username { get; set; }
 
         /// <summary>
         /// The user account
         /// </summary>
-        public AccountController Account { get; private set; }
+        public AccountController Account
+        {
+            get { return new AccountController(this); }
+        }
 
         /// <summary>
         /// The users on Bitbucket
         /// </summary>
-        public UsersController Users { get; private set; }
+        public UsersController Users
+        {
+            get { return new UsersController(this); }
+        }
 
         /// <summary>
         /// The repositories on Bitbucket
         /// </summary>
-        public RepositoriesController Repositories { get; private set; }
+        public RepositoriesController Repositories
+        {
+            get { return new RepositoriesController(this); }
+        }
 
         /// <summary>
         /// Gets or sets the timeout.
@@ -66,20 +73,111 @@ namespace BitbucketSharp
         /// <summary>
         /// Constructor
         /// </summary>
-        /// <param name="username"></param>
-        /// <param name="password"></param>
-        public Client(String username, String password)
+        private Client()
         {
             Retries = 3;
-            Username = username;
-            Password = password;
-            Account = new AccountController(this);
-            Users = new UsersController(this);
-            Repositories = new RepositoriesController(this);
-            _client.Authenticator = new HttpBasicAuthenticator(username, password);
-            _client.FollowRedirects = true;
+            _client = new RestClient() { FollowRedirects = true };
         }
 
+        /// <summary>
+        /// Constructs the client using oauth identifiers
+        /// </summary>
+        /// <param name="consumerKey"></param>
+        /// <param name="consumerSecret"></param>
+        /// <param name="oauth_token"></param>
+        /// <param name="oauth_token_secret"></param>
+        public Client(string consumerKey, string consumerSecret, string oauth_token, string oauth_token_secret) 
+            : this()
+        {
+            _client.Authenticator = RestSharp.Authenticators.OAuth1Authenticator.ForProtectedResource(consumerKey, consumerSecret, oauth_token, oauth_token_secret);
+        }
+
+        /// <summary>
+        /// Constructs the client using username / password
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="password"></param>
+        public Client(string username, string password)
+            : this()
+        {
+            _client.Authenticator = new HttpBasicAuthenticator(username, password);
+        }
+
+        /// <summary>
+        /// Create a Client object and request the user's info to validate credentials
+        /// </summary>
+        /// <param name="username">The username</param>
+        /// <param name="password">The password</param>
+        /// <returns></returns>
+        public static Client BasicLogin(string username, string password, out UsersModel userInfo)
+        {
+            var client = new Client(username, password);
+            userInfo = client.Account.GetInfo();
+            client.Username = userInfo.User.Username;
+            return client;
+        }
+
+        /// <summary>
+        /// Create a Client object with OAuth crednetials and a request the user's info to validate credentials
+        /// </summary>
+        /// <param name="consumerKey"></param>
+        /// <param name="consumerSecret"></param>
+        /// <param name="oauth_token"></param>
+        /// <param name="oauth_token_secret"></param>
+        /// <param name="userInfo"></param>
+        /// <returns></returns>
+        public static Client OAuthLogin(string consumerKey, string consumerSecret, string oauth_token, string oauth_token_secret, out UsersModel userInfo)
+        {
+            var client = new Client(consumerKey, consumerSecret, oauth_token, oauth_token_secret);
+            userInfo = client.Account.GetInfo();
+            client.Username = userInfo.User.Username;
+            return client;
+        }
+
+        /// <summary>
+        /// Run through the OAuth login process to obtain an auth token and secret. Then login using that information and request the user's
+        /// info to validate credentials
+        /// </summary>
+        /// <param name="consumerKey"></param>
+        /// <param name="consumerSecret"></param>
+        /// <param name="redirectAction"></param>
+        /// <param name="oauth_token"></param>
+        /// <param name="oauth_token_secret"></param>
+        /// <param name="userInfo"></param>
+        /// <returns></returns>
+        public static Client OAuthLogin(string consumerKey, string consumerSecret, Func<Uri, string> redirectAction, out string oauth_token, out string oauth_token_secret, out UsersModel userInfo)
+        {
+            var client = new RestClient(ApiUrl);
+            client.Authenticator = RestSharp.Authenticators.OAuth1Authenticator.ForRequestToken(consumerKey, consumerSecret);
+            var request = new RestRequest("oauth/request_token", Method.POST);
+            var response = client.Execute(request);
+
+            var qs = HttpUtility.ParseQueryString(response.Content);
+            oauth_token = qs["oauth_token"];
+            oauth_token_secret = qs["oauth_token_secret"];
+
+            request = new RestRequest("oauth/authenticate");
+            request.AddParameter("oauth_token", oauth_token);
+            var uri = new Uri(client.BuildUri(request).ToString());
+            var verifier = redirectAction(uri);
+
+            request = new RestRequest("oauth/access_token", Method.POST);
+            client.Authenticator = RestSharp.Authenticators.OAuth1Authenticator.ForAccessToken(
+                consumerKey, consumerSecret, oauth_token, oauth_token_secret, verifier
+            );
+            response = client.Execute(request);
+
+            qs = HttpUtility.ParseQueryString(response.Content);
+            oauth_token = qs["oauth_token"];
+            oauth_token_secret = qs["oauth_token_secret"];
+
+            return OAuthLogin(consumerKey, consumerSecret, oauth_token, oauth_token_secret, out userInfo);
+        }
+
+        /// <summary>
+        /// Invalidates a cache object starting with a specific URI
+        /// </summary>
+        /// <param name="startsWithUri">The starting URI to be invalidated</param>
         public void InvalidateCacheObjects(string startsWithUri)
         {
             if (CacheProvider != null)

@@ -49,22 +49,34 @@ namespace BitbucketSharp.Controllers
         /// <summary>
         /// Groups that belong to this user
         /// </summary>
-        public GroupsController Groups { get; private set; }
+        public GroupsController Groups
+        {
+            get { return new GroupsController(Client, this); }
+        }
 
         /// <summary>
         /// Repositories that belong to this user
         /// </summary>
-        public UserRepositoriesController Repositories { get; private set; }
+        public UserRepositoriesController Repositories
+        {
+            get { return new UserRepositoriesController(Client, this); }
+        }
 
         /// <summary>
         /// Gets the privileges for this user
         /// </summary>
-        public UserPrivilegesController Privileges { get; private set; }
+        public UserPrivilegesController Privileges
+        {
+            get { return new UserPrivilegesController(Client, this); }
+        }
 
         /// <summary>
         /// Gets the SSH keys.
         /// </summary>
-        public SSHKeyController SSHKeys { get; private set; }
+        public SSHKeyController SSHKeys
+        {
+            get { return new SSHKeyController(Client, this); }
+        }
 
         /// <summary>
         /// Constructor
@@ -73,10 +85,6 @@ namespace BitbucketSharp.Controllers
             : base(client)
         {
             Username = username;
-            Groups = new GroupsController(client, this);
-            Repositories = new UserRepositoriesController(client, this);
-            Privileges = new UserPrivilegesController(client, this);
-            SSHKeys = new SSHKeyController(client, this);
         }
 
         /// <summary>

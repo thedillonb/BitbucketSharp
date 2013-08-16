@@ -82,7 +82,10 @@ namespace BitbucketSharp.Controllers
         /// <summary>
         /// Gets the source this branch has
         /// </summary>
-        public SourcesController Source { get; private set; }
+        public SourcesController Source
+        {
+            get { return new SourcesController(Client, this); }
+        }
 
         /// <summary>
         /// Constructor
@@ -95,7 +98,6 @@ namespace BitbucketSharp.Controllers
         {
             Branches = branches;
             Name = branch;
-            Source = new SourcesController(Client, this);
         }
 
         /// <summary>

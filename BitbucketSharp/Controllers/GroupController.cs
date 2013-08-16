@@ -25,7 +25,7 @@ namespace BitbucketSharp.Controllers
 
         /// <summary>
         /// Gets the groups.
-        /// </summary>ß
+        /// </summary>
         public List<GroupModel> GetGroups(bool forceCacheInvalidation = false)
         {
             return Client.Get<List<GroupModel>>(Uri, forceCacheInvalidation);
