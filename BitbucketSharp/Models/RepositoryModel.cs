@@ -43,6 +43,13 @@ namespace BitbucketSharp.Models
         public List<RepositoryDetailedModel> Repositories { get; set; }
     }
 
+    public class RepositoryFollowModel
+    {
+        public int Followers { get; set; }
+        public bool Following { get; set; }
+        public string Type { get; set; }
+    }
+
     public class TagModel
     {
         public string Node { get; set; }

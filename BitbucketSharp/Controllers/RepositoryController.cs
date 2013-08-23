@@ -221,6 +221,15 @@ namespace BitbucketSharp.Controllers
         }
 
         /// <summary>
+        /// Toggle's the following for this repository. Don't use this...
+        /// </summary>
+        /// <returns><c>true</c>, if follow was toggled, <c>false</c> otherwise.</returns>
+        public RepositoryFollowModel ToggleFollow()
+        {
+            return Client.Post<RepositoryFollowModel>(Owner + "/" + Slug + "/follow", null, "https://bitbucket.org/");
+        }
+
+        /// <summary>
         /// The URI of this controller
         /// </summary>
         public override string Uri
