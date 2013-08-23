@@ -101,6 +101,7 @@ namespace BitbucketSharp
             : this()
         {
             _client.Authenticator = new HttpBasicAuthenticator(username, password);
+            Username = username;
         }
 
         /// <summary>
