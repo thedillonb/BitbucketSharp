@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Net;
 using BitbucketSharp.Controllers;
@@ -243,26 +243,6 @@ namespace BitbucketSharp
         public T Post<T>(string uri, Dictionary<string, string> data, string baseUri = ApiUrl)
         {
             return Request<T>(uri, Method.POST, data, baseUri);
-        }
-
-        /// <summary>
-        /// Makes a 'POST' request to the server
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="uri"></param>
-        /// <param name="data"></param>
-        /// <returns></returns>
-        public T Post<T>(string uri, T data, string baseUri = ApiUrl)
-        {
-            return Post<T>(uri, ObjectToDictionaryConverter.Convert(data), baseUri);
-        }
-
-        /// <summary>
-        /// Post the specified uri and data.
-        /// </summary>
-        public T Post<T, TD>(string uri, TD data, string baseUri = ApiUrl)
-        {
-            return Post<T>(uri, ObjectToDictionaryConverter.Convert(data), baseUri);
         }
 
         /// <summary>

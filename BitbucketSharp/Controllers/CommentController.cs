@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using BitbucketSharp.Models;
 using BitbucketSharp.Utils;
 
@@ -48,10 +48,10 @@ namespace BitbucketSharp.Controllers
         /// </summary>
         /// <param name="comment">The comment model to create</param>
         /// <returns></returns>
-        public CommentModel Create(CommentModel comment)
+        public CommentModel Create(string content)
         {
             Client.InvalidateCacheObjects(Uri);
-            return Client.Post(Uri, comment);
+            return Client.Post<CommentModel>(Uri, new Dictionary<string, string> {{ "content", content }});
         }
 
         /// <summary>
@@ -97,10 +97,21 @@ namespace BitbucketSharp.Controllers
         /// </summary>
         /// <param name="comment">The comment model to create</param>
         /// <returns></returns>
-        public ChangesetCommentModel Create(CreateChangesetCommentModel model)
+        public ChangesetCommentModel Create(string content, long? lineFrom = null, long? lineTo = null, long? parentId = null, string filename = null)
         {
             Client.InvalidateCacheObjects(Uri);
-            return Client.Post<ChangesetCommentModel, CreateChangesetCommentModel>(Uri, model);
+            var dic = new Dictionary<string, string>();
+            dic.Add("content", content);
+            if (lineFrom != null)
+                dic.Add("line_from", lineFrom.Value.ToString());
+            if (lineTo != null)
+                dic.Add("line_to", lineTo.Value.ToString());
+            if (parentId != null)
+                dic.Add("parent_id", parentId.Value.ToString());
+            if (filename != null)
+                dic.Add("filename", filename);
+
+            return Client.Post<ChangesetCommentModel>(Uri, dic);
         }
 
         /// <summary>

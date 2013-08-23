@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using BitbucketSharp.Models;
 using BitbucketSharp.Utils;
 using System;
@@ -84,7 +84,7 @@ namespace BitbucketSharp.Controllers
         /// <returns></returns>
         public IssueModel Create(CreateIssueModel issue)
         {
-            return Client.Post<IssueModel, CreateIssueModel>(Uri, issue);
+            return Client.Post<IssueModel>(Uri, issue.Serialize());
         }
 
         /// <summary>
