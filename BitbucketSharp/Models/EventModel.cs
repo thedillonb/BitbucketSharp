@@ -21,7 +21,7 @@ namespace BitbucketSharp.Models
 
         public static class Type
         {
-            public static readonly string 
+			public const string 
 
                 //Repository
                 Commit = "commit", CreateRepo = "create", DeleteRepo = "delete", StripRepo = "strip", ForkRepo = "fork", PatchQueue = "mq", Pushed = "pushed",

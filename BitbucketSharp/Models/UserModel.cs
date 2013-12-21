@@ -19,9 +19,8 @@ namespace BitbucketSharp.Models
 
         public override bool Equals(object obj)
         {
-            if (obj is UserModel)
-                return this.Username.Equals(((UserModel)obj).Username);
-            return false;
+			var userModel = obj as UserModel;
+			return userModel != null && string.Equals(Username, userModel.Username);
         }
 
         public override int GetHashCode()
