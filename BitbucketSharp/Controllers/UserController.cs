@@ -1,5 +1,6 @@
 ﻿using BitbucketSharp.Models;
 using BitbucketSharp.MonoTouch.Controllers;
+using BitbucketSharp.Models.V2;
 
 namespace BitbucketSharp.Controllers
 {
@@ -114,6 +115,11 @@ namespace BitbucketSharp.Controllers
         public FollowersModel GetFollowers(bool forceCacheInvalidation = false)
 		{
             return Client.Get<FollowersModel>(Uri + "/followers", forceCacheInvalidation);
+		}
+
+		public Collection<BitbucketSharp.Models.V2.UserModel> GetFollowing(bool forceCacheInvalidation = false, int limit = 100)
+		{
+			return Client.Get<Collection<BitbucketSharp.Models.V2.UserModel>>(Uri + "/following?pagelen=" + limit, forceCacheInvalidation, Client.ApiUrl2);
 		}
 
         /// <summary>

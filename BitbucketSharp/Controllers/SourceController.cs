@@ -55,36 +55,12 @@ namespace BitbucketSharp.Controllers
         /// <param name="file">The file name</param>
         /// <param name="stream">The file stream to write the file to</param>
         /// <returns>An HttpWebResponse object</returns>
-        public System.Net.HttpWebResponse GetFileRaw(string username, string password, string file, System.IO.Stream stream)
+		public string GetFileRaw(string file, System.IO.Stream stream)
         {
             var uri = Client.Url + "/" + Branch.Branches.Repository.Owner.Username + "/" + Branch.Branches.Repository.Slug + "/raw/" + Branch.UrlSafeName;
             if (!uri.EndsWith("/") && !file.StartsWith("/"))
                 file = "/" + file;
-
-            var fileReq = (System.Net.HttpWebRequest)System.Net.WebRequest.Create(uri + file);
-
-            //Set the authentication!
-            var authInfo = username + ":" + password;
-            authInfo = System.Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(authInfo));
-            fileReq.Headers["Authorization"] = "Basic " + authInfo;
-
-            var resp = (System.Net.HttpWebResponse)fileReq.GetResponse();
-            if (resp != null)
-            {
-                using (var dstream = resp.GetResponseStream())
-                {
-                    var buffer = new byte[1024];
-                    while (true)
-                    {
-                        var bytesRead = dstream.Read(buffer, 0, 1024);
-                        if (bytesRead <= 0)
-                            break;
-                        stream.Write(buffer, 0, bytesRead);
-                    }
-                }
-            }
-
-            return resp;
+			return Client.DownloadRawResource(uri + file, stream);
         }
 
         /// <summary>

@@ -341,7 +341,24 @@ namespace BitbucketSharp
 
             throw new InvalidOperationException("Unable to execute request. No connection available!");
         }
+
+		/// <summary>
+		/// Executes a request to the server
+		/// </summary>
+		internal IRestResponse ExecuteRequest(IRestRequest request)
+		{
+			var response = _client.Execute(request);
+			if (response.ErrorException != null)
+				throw response.ErrorException;
+			return response;
+		}
+
+		public string DownloadRawResource(string rawUrl, System.IO.Stream downloadSream)
+		{
+			var request = new RestRequest(rawUrl, Method.GET);
+			request.ResponseWriter = (s) => s.CopyTo(downloadSream);
+			var response = ExecuteRequest(request);
+			return response.ContentType;
+		}
     }
-
-
 }
