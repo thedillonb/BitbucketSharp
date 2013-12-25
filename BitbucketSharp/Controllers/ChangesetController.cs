@@ -137,7 +137,7 @@ namespace BitbucketSharp.Controllers
         /// </summary>
         public void Approve()
         {
-            Client.Post(Uri + "/approvals/" + Client.Username, null, Client.ApiUrl2);
+			Client.Post(Repository.Uri + "/commit/" + Node + "/approve", null, Client.ApiUrl2);
         }
 
         /// <summary>
@@ -145,7 +145,7 @@ namespace BitbucketSharp.Controllers
         /// </summary>
         public void Unapprove()
         {
-            Client.Delete(Uri + "/approvals/" + Client.Username, Client.ApiUrl2);
+			Client.Delete(Repository.Uri + "/commit/" + Node + "/approve", Client.ApiUrl2);
         }
 
         /// <summary>

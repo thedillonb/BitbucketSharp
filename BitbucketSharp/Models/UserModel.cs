@@ -50,6 +50,17 @@ namespace BitbucketSharp.Models
 			public string DisplayName { get; set; }
 			public string Location { get; set; }
 			public DateTime CreatedOn { get; set; }
+			public LinksModel Links { get; set; }
+
+			public class LinksModel
+			{
+				public LinkModel Avatar { get; set; }
+			}
+		}
+
+		public class LinkModel
+		{
+			public string Href { get; set; }
 		}
 	}
 }
