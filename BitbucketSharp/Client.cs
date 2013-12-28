@@ -193,24 +193,24 @@ namespace BitbucketSharp
         /// <param name="forceCacheInvalidation"></param>
         /// <returns>An object with response data</returns>
         public T Get<T>(String uri, bool forceCacheInvalidation = false, string baseUri = ApiUrl) where T : class
-        {
-            T obj = null;
+		{
+			T obj = null;
 
-            //If there's a cache provider, check it.
-            if (CacheProvider != null && !forceCacheInvalidation)
-                obj = CacheProvider.Get<T>(uri);
+			//If there's a cache provider, check it.
+			if (CacheProvider != null && !forceCacheInvalidation)
+				obj = CacheProvider.Get<T>(uri);
 
-            if (obj == null)
-            {
-                obj = Request<T>(uri, baseUri: baseUri);
+			if (obj == null)
+			{
+				obj = Request<T>(uri, baseUri: baseUri);
 
-                //If there's a cache provider, save it!
-                if (CacheProvider != null)
-                    CacheProvider.Set(obj, uri);
-            }
+				//If there's a cache provider, save it!
+				if (CacheProvider != null)
+					CacheProvider.Set(obj, uri);
+			}
 
-            return obj;
-        }
+			return obj;
+		}
 
         /// <summary>
         /// Makes a 'PUT' request to the server
@@ -276,10 +276,24 @@ namespace BitbucketSharp
         /// <returns></returns>
         public T Request<T>(string uri, Method method = Method.GET, Dictionary<string, string> data = null, string baseUri = ApiUrl)
         {
-            var response = ExecuteRequest(uri, method, data, baseUri);
+			var response = ExecuteRequest(new Uri(new Uri(baseUri), uri), method, data);
             var d = new JsonDeserializer();
             return d.Deserialize<T>(response);
         }
+
+		/// <summary>
+		/// Dummy thing.. for now
+		/// </summary>
+		/// <param name="uri">URI.</param>
+		/// <param name="method">Method.</param>
+		/// <param name="data">Data.</param>
+		/// <typeparam name="T">The 1st type parameter.</typeparam>
+		public T Request2<T>(string uri, Method method = Method.GET, Dictionary<string, string> data = null)
+		{
+			var response = ExecuteRequest(new Uri(uri), method, data);
+			var d = new JsonDeserializer();
+			return d.Deserialize<T>(response);
+		}
 
         /// <summary>
         /// Makes a request to the server but does not expect a response.
@@ -289,7 +303,7 @@ namespace BitbucketSharp
         /// <param name="data"></param>
         public void Request(string uri, Method method = Method.GET, Dictionary<string, string> data = null, string baseUri = ApiUrl)
         {
-            ExecuteRequest(uri, method, data, baseUri);
+			ExecuteRequest(new Uri(new Uri(baseUri), uri), method, data);
         }
 
         /// <summary>
@@ -299,14 +313,13 @@ namespace BitbucketSharp
         /// <param name="method"></param>
         /// <param name="data"></param>
         /// <returns></returns>
-        internal IRestResponse ExecuteRequest(string uri, Method method, Dictionary<string, string> data, string baseUri)
+		internal IRestResponse ExecuteRequest(Uri uri, Method method, Dictionary<string, string> data)
         {
             if (uri == null)
                 throw new ArgumentNullException("uri");
 
-            var requestUri = new Uri(new Uri(baseUri), uri);
             var request = new RestRequest(method);
-            request.Resource = requestUri.AbsoluteUri;
+			request.Resource = uri.AbsoluteUri;
             if (data != null)
                 foreach (var hd in data)
                     request.AddParameter(hd.Key, hd.Value);

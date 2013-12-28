@@ -146,6 +146,14 @@ namespace BitbucketSharp.Controllers
             get { return new RepositoryGroupPrivilegeController(Client, this); }
         }
 
+		/// <summary>
+		/// Gets the pull requests.
+		/// </summary>
+		public PullRequestsController PullRequests
+		{
+			get { return new PullRequestsController(Client, this); }
+		}
+
         /// <summary>
         /// Constructor
         /// </summary>
