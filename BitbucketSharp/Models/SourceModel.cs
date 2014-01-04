@@ -45,5 +45,4 @@ namespace BitbucketSharp.Models
         public string Path { get; set; }
         public string Encoding { get; set; }
     }
-
 }

@@ -132,6 +132,11 @@ namespace BitbucketSharp.Controllers
             return Client.Get<List<ChangesetParticipantsModel>>(Uri + "/participants", forceCacheInvalidation);
         }
 
+		public string GetPatch(bool forceCacheInvalidation = false)
+		{
+			return Client.Get<string>(Uri + "/patch/" + Node, forceCacheInvalidation, Client.ApiUrl2);
+		}
+
         /// <summary>
         /// Approve this instance.
         /// </summary>
