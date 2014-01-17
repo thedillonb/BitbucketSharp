@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using BitbucketSharp.Controllers;
-using BitbucketSharp.Utils;
 using RestSharp;
 using RestSharp.Deserializers;
 using BitbucketSharp.Models;
@@ -17,6 +16,8 @@ namespace BitbucketSharp
         public static string Url = "https://bitbucket.org";
 
         private readonly RestClient _client;
+
+		public static IJsonSerializer Serializer = new SimpleJsonSerializer();
 
         /// <summary>
         /// The username we are logging as as.

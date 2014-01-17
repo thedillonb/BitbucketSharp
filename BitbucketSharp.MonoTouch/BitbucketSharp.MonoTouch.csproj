@@ -142,6 +142,12 @@
     <Compile Include="..\BitbucketSharp\PullRequestModel.cs">
       <Link>Models\PullRequestModel.cs</Link>
     </Compile>
+    <Compile Include="..\BitbucketSharp\IJsonSerializer.cs">
+      <Link>IJsonSerializer.cs</Link>
+    </Compile>
+    <Compile Include="..\BitbucketSharp\SimpleJsonSerializer.cs">
+      <Link>SimpleJsonSerializer.cs</Link>
+    </Compile>
   </ItemGroup>
   <ItemGroup />
   <ProjectExtensions>
