@@ -47,6 +47,14 @@ namespace BitbucketSharp
             get { return new RepositoriesController(this); }
         }
 
+		/// <summary>
+		/// Gets the teams.
+		/// </summary>
+		public TeamsController Teams
+		{
+			get { return new TeamsController(this); }
+		}
+
         /// <summary>
         /// Gets or sets the timeout.
         /// </summary>

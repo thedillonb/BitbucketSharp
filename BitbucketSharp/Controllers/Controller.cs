@@ -8,7 +8,7 @@
         /// <summary>
         /// The client this controller belongs to
         /// </summary>
-        protected Client Client { get; private set; }
+		internal Client Client { get; private set; }
 
         /// <summary>
         /// The URI of this controller
