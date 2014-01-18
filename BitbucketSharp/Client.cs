@@ -17,8 +17,6 @@ namespace BitbucketSharp
 
         private readonly RestClient _client;
 
-		public static IJsonSerializer Serializer = new SimpleJsonSerializer();
-
         /// <summary>
         /// The username we are logging as as.
         /// Instead of passing in the account's username everywhere we'll just set it once here.
