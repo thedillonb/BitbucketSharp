@@ -24,6 +24,7 @@ namespace BitbucketSharp.Models
         public bool IsFork { get; set; }
         public bool EmailWriters { get; set; }
         public bool NoPublicForks { get; set; }
+        public RepositoryDetailedModel ForkOf { get; set; }
     }
 
     public class RepositorySimpleModel
