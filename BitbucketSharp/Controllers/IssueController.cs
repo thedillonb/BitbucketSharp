@@ -169,12 +169,35 @@ namespace BitbucketSharp.Controllers
             return Update(ObjectToDictionaryConverter.Convert(issue));
         }
 
-		public IssueModel UpdateMilestone(string milestone)
+        /// <summary>
+        /// Updates the milestone.
+        /// </summary>
+        public IssueModel UpdateMilestone(string value)
 		{
 			var d = new Dictionary<string, string>();
-			d.Add("milestone", milestone);
+            d.Add("milestone", value);
 			return Update(d);
 		}
+
+        /// <summary>
+        /// Updates the version.
+        /// </summary>
+        public IssueModel UpdateVersion(string value)
+        {
+            var d = new Dictionary<string, string>();
+            d.Add("version", value);
+            return Update(d);
+        }
+
+        /// <summary>
+        /// Updates the component.
+        /// </summary>
+        public IssueModel UpdateComponent(string value)
+        {
+            var d = new Dictionary<string, string>();
+            d.Add("component", value);
+            return Update(d);
+        }
 
         /// <summary>
         /// Updates an issue

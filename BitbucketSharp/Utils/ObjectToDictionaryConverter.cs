@@ -11,10 +11,7 @@ namespace BitbucketSharp.Utils
             foreach (var propertyInfo in properties)
             {
                 var value = propertyInfo.GetValue(obj, null);
-                if (value != null)
-                {
-                    dictionary.Add(propertyInfo.Name.ToLower(), value.ToString());
-                }
+                dictionary.Add(propertyInfo.Name.ToLower(), value == null ? null : value.ToString());
             }
             return dictionary;
         }
