@@ -88,4 +88,34 @@ namespace BitbucketSharp.Models
             public int Added { get; set; }
         }
     }
+
+    namespace V2
+    {
+        public class CommitModel
+        {
+            public string Hash { get; set; }
+            public RepositoryModel Repository { get; set; }
+            public AuthorModel Author { get; set; }
+            public string Message { get; set; }
+            public DateTime Date { get; set; }
+
+            public class AuthorModel
+            {
+                public string Raw { get; set; }
+                public UserModel User { get; set; }
+            }
+        }
+
+        public class RepositoryModel
+        {
+            public string FullName { get; set; }
+            public string Name { get; set; }
+            public LinksModel Links { get; set; }
+
+            public class LinksModel
+            {
+                public LinkModel Avatar { get; set; }
+            }
+        }
+    }
 }

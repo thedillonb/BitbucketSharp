@@ -83,6 +83,11 @@ namespace BitbucketSharp.Controllers
 			return Client.Get<Collection<PullRequestCommentModel>>(Uri + "/comments", forceCacheInvalidation, Client.ApiUrl2);
 		}
 
+        public Collection<CommitModel> GetCommits(bool forceCacheInvalidation = false)
+        {
+            return Client.Get<Collection<CommitModel>>(Uri + "/commits", forceCacheInvalidation, Client.ApiUrl2);
+        }
+
 		public OldPullRequestCommentModel AddComment(string content)
 		{
 			var d = new Dictionary<string, string>() {{"content", content}};

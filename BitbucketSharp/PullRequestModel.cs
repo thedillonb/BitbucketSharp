@@ -13,6 +13,8 @@ namespace BitbucketSharp.Models
 		public string Title { get; set; }
 		public bool CloseSourceBranch { get; set; }
         public string Reason { get; set; }
+        public TargetModel Source { get; set; }
+        public TargetModel Destination { get; set; }
         public List<BitbucketSharp.Models.V2.UserModel> Reviewers { get; set; }
         public BitbucketSharp.Models.V2.UserModel Author { get; set; }
         public List<ParticipantModel> Participants { get; set; }
@@ -22,6 +24,11 @@ namespace BitbucketSharp.Models
             public string Role { get; set; }
             public BitbucketSharp.Models.V2.UserModel User { get; set; }
             public bool Approved { get; set; }
+        }
+
+        public class TargetModel
+        {
+            public V2.RepositoryModel Repository { get; set; }
         }
     }
 
