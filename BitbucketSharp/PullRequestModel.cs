@@ -38,6 +38,7 @@ namespace BitbucketSharp.Models
 		public DateTime UpdatedOn { get; set; }
 		public ulong Id { get; set; }
 		public ContentModel Content { get; set; }
+        public InlineModel Inline { get; set; }
 		public BitbucketSharp.Models.V2.UserModel User { get; set; }
 
 		public class ContentModel
@@ -46,6 +47,13 @@ namespace BitbucketSharp.Models
 			public string Markup { get; set; }
 			public string Html { get; set; }
 		}
+
+        public class InlineModel
+        {
+            public int? To { get; set; }
+            public int? From { get; set; }
+            public string Path { get; set; }
+        }
 	}
 
 	public class OldPullRequestCommentModel
