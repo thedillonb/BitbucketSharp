@@ -51,6 +51,11 @@ namespace BitbucketSharp.Models
         public string Type { get; set; }
     }
 
+    public class PrimaryBranchModel
+    {
+        public string Name { get; set; }
+    }
+
     public class TagModel
     {
         public string Node { get; set; }

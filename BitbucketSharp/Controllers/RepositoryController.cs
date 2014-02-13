@@ -238,6 +238,16 @@ namespace BitbucketSharp.Controllers
         }
 
         /// <summary>
+        /// Gets the primary branch
+        /// </summary>
+        /// <returns>The primary branch.</returns>
+        /// <param name="forceCacheInvalidation">If set to <c>true</c> force cache invalidation.</param>
+        public PrimaryBranchModel GetPrimaryBranch(bool forceCacheInvalidation = false)
+        {
+            return Client.Get<PrimaryBranchModel>(Uri + "/main-branch", forceCacheInvalidation);
+        }
+
+        /// <summary>
         /// The URI of this controller
         /// </summary>
         public override string Uri
