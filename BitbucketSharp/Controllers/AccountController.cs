@@ -35,10 +35,20 @@ namespace BitbucketSharp.Controllers
         }
 
         /// <summary>
-        /// Requests the repositories that the current logged in user is following
+        /// Requests the repositories that is visible to the current user
         /// </summary>
         /// <returns>A list of repositories</returns>
         public List<RepositoryDetailedModel> GetRepositories(bool forceCacheInvalidation = false)
+        {
+            return Client.Get<List<RepositoryDetailedModel>>("user/repositories", forceCacheInvalidation);
+        }
+
+
+        /// <summary>
+        /// Requests the repositories that the current logged in user is following
+        /// </summary>
+        /// <returns>A list of repositories</returns>
+        public List<RepositoryDetailedModel> GetRepositoriesFollowing(bool forceCacheInvalidation = false)
         {
             return Client.Get<List<RepositoryDetailedModel>>("user/follows", forceCacheInvalidation);
         }
