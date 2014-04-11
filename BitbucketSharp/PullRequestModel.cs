@@ -6,8 +6,8 @@ namespace BitbucketSharp.Models
     public class PullRequestModel
     {
 		public ulong Id { get; set; }
-		public DateTime UpdatedOn { get; set; }
-		public DateTime CreatedOn { get; set; }
+        public DateTimeOffset UpdatedOn { get; set; }
+        public DateTimeOffset CreatedOn { get; set; }
 		public string State { get; set; }
 		public string Description { get; set; }
 		public string Title { get; set; }
@@ -34,8 +34,8 @@ namespace BitbucketSharp.Models
 
 	public class PullRequestCommentModel
 	{
-		public DateTime CreatedOn { get; set; }
-		public DateTime UpdatedOn { get; set; }
+        public DateTimeOffset CreatedOn { get; set; }
+        public DateTimeOffset UpdatedOn { get; set; }
 		public ulong Id { get; set; }
 		public ContentModel Content { get; set; }
         public InlineModel Inline { get; set; }

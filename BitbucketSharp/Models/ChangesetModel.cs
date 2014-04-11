@@ -16,7 +16,7 @@ namespace BitbucketSharp.Models
         public string Node { get; set; }
         public string Author { get; set; }
         public string Timestamp { get; set; }
-        public DateTime Utctimestamp { get; set; }
+        public DateTimeOffset Utctimestamp { get; set; }
         public string Branch { get; set; }
         public string Message { get; set; }
         public int Revision { get; set; }
@@ -40,7 +40,7 @@ namespace BitbucketSharp.Models
         public string DisplayName { get; set; }
         public long? ParentId { get; set; }
         public bool Deleted { get; set; }
-        public DateTime UtcLastUpdated { get; set; }
+        public DateTimeOffset UtcLastUpdated { get; set; }
         public string FilenameHash { get; set; }
         public string Filename { get; set; }
         public string Content { get; set; }
@@ -48,7 +48,7 @@ namespace BitbucketSharp.Models
         public string UserAvatarUrl { get; set; }
         public long? LineFrom { get; set; }
         public long? LineTo { get; set; }
-        public DateTime UtcCreatedOn { get; set; }
+        public DateTimeOffset UtcCreatedOn { get; set; }
         public bool IsSpam { get; set; }
     }
 
@@ -97,7 +97,7 @@ namespace BitbucketSharp.Models
             public RepositoryModel Repository { get; set; }
             public AuthorModel Author { get; set; }
             public string Message { get; set; }
-            public DateTime Date { get; set; }
+            public DateTimeOffset Date { get; set; }
 
             public class AuthorModel
             {

@@ -44,8 +44,8 @@ namespace BitbucketSharp.Models
         public int CommentCount { get; set; }
         public string Content { get; set; }
         public string CreatedOn { get; set; }
-        public DateTime UtcCreatedOn { get; set; }
-        public DateTime UtcLastUpdated { get; set; }
+        public DateTimeOffset UtcCreatedOn { get; set; }
+        public DateTimeOffset UtcLastUpdated { get; set; }
         public int LocalId { get; set; }
         public int FollowerCount { get; set; }
         public string ResourceUri { get; set; }
@@ -68,8 +68,8 @@ namespace BitbucketSharp.Models
         public string Content { get; set; }
         public UserModel AuthorInfo { get; set; }
         public int CommentId { get; set; }
-        public DateTime UtcUpdatedOn { get; set; }
-        public DateTime UtcCreatedOn { get; set; }
+        public DateTimeOffset UtcUpdatedOn { get; set; }
+        public DateTimeOffset UtcCreatedOn { get; set; }
         public bool IsSpam { get; set; }
     }
 
