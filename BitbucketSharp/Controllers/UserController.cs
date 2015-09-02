@@ -1,4 +1,4 @@
-﻿using BitbucketSharp.Models;
+using BitbucketSharp.Models;
 using BitbucketSharp.MonoTouch.Controllers;
 using BitbucketSharp.Models.V2;
 

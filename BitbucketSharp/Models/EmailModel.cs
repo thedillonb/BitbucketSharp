@@ -1,4 +1,4 @@
-﻿namespace BitbucketSharp.Models
+namespace BitbucketSharp.Models
 {
     public class EmailModel
     {

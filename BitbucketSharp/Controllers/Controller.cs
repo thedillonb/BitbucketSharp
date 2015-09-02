@@ -1,4 +1,4 @@
-﻿namespace BitbucketSharp.Controllers
+namespace BitbucketSharp.Controllers
 {
     /// <summary>
     /// Provides a base class for all controllers

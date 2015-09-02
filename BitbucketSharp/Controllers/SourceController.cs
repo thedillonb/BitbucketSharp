@@ -1,4 +1,4 @@
-﻿using BitbucketSharp.Models;
+using BitbucketSharp.Models;
 
 namespace BitbucketSharp.Controllers
 {
