@@ -126,6 +126,33 @@ namespace BitbucketSharp
         }
 
         /// <summary>
+        /// Create a Client object and request the user's info to validate credentials
+        /// </summary>
+        public static Client BearerLogin(string token, out UsersModel userInfo)
+        {
+            var client = new Client();
+            client._client.Authenticator = new BeaererAuthentication(token);
+            userInfo = client.Account.GetInfo(true);
+            client.Username = userInfo.User.Username;
+            return client;
+        }
+
+        private class BeaererAuthentication : IAuthenticator
+        {
+            private readonly string _token;
+
+            public BeaererAuthentication(string token)
+            {
+                _token = token;
+            }
+
+            public void Authenticate(IRestClient client, IRestRequest request)
+            {
+                request.AddHeader("Authorization", "Bearer " + _token);
+            }
+        }
+
+        /// <summary>
         /// Create a Client object with OAuth crednetials and a request the user's info to validate credentials
         /// </summary>
         /// <param name="consumerKey"></param>
