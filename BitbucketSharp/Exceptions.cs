@@ -21,6 +21,12 @@ namespace BitbucketSharp
         : base(HttpStatusCode.InternalServerError, "The request was unable to be processed due to an interal server error.") { }
     }
 
+    public class UnauthoriezdException : StatusCodeException
+    {
+        public UnauthoriezdException()
+            : base(HttpStatusCode.Unauthorized, "You are not authorized to view this resource.") { }
+    }
+
     public class StatusCodeException : Exception
     {
         public HttpStatusCode StatusCode { get; private set; }
@@ -42,6 +48,8 @@ namespace BitbucketSharp
             {
                 case HttpStatusCode.Forbidden:
                     return new ForbiddenException();
+                case HttpStatusCode.Unauthorized:
+                    return new UnauthoriezdException();
                 case HttpStatusCode.NotFound:
                     return new NotFoundException();
                 case HttpStatusCode.InternalServerError:

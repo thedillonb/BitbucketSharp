@@ -6,6 +6,7 @@ using RestSharp;
 using RestSharp.Deserializers;
 using BitbucketSharp.Models;
 using RestSharp.Contrib;
+using System.Threading.Tasks;
 
 namespace BitbucketSharp
 {
@@ -219,6 +220,26 @@ namespace BitbucketSharp
                 CacheProvider.DeleteWhereStartingWith(startsWithUri);
         }
 
+        public static OAuthResponse RefreshToken(string clientId, string clientSecret, string refreshToken)
+        {
+            var client = new RestClient();
+            client.Authenticator = new HttpBasicAuthenticator(clientId, clientSecret);
+            var request = new RestRequest("https://bitbucket.org/site/oauth2/access_token", Method.POST);
+            request.AddParameter("grant_type", "refresh_token");
+            request.AddParameter("refresh_token", refreshToken);
+            var response = client.Execute<OAuthResponse>(request);
+            return response.Data;
+        }
+
+        public static OAuthResponse GetAuthorizationCode(string clientId, string clientSecret, string code)
+        {
+            var client = new RestClient() { Authenticator = new HttpBasicAuthenticator(clientId, clientSecret) };
+            var request = new RestRequest("https://bitbucket.org/site/oauth2/access_token", Method.POST);
+            request.AddParameter("grant_type", "authorization_code");
+            request.AddParameter("code", code);
+            return client.Execute<OAuthResponse>(request).Data;
+        }
+
         /// <summary>
         /// Makes a 'GET' request to the server using a URI
         /// </summary>
@@ -407,5 +428,12 @@ namespace BitbucketSharp
 			var response = ExecuteRequest(request);
 			return response.ContentType;
 		}
+    }
+
+    public class OAuthResponse
+    {
+        public string AccessToken { get; set; }
+        public string Scopes { get; set; }
+        public string RefreshToken { get; set; }
     }
 }
