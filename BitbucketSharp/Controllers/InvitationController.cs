@@ -32,7 +32,6 @@ namespace BitbucketSharp.Controllers
         /// <returns></returns>
         public InvitationModel SendInvitation(string user, string permission)
         {
-            Client.InvalidateCacheObjects(Uri);
             return Client.Post<InvitationModel>(Uri + "/" + user, new Dictionary<string, string> {{"permission", permission}});
         }
 

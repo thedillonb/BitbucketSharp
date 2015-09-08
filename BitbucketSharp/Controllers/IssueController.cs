@@ -155,7 +155,6 @@ namespace BitbucketSharp.Controllers
         /// </summary>
         public void Delete()
         {
-            Client.InvalidateCacheObjects(Uri);
             Client.Delete(Uri);
         }
 
@@ -206,7 +205,6 @@ namespace BitbucketSharp.Controllers
         /// <returns></returns>
         public IssueModel Update(Dictionary<string,string> data)
         {
-            Client.InvalidateCacheObjects(Uri);
             return Client.Put<IssueModel>(Uri, data);
         }
 

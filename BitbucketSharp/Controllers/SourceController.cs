@@ -47,23 +47,6 @@ namespace BitbucketSharp.Controllers
         } 
 
         /// <summary>
-        /// Get the raw file that will write to an IO stream. 
-        /// BASIC authentication is only supported now until I update the latest RestSharp to include streaming capabilities.
-        /// </summary>
-        /// <param param name="username">The username to login with</param>
-        /// <param name="password">The password to login with</param>
-        /// <param name="file">The file name</param>
-        /// <param name="stream">The file stream to write the file to</param>
-        /// <returns>An HttpWebResponse object</returns>
-		public string GetFileRaw(string file, System.IO.Stream stream)
-        {
-            var uri = Client.Url + "/" + Branch.Branches.Repository.Owner.Username + "/" + Branch.Branches.Repository.Slug + "/raw/" + Branch.UrlSafeName;
-            if (!uri.EndsWith("/") && !file.StartsWith("/"))
-                file = "/" + file;
-			return Client.DownloadRawResource(uri + file, stream);
-        }
-
-        /// <summary>
         /// The URI of this controller
         /// </summary>
         public override string Uri

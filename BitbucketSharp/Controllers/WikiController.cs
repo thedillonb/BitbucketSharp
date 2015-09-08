@@ -86,7 +86,6 @@ namespace BitbucketSharp.Controllers
         /// <param name="data">The data to put on the wiki</param>
         public void Update(string data, string path)
         {
-            Client.InvalidateCacheObjects(Uri);
             Client.Put(Uri, new Dictionary<string, string> {{"data", data}, {"path", path}});
         }
 
@@ -96,7 +95,6 @@ namespace BitbucketSharp.Controllers
         /// <param name="data"></param>
         public void Create(string data)
         {
-            Client.InvalidateCacheObjects(Uri);
             Client.Post(Uri, new Dictionary<string, string> { { "data", data } });
         }
 

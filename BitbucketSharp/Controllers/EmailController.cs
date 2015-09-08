@@ -44,7 +44,6 @@ namespace BitbucketSharp.Controllers
         /// <returns></returns>
         public EmailModel AddEmail(string emailAddress)
         {
-            Client.InvalidateCacheObjects(Uri);
             return Client.Put<EmailModel>(Uri + "/" + emailAddress);
         }
 
@@ -55,7 +54,6 @@ namespace BitbucketSharp.Controllers
         /// <returns></returns>
         public EmailModel SetPrimaryEmail(string emailAddress)
         {
-            Client.InvalidateCacheObjects(Uri);
             return Client.Post<EmailModel>(Uri + "/" + emailAddress, new Dictionary<string, string> { { "primary", "true" } });
         }
 

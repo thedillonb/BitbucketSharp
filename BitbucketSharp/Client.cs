@@ -74,17 +74,12 @@ namespace BitbucketSharp
         public uint Retries { get; set; }
 
         /// <summary>
-        /// Gets or sets the cache provider.
-        /// </summary>
-        public ICacheProvider CacheProvider { get; set; }
-
-        /// <summary>
         /// Constructor
         /// </summary>
         private Client()
         {
             Retries = 3;
-            _client = new RestClient() { FollowRedirects = true };
+            _client = new RestClient() { FollowRedirects = true, Timeout = 1000 * 30 };
         }
 
         /// <summary>
@@ -210,16 +205,6 @@ namespace BitbucketSharp
             return OAuthLogin(consumerKey, consumerSecret, oauth_token, oauth_token_secret, out userInfo);
         }
 
-        /// <summary>
-        /// Invalidates a cache object starting with a specific URI
-        /// </summary>
-        /// <param name="startsWithUri">The starting URI to be invalidated</param>
-        public void InvalidateCacheObjects(string startsWithUri)
-        {
-            if (CacheProvider != null)
-                CacheProvider.DeleteWhereStartingWith(startsWithUri);
-        }
-
         public static OAuthResponse RefreshToken(string clientId, string clientSecret, string refreshToken)
         {
             var client = new RestClient();
@@ -249,22 +234,7 @@ namespace BitbucketSharp
         /// <returns>An object with response data</returns>
         public T Get<T>(String uri, bool forceCacheInvalidation = false, string baseUri = ApiUrl) where T : class
 		{
-			T obj = null;
-
-			//If there's a cache provider, check it.
-			if (CacheProvider != null && !forceCacheInvalidation)
-				obj = CacheProvider.Get<T>(uri);
-
-			if (obj == null)
-			{
-				obj = Request<T>(uri, baseUri: baseUri);
-
-				//If there's a cache provider, save it!
-				if (CacheProvider != null)
-					CacheProvider.Set(obj, uri);
-			}
-
-			return obj;
+		    return Request<T>(uri, baseUri: baseUri);
 		}
 
         /// <summary>
@@ -419,14 +389,6 @@ namespace BitbucketSharp
 			if (response.ErrorException != null)
 				throw response.ErrorException;
 			return response;
-		}
-
-		public string DownloadRawResource(string rawUrl, System.IO.Stream downloadSream)
-		{
-			var request = new RestRequest(rawUrl, Method.GET);
-			request.ResponseWriter = (s) => s.CopyTo(downloadSream);
-			var response = ExecuteRequest(request);
-			return response.ContentType;
 		}
     }
 

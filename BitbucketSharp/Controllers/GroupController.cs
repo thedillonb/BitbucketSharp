@@ -91,7 +91,6 @@ namespace BitbucketSharp.Controllers
         /// </summary>
         public void AddMember(string member)
         {
-            Client.InvalidateCacheObjects(Uri);
             Client.Put<string>(Uri + "/members/" + member);
         }
 
@@ -100,7 +99,6 @@ namespace BitbucketSharp.Controllers
         /// </summary>
         public void RemoveMember(string member)
         {
-            Client.InvalidateCacheObjects(Uri);
             Client.Delete(Uri + "/members/" + member);
         }
 

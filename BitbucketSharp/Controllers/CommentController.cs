@@ -50,7 +50,6 @@ namespace BitbucketSharp.Controllers
         /// <returns></returns>
         public CommentModel Create(string content)
         {
-            Client.InvalidateCacheObjects(Uri);
             return Client.Post<CommentModel>(Uri, new Dictionary<string, string> {{ "content", content }});
         }
 
@@ -99,7 +98,6 @@ namespace BitbucketSharp.Controllers
         /// <returns></returns>
         public ChangesetCommentModel Create(string content, long? lineFrom = null, long? lineTo = null, long? parentId = null, string filename = null)
         {
-            Client.InvalidateCacheObjects(Uri);
             var dic = new Dictionary<string, string>();
             dic.Add("content", content);
             if (lineFrom != null)
@@ -174,7 +172,6 @@ namespace BitbucketSharp.Controllers
         /// </summary>
         public void DeleteComment()
         {
-            Client.InvalidateCacheObjects(Uri);
             Client.Delete(Uri);
         }
 
@@ -195,7 +192,6 @@ namespace BitbucketSharp.Controllers
         /// <returns></returns>
         public CommentModel Update(Dictionary<string, string> data)
         {
-            Client.InvalidateCacheObjects(Uri);
             return Client.Put<CommentModel>(Uri, data);
         }
 
