@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using BitbucketSharp.Models;
+using BitbucketSharp.Models.V2;
 
 namespace BitbucketSharp.Controllers
 {
@@ -37,16 +38,12 @@ namespace BitbucketSharp.Controllers
         /// <summary>
         /// Requests all the changesets
         /// </summary>
-        /// <param name="limit">The limit of returned items (default: 15)</param>
-        /// <param name="startNode">The starting node</param>
+        /// <param name="branch">The starting node</param>
         /// <returns></returns>
-        public ChangesetsModel GetChangesets(int limit = 15, string startNode = null)
+        public Collection<CommitModel> GetCommits(string branch = null)
         {
-            var url = Uri + "?limit=" + limit;
-            if (startNode != null)
-                url = url + "&start=" + startNode;
-
-            return Client.Request<ChangesetsModel>(url);
+            var url = Client.ApiUrl2 + "repositories/" + Repository.Owner.Username + "/" + Repository.Slug + "/commits/" + branch;
+            return Client.Request2<Collection<CommitModel>>(url);
         }
 
         /// <summary>
