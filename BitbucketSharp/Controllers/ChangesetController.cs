@@ -95,9 +95,19 @@ namespace BitbucketSharp.Controllers
         /// Requests information about the changeset
         /// </summary>
         /// <returns></returns>
-        public ChangesetModel GetInfo(bool forceCacheInvalidation = false)
+        public CommitModel GetCommit()
         {
-            return Client.Get<ChangesetModel>(Uri, forceCacheInvalidation);
+            var url = Client.ApiUrl2 + "repositories/" + Repository.Owner.Username + "/" + Repository.Slug + "/commit/" + Node;
+            return Client.Request2<CommitModel>(url);
+        }
+
+        /// <summary>
+        /// Gets the comments for a commit
+        /// </summary>
+        public Collection<CommitComment> GetComments()
+        {
+            var url = Client.ApiUrl2 + "repositories/" + Repository.Owner.Username + "/" + Repository.Slug + "/commit/" + Node + "/comments";
+            return Client.Request2<Collection<CommitComment>>(url);
         }
 
         /// <summary>

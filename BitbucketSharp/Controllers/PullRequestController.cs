@@ -38,7 +38,7 @@ namespace BitbucketSharp.Controllers
 		/// <returns></returns>
 		public Collection<PullRequestModel> GetAll(string state = "OPEN", bool forceCacheInvalidation = false)
 		{
-			return Client.Get<Collection<PullRequestModel>>(Uri + "?state=" + state, forceCacheInvalidation, Client.ApiUrl2);
+			return Client.Get<Collection<PullRequestModel>>(Uri + "?pagelen=30&state=" + state, forceCacheInvalidation, Client.ApiUrl2);
 		}
 
 		/// <summary>

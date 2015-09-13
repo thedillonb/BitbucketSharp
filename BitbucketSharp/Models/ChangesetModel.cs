@@ -98,12 +98,42 @@ namespace BitbucketSharp.Models
             public AuthorModel Author { get; set; }
             public string Message { get; set; }
             public DateTimeOffset Date { get; set; }
+            public List<CommitParticipant> Participants { get; set; }
+            public List<CommitParent> Parents { get; set; }
 
             public class AuthorModel
             {
                 public string Raw { get; set; }
                 public UserModel User { get; set; }
             }
+        }
+
+        public class CommitComment
+        {
+            public UserModel User { get; set; }
+            public CommitCommentContent Content { get; set; }
+            public DateTimeOffset CreatedOn { get; set; }
+            public DateTimeOffset UpdatedOn { get; set; }
+        }
+
+        public class CommitCommentContent
+        {
+            public string Raw { get; set; }
+            public string Markup { get; set; }
+            public string Html { get; set; }
+        }
+
+        public class CommitParent
+        {
+            public string Hash { get; set; }
+        }
+
+        public class CommitParticipant
+        {
+            public string Role { get; set; }
+            public bool Approved { get; set; }
+            public UserModel User { get; set; }
+
         }
 
         public class RepositoryModel
