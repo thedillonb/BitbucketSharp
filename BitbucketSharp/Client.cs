@@ -7,6 +7,7 @@ using RestSharp.Deserializers;
 using BitbucketSharp.Models;
 using RestSharp.Contrib;
 using System.Threading.Tasks;
+using RestSharp.Serializers;
 
 namespace BitbucketSharp
 {
@@ -369,6 +370,13 @@ namespace BitbucketSharp
                     }
                     else
                     {
+                        if (!string.IsNullOrEmpty(response.Content))
+                        {
+                            var errorResponse = new JsonDeserializer().Deserialize<ErrorResponse>(response);
+                            var message = errorResponse?.Error?.Message;
+                            throw StatusCodeException.FactoryCreate(response.StatusCode, message);
+                        }
+
                         throw StatusCodeException.FactoryCreate(response.StatusCode);
                     }
                 }
@@ -397,5 +405,16 @@ namespace BitbucketSharp
         public string AccessToken { get; set; }
         public string Scopes { get; set; }
         public string RefreshToken { get; set; }
+    }
+
+    public class ErrorResponse
+    {
+        public ErrorDetails Error { get; set ;}
+    }
+
+    public class ErrorDetails
+    {
+        public string Message { get; set; }
+        public string Detail { get; set; }
     }
 }
