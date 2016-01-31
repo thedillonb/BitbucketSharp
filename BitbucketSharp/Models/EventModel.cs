@@ -56,7 +56,6 @@ namespace BitbucketSharp.Models
 
 	public class PushedEventDescriptionModel
 	{
-		public int TotalCommits { get; set; }
 		public List<CommitModel> Commits { get; set; }
 
 		public class CommitModel
