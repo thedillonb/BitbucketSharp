@@ -1,258 +1,206 @@
-using System.Collections.Generic;
 using BitbucketSharp.Models;
-using BitbucketSharp.MonoTouch.Controllers;
+using System.Threading.Tasks;
+using System;
+using System.IO;
+using BitbucketSharp.Models.V2;
+using System.Collections.Generic;
 
 namespace BitbucketSharp.Controllers
 {
-    /// <summary>
-    /// Provides access to repositories owned by a user
-    /// </summary>
-    public class UserRepositoriesController : Controller
+    public class RepositoriesController
     {
-        /// <summary>
-        /// Gets the owner of the repositories
-        /// </summary>
-        public UserController Owner { get; private set; }
+        private readonly Client _client;
 
-        /// <summary>
-        /// Constructor
-        /// </summary>
-        /// <param name="client">A handle to the client</param>
-        /// <param name="owner">The owner of the repositories</param>
-        public UserRepositoriesController(Client client, UserController owner) : base(client)
+        public RepositoriesController(Client client)
         {
-            Owner = owner;
+            _client = client;
         }
 
-        /// <summary>
-        /// Access a specific repository via the slug
-        /// </summary>
-        /// <param name="slug">The repository slug</param>
-        /// <returns></returns>
-        public RepositoryController this[string slug]
+        public Task<RepositorySearchModel> Search(string name)
         {
-            get { return new RepositoryController(Client, Owner, slug); } 
+            var uri = new Uri(Client.ApiUrl, "/repositories?name=" + Uri.EscapeDataString(name));
+            return _client.Get<RepositorySearchModel>(uri);
         }
 
-        /// <summary>
-        /// The URI of this controller
-        /// </summary>
-        public override string Uri
+        public Task<Collection<Repository>> GetRepositories(string username)
         {
-            get { return "repositories"; }
-        }
-    }
-
-    /// <summary>
-    /// Provides access to 'global' repositories via a search method
-    /// </summary>
-    public class RepositoriesController : Controller
-    {
-        /// <summary>
-        /// Constructor
-        /// </summary>
-        /// <param name="client">A handle to the client</param>
-        public RepositoriesController(Client client) : base(client)
-        {
+            var uri = Client.ApiUrl2.With("repositories").WithQuery(username);
+            return _client.Get<Collection<Repository>>(uri);
         }
 
-        /// <summary>
-        /// Search for a specific repository via the name
-        /// </summary>
-        /// <param name="name">The partial or full name to search for</param>
-        /// <returns>A list of RepositorySimpleModel</returns>
-        public RepositorySearchModel Search(string name)
+        public Task<Repository> GetRepository(string owner, string repository)
         {
-            return Client.Request<RepositorySearchModel>(Uri + "/?name=" + name);
+            return _client.Get<Repository>(
+                Client.ApiUrl2.With("repositories").WithQuery(owner).WithQuery(repository));
         }
 
-        /// <summary>
-        /// The URI of this controller
-        /// </summary>
-        public override string Uri
+        public Task<Collection<User>> GetWatchers(string owner, string repository)
         {
-            get { return "repositories"; }
-        }
-    }
-
-    /// <summary>
-    /// Provides access to a repository
-    /// </summary>
-    public class RepositoryController : Controller
-    {
-        /// <summary>
-        /// Gets a handle to the issue controller
-        /// </summary>
-        public IssuesController Issues
-        {
-            get { return new IssuesController(Client, this); }
+            var uri = Client.ApiUrl2.With("repositories").WithQuery(owner).WithQuery(repository).With("watchers");
+            return _client.Get<Collection<User>>(uri);
         }
 
-        /// <summary>
-        /// Gets the owner of the repository
-        /// </summary>
-        public UserController Owner { get; private set; }
-
-        /// <summary>
-        /// Gets the slug of the repository
-        /// </summary>
-        public string Slug { get; private set; }
-
-        /// <summary>
-        /// Gets the wikis of this repository
-        /// </summary>
-        public WikisController Wikis
+        public Task<Collection<Repository>> GetForks(string owner, string repository)
         {
-            get { return new WikisController(Client, this); }
+            var uri = Client.ApiUrl2.With("repositories").WithQuery(owner).WithQuery(repository).With("forks");
+            return _client.Get<Collection<Repository>>(uri);
         }
 
-        /// <summary>
-        /// Gets the invitations to this repository
-        /// </summary>
-        public InvitationController Invitations
+        public Task<Collection<Download>> GetDownloads(string owner, string repository)
         {
-            get { return new InvitationController(Client, this); }
+            return _client.Get<Collection<Download>>(
+                Client.ApiUrl2.With("repositories").WithQuery(owner).WithQuery(repository).With("downloads"));
         }
 
-        /// <summary>
-        /// Gets the changesets.
-        /// </summary>
-        public ChangesetsController Changesets
+        public Task<Collection<Component>> GetComponents(string owner, string repository)
         {
-            get { return new ChangesetsController(Client, this); }
+            return _client.Get<Collection<Component>>(
+                Client.ApiUrl2.With("repositories").WithQuery(owner).WithQuery(repository).With("components"));
         }
 
-        /// <summary>
-        /// Gets the branches
-        /// </summary>
-        public BranchesController Branches
+        public Task<Stream> GetDiff(string owner, string repository, string spec)
         {
-            get { return new BranchesController(Client, this); }
+            return _client.GetRaw(Client.ApiUrl2.With("repositories").WithQuery(owner)
+                .WithQuery(repository).With("diff").WithQuery(spec));
         }
 
-        /// <summary>
-        /// Gets the privileges for this repository
-        /// </summary>
-        public RepositoryPrivilegeController Privileges
+        public Task<Stream> GetPatch(string owner, string repository, string spec)
         {
-            get { return new RepositoryPrivilegeController(Client, new UserPrivilegesController(Client, Owner), Slug); }
+            return _client.GetRaw(Client.ApiUrl2.With("repositories").WithQuery(owner)
+                .WithQuery(repository).With("patch").WithQuery(spec));
         }
 
-        /// <summary>
-        /// Gets the group privileges for this repository
-        /// </summary>
-        public RepositoryGroupPrivilegeController GroupPrivileges
+        public Task<Collection<PullRequest>> GetPullRequests(string owner, string repository, PullRequestState state = PullRequestState.Open)
         {
-            get { return new RepositoryGroupPrivilegeController(Client, this); }
+            var uri = Client.ApiUrl2.With("repositories").WithQuery(owner).WithQuery(repository).With("pullrequests?state=" + state);
+            return _client.Get<Collection<PullRequest>>(uri);
         }
 
-		/// <summary>
-		/// Gets the pull requests.
-		/// </summary>
-		public PullRequestsController PullRequests
-		{
-			get { return new PullRequestsController(Client, this); }
-		}
-
-        /// <summary>
-        /// Constructor
-        /// </summary>
-        /// <param name="owner">The owner of this repository</param>
-        /// <param name="slug">The slug of this repository</param>
-        /// <param name="client">A handle to the client</param>
-        public RepositoryController(Client client, UserController owner, string slug) 
-            : base(client)
+        public Task<PullRequest> GetPullRequest(string owner, string repository, int id)
         {
-            Owner = owner;
-            Slug = slug.Replace(' ', '-').ToLower();
+            var uri = Client.ApiUrl2.With("repositories").WithQuery(owner).WithQuery(repository).With("pullrequests").WithQuery(id.ToString());
+            return _client.Get<PullRequest>(uri);
+        }
+   
+        public Task<Collection<Commit>> GetCommits(string owner, string repository, string branch = null)
+        {
+            var uri = Client.ApiUrl2.With("repositories").WithQuery(owner).WithQuery(repository).With("commits").WithQuery(branch);
+            return _client.Get<Collection<Commit>>(uri);
         }
 
-        /// <summary>
-        /// Requests the information on a specific repository
-        /// </summary>
-        /// <returns>A RepositoryDetailedModel</returns>
-        public RepositoryDetailedModel GetInfo(bool forceCacheInvalidation = false)
+        public Task<IDictionary<string, BranchModel>> GetBranches(string owner, string repository)
         {
-            return Client.Get<RepositoryDetailedModel>(Uri, forceCacheInvalidation);
+            var uri = Client.ApiUrl.With("repositories").WithQuery(owner).WithQuery(repository).With("branches");
+            return _client.Get<IDictionary<string, BranchModel>>(uri);
         }
 
-        /// <summary>
-        /// Requests the followers of a specific repository
-        /// </summary>
-        /// <returns>A FollowersModel</returns>
-        public FollowersModel GetFollowers(bool forceCacheInvalidation = false)
+        public Task<MainBranch> GetMainBranch(string owner, string repository)
         {
-            return Client.Get<FollowersModel>(Uri + "/followers", forceCacheInvalidation);
+            var uri = Client.ApiUrl.With("repositories").WithQuery(owner).WithQuery(repository).With("main-branch");
+            return _client.Get<MainBranch>(uri);
         }
 
-        /// <summary>
-        /// Gets the tags.
-        /// </summary>
-        public Dictionary<string, TagModel> GetTags(bool forceCacheInvalidation = false)
+        public Task<IDictionary<string, BranchModel>> GetTags(string owner, string repository)
         {
-            return Client.Get<Dictionary<string, TagModel>>(Uri + "/tags", forceCacheInvalidation);
+            var uri = Client.ApiUrl.With("repositories").WithQuery(owner).WithQuery(repository).With("tags");
+            return _client.Get<IDictionary<string, BranchModel>>(uri);
         }
 
-        /// <summary>
-        /// Requests the events of a repository
-        /// </summary>
-        /// <param name="start">The start index of returned items (default: 0)</param>
-        /// <param name="limit">The limit of returned items (default: 25)</param>
-        /// <param name="type">The type of event to return. If null, all event types are returned</param>
-        /// <returns>A EventsModel</returns>
-        public EventsModel GetEvents(int start = 0, int limit = 25, string type = null)
+        public Task<FollowersModel> GetFollowers(string owner, string repository)
         {
-            return Client.Request<EventsModel>(Uri + "/events/?start=" + start + "&limit=" +
-                                               limit + (type == null ? "" : "&type=" + type));
+            var uri = Client.ApiUrl.With("repositories").WithQuery(owner).WithQuery(repository).With("followers");
+            return _client.Get<FollowersModel>(uri);
         }
 
-        /// <summary>
-        /// Forks the repository.
-        /// </summary>
-        /// <returns>The repository model of the forked repository.</returns>
-        /// <param name="name">The name of the new forked repository.</param>
-        /// <param name="description">the description of the forked repository.</param>
-        /// <param name="language">The language of the forked repository.</param>
-        /// <param name="isPrivate">Whether or not the forked repository is private.</param>
-        public RepositoryDetailedModel ForkRepository(string name, string description = null, string language = null, bool? isPrivate = null)
+        public Task<Collection<PullRequestComment>> GetPullRequestComments(string owner, string repository, int id)
         {
-            var data = new Dictionary<string, string>();
-            data.Add("name", name);
-            if (description != null)
-                data.Add("description", description);
-            if (language != null)
-                data.Add("language", language);
-            if (isPrivate != null)
-                data.Add("is_private", isPrivate.Value.ToString());
-
-            return Client.Post<RepositoryDetailedModel>(Uri + "/fork", data);
+            var uri = Client.ApiUrl2.With("repositories").WithQuery(owner).WithQuery(repository).With("pullrequests").WithQuery(id.ToString()).With("comments");
+            return _client.Get<Collection<PullRequestComment>>(uri);
         }
 
-        /// <summary>
-        /// Toggle's the following for this repository. Don't use this...
-        /// </summary>
-        /// <returns><c>true</c>, if follow was toggled, <c>false</c> otherwise.</returns>
-        public RepositoryFollowModel ToggleFollow()
+        public Task<PullRequestComment> GetPullRequestComment(string owner, string repository, int id, int commentId)
         {
-            return Client.Post<RepositoryFollowModel>(Owner + "/" + Slug + "/follow", null, "https://bitbucket.org/");
+            var uri = Client.ApiUrl2.With("repositories").WithQuery(owner).WithQuery(repository).With("pullrequests").WithQuery(id.ToString()).With("comments").WithQuery(commentId.ToString());
+            return _client.Get<PullRequestComment>(uri);
         }
 
-        /// <summary>
-        /// Gets the primary branch
-        /// </summary>
-        /// <returns>The primary branch.</returns>
-        /// <param name="forceCacheInvalidation">If set to <c>true</c> force cache invalidation.</param>
-        public PrimaryBranchModel GetPrimaryBranch(bool forceCacheInvalidation = false)
+        public Task<PullRequest> MergePullRequest(string owner, string repository, int id, string message = null)
         {
-            return Client.Get<PrimaryBranchModel>(Uri + "/main-branch", forceCacheInvalidation);
+            var uri = Client.ApiUrl2.With("repositories").WithQuery(owner).WithQuery(repository).With("pullrequests").WithQuery(id.ToString()).With("merge");
+            return _client.Post<PullRequest>(uri, new { message });
         }
 
-        /// <summary>
-        /// The URI of this controller
-        /// </summary>
-        public override string Uri
+        public Task<Participant> ApprovePullRequest(string owner, string repository, int id)
         {
-            get { return "repositories/" + Owner.Username + "/" + Slug; }
+            var uri = Client.ApiUrl2.With("repositories").WithQuery(owner).WithQuery(repository).With("pullrequests").WithQuery(id.ToString()).With("approve");
+            return _client.Post<Participant>(uri);
         }
+
+        public Task DeclinePullRequest(string owner, string repository, int id)
+        {
+            var uri = Client.ApiUrl2.With("repositories").WithQuery(owner).WithQuery(repository).With("pullrequests").WithQuery(id.ToString()).With("approve");
+            return _client.Delete(uri);
+        }
+
+        public Task<OldPullRequestComment> CommentPullRequest(string owner, string repository, int id, string comment)
+        {
+            var uri = Client.ApiUrl.With("repositories").WithQuery(owner).WithQuery(repository).With("pullrequests").WithQuery(id.ToString()).With("comments");
+            return _client.Post<OldPullRequestComment>(uri, new { content = comment });
+        }
+
+        public Task<Collection<Commit>> GetPullRequestCommits(string owner, string repository, int id)
+        {
+            var uri = Client.ApiUrl2.With("repositories").WithQuery(owner).WithQuery(repository).With("pullrequests").WithQuery(id.ToString()).With("commits");
+            return _client.Get<Collection<Commit>>(uri);
+        }
+
+        public Task<Commit> GetCommit(string owner, string repository, string revision)
+        {
+            var uri = Client.ApiUrl2.With("repositories").WithQuery(owner).WithQuery(repository).With("commit").WithQuery(revision);
+            return _client.Get<Commit>(uri);
+        }
+
+        public Task<EventsModel> GetEvents(string owner, string repository, int start = 0, int limit = 30)
+        {
+            var uri = Client.ApiUrl.With("repositories").WithQuery(owner).WithQuery(repository).With("events?start=" + start + "&limit=" + limit);
+            return _client.Get<EventsModel>(uri);
+        }
+
+        public Task<Participant> ApproveCommit(string owner, string repository, string revision)
+        {
+            var uri = Client.ApiUrl2.With("repositories").WithQuery(owner).WithQuery(repository).With("commit").WithQuery(revision).With("approve");
+            return _client.Post<Participant>(uri);
+        }
+
+        public Task UnapproveCommit(string owner, string repository, string revision)
+        {
+            var uri = Client.ApiUrl2.With("repositories").WithQuery(owner).WithQuery(repository).With("commit").WithQuery(revision).With("approve");
+            return _client.Delete(uri);
+        }
+
+        public Task<WikiModel> GetWiki(string owner, string repository, string page)
+        {
+            var uri = Client.ApiUrl.With("repositories").WithQuery(owner).WithQuery(repository).With("wiki").WithQuery(page);
+            return _client.Get<WikiModel>(uri);
+        }
+
+        public Task<RepositoryDetailedModel> Fork(string owner, string repository)
+        {
+            var uri = Client.ApiUrl.With("repositories").WithQuery(owner).WithQuery(repository).With("fork");
+            return _client.Post<RepositoryDetailedModel>(uri, new { name = repository });
+        }
+
+        public Task<FileModel> GetFile(string owner, string repository, string revision, string file)
+        {
+            var uri = Client.ApiUrl.With("repositories").WithQuery(owner).WithQuery(repository).With("src").WithQuery(revision).With(file.TrimStart('/'));
+            return _client.Get<FileModel>(uri);
+        } 
+
+        public Task<SourceModel> GetSource(string owner, string repository, string revision, string source = null)
+        {
+            source = source ?? "/";
+            var uri = Client.ApiUrl.With("repositories").WithQuery(owner).WithQuery(repository).With("src").WithQuery(revision).With(source.TrimStart('/'));
+            return _client.Get<SourceModel>(uri);
+        } 
     }
 }

@@ -24,11 +24,6 @@ namespace BitbucketSharp.Models
         }
     }
 
-    public class MainBranch
-    {
-        public string Name { get; set; }
-    }
-
     public class SourceModel
     {
         public List<String> Directories { get; set; }

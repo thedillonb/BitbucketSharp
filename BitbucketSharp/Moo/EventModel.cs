@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System;
-using Newtonsoft.Json.Linq;
 
 namespace BitbucketSharp.Models
 {
@@ -13,7 +12,7 @@ namespace BitbucketSharp.Models
     public class EventModel
     {
         public string Node { get; set; }
-        public JToken Description { get; set; }
+        public string Description { get; set; }
         public RepositoryDetailedModel Repository { get; set; }
         public string CreatedOn { get; set; }
         public UserModel User { get; set; }

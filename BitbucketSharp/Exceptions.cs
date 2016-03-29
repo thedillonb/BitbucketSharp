@@ -3,6 +3,18 @@ using System.Net;
 
 namespace BitbucketSharp
 {
+    public class BitbucketException : Exception
+    {
+        public string Name { get; }
+        
+        public BitbucketException(string name, string description)
+            : base(description)
+        {
+            Name = name;
+        }
+    }
+
+
     public class ForbiddenException : StatusCodeException
     {
         public ForbiddenException(string title)

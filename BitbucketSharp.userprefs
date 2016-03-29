@@ -1,0 +1,38 @@
+﻿<Properties StartupItem="BitbucketSharp/BitbucketSharp.csproj">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="BitbucketSharp/Controllers/TeamsController.cs">
+    <Files>
+      <File FileName="BitBucketSharp.UnitTests/ClientTests.cs" Line="33" Column="54" />
+      <File FileName="BitbucketSharp/Controllers/RepositoryController.cs" Line="111" Column="25" />
+      <File FileName="BitbucketSharp/Controllers/TeamsController.cs" Line="32" Column="10" />
+      <File FileName="BitbucketSharp/Controllers/GroupController.cs" Line="17" Column="10" />
+      <File FileName="BitbucketSharp/Controllers/CommentController.cs" Line="95" Column="50" />
+      <File FileName="BitbucketSharp/Controllers/ChangesetController.cs" Line="96" Column="25" />
+    </Files>
+    <Pads>
+      <Pad Id="MonoDevelop.NUnit.TestPad">
+        <State name="__root__">
+          <Node name="BitbucketSharp" expanded="True">
+            <Node name="BitBucketSharp.UnitTests" expanded="True">
+              <Node name="BitBucketSharp" expanded="True">
+                <Node name="UnitTests" expanded="True">
+                  <Node name="ClientTests" expanded="True">
+                    <Node name="TestGetDownloads" selected="True" />
+                  </Node>
+                </Node>
+              </Node>
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore>
+      <Breakpoint enabled="false" file="/Users/dillonb/Projects/BitbucketSharp/BitBucketSharp.Tests/ClientTests.cs" line="14" column="1" />
+      <Breakpoint enabled="false" file="/Users/dillonb/Projects/BitbucketSharp/BitBucketSharp.UnitTests/ClientTests.cs" line="34" column="1" />
+      <Catchpoint exceptionName="System.Exception" includeSubclasses="True" />
+    </BreakpointStore>
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>

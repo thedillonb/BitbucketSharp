@@ -27,6 +27,13 @@ namespace BitbucketSharp.Models
             return Status == null && Priority == null && Title == null && Responsible == null && Content == null && 
                    Kind == null && Component == null && Milestone == null && Version == null;
         }
+
+        public Dictionary<string, string> Serialize()
+        {
+            //This is inherently flawed because it only works because this model has no camel characters in it.
+            //Bitbucket doesn't do JSON requests, which mean we don't do 
+            return Utils.ObjectToDictionaryConverter.Convert(this);
+        }
     }
 
     public class IssueModel
@@ -66,19 +73,19 @@ namespace BitbucketSharp.Models
         public bool IsSpam { get; set; }
     }
 
-    public class IssueComponent
+    public class ComponentModel
     {
         public string Name { get; set; }
         public int Id { get; set; }
     }
 
-    public class IssueVersion
+    public class VersionModel
     {
         public string Name { get; set; }
         public int Id { get; set; }
     }
 
-    public class IssueMilestone
+    public class MilestoneModel
     {
         public string Name { get; set; }
         public int Id { get; set; }

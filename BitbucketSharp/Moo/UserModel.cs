@@ -29,4 +29,38 @@ namespace BitbucketSharp.Models
             return this.Username.GetHashCode();
         }
     }
+
+	namespace V2
+	{
+		public class Collection<T>
+		{
+			public ulong Size { get; set; }
+			public ulong Page { get; set; }
+			public uint Pagelen { get; set; }
+			public string Next { get; set; }
+			public string Previous { get; set; }
+			public List<T> Values { get; set; }
+		}
+
+		public class UserModel
+		{
+			public string Username { get; set; }
+			public string Kind { get; set; }
+			public string Website { get; set; }
+			public string DisplayName { get; set; }
+			public string Location { get; set; }
+			public DateTime CreatedOn { get; set; }
+			public LinksModel Links { get; set; }
+
+			public class LinksModel
+			{
+				public LinkModel Avatar { get; set; }
+			}
+		}
+
+		public class LinkModel
+		{
+			public string Href { get; set; }
+		}
+	}
 }

@@ -91,26 +91,26 @@ namespace BitbucketSharp.Models
 
     namespace V2
     {
-        public class Commit
+        public class CommitModel
         {
             public string Hash { get; set; }
-            public RepositorySource Repository { get; set; }
+            public RepositoryModel Repository { get; set; }
             public AuthorModel Author { get; set; }
             public string Message { get; set; }
             public DateTimeOffset Date { get; set; }
-            public List<Participant> Participants { get; set; }
+            public List<CommitParticipant> Participants { get; set; }
             public List<CommitParent> Parents { get; set; }
 
             public class AuthorModel
             {
                 public string Raw { get; set; }
-                public User User { get; set; }
+                public UserModel User { get; set; }
             }
         }
 
         public class CommitComment
         {
-            public User User { get; set; }
+            public UserModel User { get; set; }
             public CommitCommentContent Content { get; set; }
             public DateTimeOffset CreatedOn { get; set; }
             public DateTimeOffset UpdatedOn { get; set; }
@@ -128,69 +128,24 @@ namespace BitbucketSharp.Models
             public string Hash { get; set; }
         }
 
-        public class Participant
+        public class CommitParticipant
         {
             public string Role { get; set; }
             public bool Approved { get; set; }
-            public User User { get; set; }
+            public UserModel User { get; set; }
+
         }
 
-
-        public class PullRequest
+        public class RepositoryModel
         {
-            public string Description { get; set; }
-            public User Author { get; set; }
-            public bool ClosedSourceBranch { get; set; }
-            public string Title { get; set; }
-            public string Reason { get; set; }
-            public User ClosedBy { get; set; }
-            public string State { get; set; }
-            public DateTimeOffset CreatedOn { get; set; }
-            public DateTimeOffset UpdatedOn { get; set; }
-            public string MergeCommit { get; set; }
-            public int Id { get; set; }
-            public int? CommentCount { get; set; }
-            public int? TaskCount { get; set; }
-            public List<User> Reviewers { get; set; }
-            public List<Participant> Participants { get; set; }
-            public PullRequestSource Source { get; set; }
-            public PullRequestSource Destination { get; set; }
-
-            public class LinksModel
-            {
-                public LinkModel Avatar { get; set; }
-            }
-        }
-
-        public class PullRequestSource
-        {
-            public RepositorySource Repository { get; set; }
-            public CommitSource Commit { get; set; }
-
-            public class CommitSource
-            {
-                public string Hash { get; set; }
-            }
-       
-        }
-
-        public class RepositorySource
-        {
-            public string Name { get; set; }
             public string FullName { get; set; }
+            public string Name { get; set; }
             public LinksModel Links { get; set; }
 
             public class LinksModel
             {
                 public LinkModel Avatar { get; set; }
             }
-        }
-
-        public enum PullRequestState
-        {
-            Open,
-            Merged,
-            Declined
         }
     }
 }
